@@ -17,15 +17,15 @@ function LandingPage() {
     <div className="container">
       <h2>{heading}</h2>
 
-      <div className="grid">
-        <div className="grid-col grid-col_8">
+      <div>
+        <div>
           <p>
             Fluffy or fat..?
           </p>
 
           
         </div>
-        <div className="grid-col grid-col_4">
+        <div>
           <RegisterForm />
 
           <center>
