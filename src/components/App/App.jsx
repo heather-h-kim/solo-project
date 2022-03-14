@@ -15,10 +15,11 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
+import ChartPage from '../ChartPage/ChartPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import HomePage from '../HomePage/HomePage';
 
 import './App.css';
 
@@ -36,8 +37,8 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          {/* Visiting localhost:3000 will redirect to localhost:3000/landing */}
+          <Redirect exact from="/" to="/landing" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -59,13 +60,27 @@ function App() {
           >
             <UserPage />
           </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows HomePage else shows LoginPage
+            exact
+            path="/home"
+          >
+            <HomePage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows AddCatPage else shows LoginPage
+            exact
+            path="/add-cat"
+          >
+            <ChartPage />
+          </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
+            // logged in shows ChartPage else shows LoginPage
             exact
-            path="/info"
+            path="/chart"
           >
-            <InfoPage />
+            <ChartPage />
           </ProtectedRoute>
 
           <Route
@@ -98,7 +113,7 @@ function App() {
 
           <Route
             exact
-            path="/home"
+            path="/landing"
           >
             {user.id ?
               // If the user is already logged in, 
