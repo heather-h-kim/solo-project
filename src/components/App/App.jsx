@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import HomePage from '../HomePage/HomePage';
+import AddCatPage from '../AddCatPage/AddCatPage';
 
 import './App.css';
 
@@ -72,7 +73,7 @@ function App() {
             exact
             path="/add-cat"
           >
-            <ChartPage />
+            <AddCatPage />
           </ProtectedRoute>
 
           <ProtectedRoute

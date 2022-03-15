@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useSelector} from 'react-redux';
-import {history} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 
 function HomePage() {
@@ -9,11 +9,11 @@ function HomePage() {
   const history = useHistory();
 
   const handleClick = () =>{
-    history.push("/add-cat")
+    history.push("/add-cat");
   }
 
   return (
-    <div>
+    <div className="container">
       <h2>{heading}</h2>
       <p> Your cats:</p>
       <button onClick={handleClick}>Add Cat</button>
