@@ -80,9 +80,9 @@ function App() {
             <AddCatPage />
           </ProtectedRoute>
           <ProtectedRoute
-            // logged in shows AddCatPage else shows LoginPage
+            // logged in shows CatInfoPage else shows LoginPage
             exact
-            path="/cat-info"
+            path="/cat-info/:id"
           >
             <CatInfoPage />
           </ProtectedRoute>

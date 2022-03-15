@@ -16,7 +16,7 @@ function CatItem({ cat }) {
 
     const handleClick = () => {
         dispatch({type:'FETCH_THIS_CAT', payload: cat.id})
-        history.push("/cat-info");
+        history.push(`/cat-info/${cat.id}`);
     }
 
     return (

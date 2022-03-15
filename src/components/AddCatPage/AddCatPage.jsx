@@ -16,13 +16,10 @@ function AddCatPage() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('in add cat handleSubmit');
-        const is_neutered = (/true/i).test(neutered);
-        console.log('is_neutered is', is_neutered);
-
         const newCat = {
             name: name,
             age: age,
-            is_neutered: is_neutered,
+            is_neutered: neutered,
             current_weight: weight
         };
 
@@ -62,8 +59,8 @@ function AddCatPage() {
                 value={neutered}
                 onChange={event => setNeutered(event.target.value)}
             >
-                <option value="true">Yes</option>
-                <option value="false">No</option>
+                <option value="neutered">Neutered</option>
+                <option value="intact">Intact</option>
             </select>
            </label> <br></br>
            <label> Weight:
