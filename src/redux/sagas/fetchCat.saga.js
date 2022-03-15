@@ -5,7 +5,8 @@ import { put, takeEvery } from 'redux-saga/effects';
 function* fetchCats( ) {
   console.log('in fetchCats saga');
   try { 
-    const cats = yield axios.get('api/cat');
+    const cats = yield axios.get('api/cats');
+    console.log('cats are', cats.data);
     yield put({type:'SET_CATS', payload: cats.data});
 
   } catch (error) {
@@ -13,8 +14,8 @@ function* fetchCats( ) {
   }
 }
 
-function* addCatSaga() {
-  yield takeEvery('ADD_CAT', addCat);
+function* fetchCatsSaga() {
+  yield takeEvery('FETCH_CATS', fetchCats);
 }
 
-export default addCatSaga;
+export default fetchCatsSaga;
