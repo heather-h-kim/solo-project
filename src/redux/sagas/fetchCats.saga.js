@@ -5,7 +5,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 function* fetchCats( ) {
   console.log('in fetchCats saga');
   try { 
-    const cats = yield axios.get('api/cats');
+    const cats = yield axios.get('/api/cats');
     console.log('cats are', cats.data);
     yield put({type:'SET_CATS', payload: cats.data});
 

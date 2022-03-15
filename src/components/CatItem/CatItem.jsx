@@ -9,12 +9,14 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
 
+
 function CatItem({ cat }) {
     const history = useHistory();
     const dispatch = useDispatch();
 
     const handleClick = () => {
-        history.push("/cat-info")
+        dispatch({type:'FETCH_THIS_CAT', payload: cat.id})
+        history.push("/cat-info");
     }
 
     return (

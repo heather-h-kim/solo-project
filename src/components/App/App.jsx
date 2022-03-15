@@ -21,6 +21,10 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import HomePage from '../HomePage/HomePage';
 import AddCatPage from '../AddCatPage/AddCatPage';
+import CatInfoPage from '../CatInfoPage/CatInfoPage';
+import EditInfoPage from '../EditInfoPage/EditInfoPage';
+import WeightInputPage from '../WeightInputPage/WeightInputPage';
+
 
 import './App.css';
 
@@ -75,7 +79,27 @@ function App() {
           >
             <AddCatPage />
           </ProtectedRoute>
-
+          <ProtectedRoute
+            // logged in shows AddCatPage else shows LoginPage
+            exact
+            path="/cat-info"
+          >
+            <CatInfoPage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows AddCatPage else shows LoginPage
+            exact
+            path="/edit-info"
+          >
+            <EditInfoPage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows AddCatPage else shows LoginPage
+            exact
+            path="/weight-input"
+          >
+            <WeightInputPage />
+          </ProtectedRoute>
           <ProtectedRoute
             // logged in shows ChartPage else shows LoginPage
             exact
