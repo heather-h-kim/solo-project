@@ -22,7 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import HomePage from '../HomePage/HomePage';
 import AddCatPage from '../AddCatPage/AddCatPage';
 import CatInfoPage from '../CatInfoPage/CatInfoPage';
-import EditInfoPage from '../EditInfoPage/EditInfoPage';
+import EditCatPage from '../EditCatPage/EditCatPage';
 import WeightInputPage from '../WeightInputPage/WeightInputPage';
 
 
@@ -89,9 +89,9 @@ function App() {
           <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage
             exact
-            path="/edit-info"
+            path="/edit-cat"
           >
-            <EditInfoPage />
+            <EditCatPage />
           </ProtectedRoute>
           <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage

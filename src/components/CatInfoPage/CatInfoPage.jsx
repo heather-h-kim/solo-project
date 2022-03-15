@@ -12,7 +12,7 @@ function CatInfoPage() {
 
   console.log('this cat is', cat);
   const sendToEditInfo = () => {
-    history.push("/edit-info")
+    history.push("/edit-cat")
   }
 
   const sendToWeightInputPage = () => {
