@@ -1,4 +1,4 @@
-const catsReducer = (state = {}, action) => {
+const catsReducer = (state = [], action) => {
     console.log('in catsReducer');
     
     switch (action.type) {

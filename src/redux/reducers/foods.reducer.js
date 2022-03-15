@@ -1,4 +1,4 @@
-const foodsReducer = (state = {}, action) => {
+const foodsReducer = (state = [], action) => {
     console.log('in foodsReducer');
     switch (action.type) {
       case 'SET_FOODS':
