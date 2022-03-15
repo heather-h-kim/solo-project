@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 
@@ -11,6 +11,7 @@ function AddCatPage() {
     const [age, setAge] = useState('');
     const [neutered, setNeutered] = useState(''); 
     const [weight, setWeight] = useState('');
+    const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,7 +27,11 @@ function AddCatPage() {
         };
 
         console.log('newCat is', newCat);
-        
+        dispatch({type: 'ADD_CAT', payload: newCat})
+        setName('');
+        setAge('');
+        setNeutered('');
+        setWeight('');
     }
     
   

@@ -2,12 +2,12 @@ import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
 // will be fired on 'ADD_CAT' action
-function* addCat(action) {
-  console.log('in addCat saga');
-  console.log('action.payload is', action.payload);
+function* fetchCats( ) {
+  console.log('in fetchCats saga');
   try { 
-    yield axios.post('api/cats', action.payload);
-    
+    const cats = yield axios.get('api/cat');
+    yield put({type:'SET_CATS', payload: cats.data});
+
   } catch (error) {
     console.log('add cat request failed', error);
   }
