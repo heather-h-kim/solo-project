@@ -23,6 +23,28 @@ router.get('/', (req, res) => {
     }
 });
 
+//Fetch one cat from the database
+router.get('/:id', (req, res) => {
+    console.log('in cats/GET route to fetch one cat');
+    
+    if (req.isAuthenticated()) {
+        const queryText = `SELECT * FROM "cats" WHERE "user_id" = $1 AND "id" = $2;`;
+        const valueArray = [req.user.id, req.params.id];
+
+        pool.query(queryText, valueArray)
+        .then((result) => {
+            console.log('result.rows is', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('error GETing cats', error);
+            res.sendStatus(500);
+        })
+    } else {
+        res.sendStatus(403);
+    }
+});
+
 // Add a cat to the database
 router.post('/', (req, res) => {
     console.log('in cats/POST route');
