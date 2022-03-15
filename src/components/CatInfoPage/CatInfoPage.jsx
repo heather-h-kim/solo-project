@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 
 
 function CatInfoPage() {
@@ -9,6 +9,12 @@ function CatInfoPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const cat = store.thisCat;
+  const {id} =useParams();
+
+  useEffect( () => {
+    dispatch({type:'FETCH_THIS_CAT', payload: id});
+  }, []);
+
 
   console.log('this cat is', cat);
   const sendToEditInfo = () => {
@@ -18,13 +24,14 @@ function CatInfoPage() {
   const sendToWeightInputPage = () => {
       history.push("/weight-input")
   }
+  
 
   return (
     <div className="container">
         <ul>
             <li>Name: {cat.name}</li>
             <li>Age: {cat.age}</li>
-            <li>Neutered: {cat.is_neutered}</li>
+            <li>Neuter-status: {cat.is_neutered} </li>
             <li>Current weight: {cat.current_weight}</li>
             <li>Current food: </li>
             

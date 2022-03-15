@@ -9,7 +9,7 @@ function* fetchThisCat(action) {
     const cat = yield axios.get(`/api/cats/${action.payload}`);
     yield put({type:'SET_THIS_CAT', payload: cat.data});
   } catch (error) {
-    console.log('add cat request failed', error);
+    console.log('fetch this cat request failed', error);
   }
 }
 
