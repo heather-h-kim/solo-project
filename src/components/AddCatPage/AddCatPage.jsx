@@ -51,8 +51,8 @@ function AddCatPage() {
             >
                 <option value="kitten">Kitten</option>
                 <option value="adult">Adult</option>
-            </select><br></br>
-           </label>    
+            </select>
+           </label><br></br>    
            <label>Neutered?
             <select 
                 name="neuter-status"

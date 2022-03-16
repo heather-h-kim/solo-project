@@ -5,6 +5,10 @@ import userSaga from './user.saga';
 import addCatSaga from './addCat.saga';
 import fetchCatsSaga from './fetchCats.saga';
 import fetchThisCatSaga from './fetchThisCat.saga';
+import editNameSaga from './editName.saga';
+import editAgeSaga from './editAge.saga';
+import editNeuterStatusSaga from './editNeuterStatus.saga';
+import editWeightSaga from './editWeight.saga';
 
 
 // rootSaga is the primary saga.
@@ -22,5 +26,9 @@ export default function* rootSaga() {
     addCatSaga(),
     fetchCatsSaga(),
     fetchThisCatSaga(),
+    editNameSaga(),
+    editAgeSaga(),
+    editNeuterStatusSaga(),
+    editWeightSaga(),
   ]);
 }

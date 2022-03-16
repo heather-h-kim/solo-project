@@ -72,4 +72,84 @@ router.post('/', (req, res) => {
     }
 });
 
+//edit a cat
+router.put('/:id', (req, res) =>{
+    console.log('in cats/PUT route');
+    console.log('req.body is', req.body);
+    console.log('req.user is', req.user);
+    
+    let name = req.body.hasOwnProperty('name');
+    let age = req.body.hasOwnProperty('age');
+    let neutered = req.body.hasOwnProperty('is_neutered');
+    let weight = req.body.hasOwnProperty('current_weight');
+    console.log('name is', name);
+    
+    if(name){
+        if (req.isAuthenticated()) {
+            const queryText = `UPDATE "cats" SET "name" = $1 WHERE id = $2 AND user_id = $3;`;
+            const valueArray = [req.body.name, req.params.id, req.user.id]
+    
+            pool.query(queryText, valueArray)
+                .then((result) => {
+                    res.sendStatus(200);
+                })
+                .catch((error) => {
+                    console.log('Error PUTting/updating cat name', error);
+                    res.sendStatus(500);
+                });
+        } else {
+            res.sendStatus(403);
+        }
+        
+    } else if(age){
+        if (req.isAuthenticated()) {
+            const queryText = `UPDATE "cats" SET "age" = $1 WHERE id = $2 AND user_id = $3;`;
+            const valueArray = [req.body.age, req.params.id, req.user.id]
+    
+            pool.query(queryText, valueArray)
+                .then((result) => {
+                    res.sendStatus(200);
+                })
+                .catch((error) => {
+                    console.log('Error PUTting/updating cat age', error);
+                    res.sendStatus(500);
+                });
+        } else {
+            res.sendStatus(403);
+        }
+        
+    } else if(neutered){
+        if (req.isAuthenticated()) {
+            const queryText = `UPDATE "cats" SET "is_neutered" = $1 WHERE id = $2 AND user_id = $3;`;
+            const valueArray = [req.body.is_neutered, req.params.id, req.user.id]
+    
+            pool.query(queryText, valueArray)
+                .then((result) => {
+                    res.sendStatus(200);
+                })
+                .catch((error) => {
+                    console.log('Error PUTting/updating cat neuter status', error);
+                    res.sendStatus(500);
+                });
+        } else {
+            res.sendStatus(403);
+        }
+    } else if(weight){
+        if (req.isAuthenticated()) {
+            const queryText = `UPDATE "cats" SET "current_weight" = $1 WHERE id = $2 AND user_id = $3;`;
+            const valueArray = [req.body.current_weight, req.params.id, req.user.id]
+    
+            pool.query(queryText, valueArray)
+                .then((result) => {
+                    res.sendStatus(200);
+                })
+                .catch((error) => {
+                    console.log('Error PUTting/updating cat weight', error);
+                    res.sendStatus(500);
+                });
+        } else {
+            res.sendStatus(403);
+        }
+}})
+
 module.exports = router;
