@@ -60,6 +60,7 @@ router.put('/:id', async (req, res) => {
             res.sendStatus(200);
         } catch (error) {
             console.log('error updating daily calorie', error);
+            res.sendStatus(500);
         }
 
     } else {
