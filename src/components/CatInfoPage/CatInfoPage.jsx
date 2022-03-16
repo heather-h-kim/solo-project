@@ -22,7 +22,7 @@ function CatInfoPage() {
   }
 
   const sendToWeightInputPage = () => {
-      history.push("/weight-input")
+      history.push(`/weight-input/${cat.id}`);
   }
   
 

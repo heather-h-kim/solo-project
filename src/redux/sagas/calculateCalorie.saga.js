@@ -2,8 +2,9 @@ import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
 
-function*  editWeight(action) {
-  console.log('in editWeight saga');
+function*  calculateCalorie(action) {
+  console.log('in calculateCalorie saga');
+  console.log('action.payload is', action.payload.name);
   try { 
     yield axios.put(`api/cats/${action.payload.id}`, action.payload);
     yield put({type:'FETCH_CATS'});

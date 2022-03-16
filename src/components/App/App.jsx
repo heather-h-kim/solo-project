@@ -96,7 +96,7 @@ function App() {
           <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage
             exact
-            path="/weight-input"
+            path="/weight-input/:id"
           >
             <WeightInputPage />
           </ProtectedRoute>

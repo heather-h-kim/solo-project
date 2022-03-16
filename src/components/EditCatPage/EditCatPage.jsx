@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 
 function EditCatPage() {
   const store = useSelector((store) => store);
-  const [heading, setHeading] = useState('Add your cat');
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [neutered, setNeutered] = useState('');
   const [weight, setWeight] = useState('');
   const dispatch = useDispatch();
-  const thisCat = store.thisCat;
+  const cat = store.thisCat;
   const {id} =useParams();
+  const history = useHistory();
 
   useEffect( () => {
     dispatch({type:'FETCH_THIS_CAT', payload: id});
@@ -21,7 +21,7 @@ function EditCatPage() {
  
   const editName = () => {
     const newName = {
-      id: thisCat.id,
+      id: cat.id,
       name: name
     }
     console.log('newName is', newName);
@@ -34,7 +34,7 @@ function EditCatPage() {
 
   const editAge = () => {
     const newAge = {
-      id: thisCat.id,
+      id: cat.id,
       age: age
     }
     console.log('newAge is', newAge);
@@ -43,7 +43,7 @@ function EditCatPage() {
   
   const editNeuterStatus = () => {
     const newNeuterStatus= {
-      id: thisCat.id,
+      id: cat.id,
       is_neutered: neutered
     }
     console.log('newNeuterStatus is', newNeuterStatus);
@@ -52,13 +52,16 @@ function EditCatPage() {
 
   const editWeight = () => {
     const newWeight= {
-      id: thisCat.id,
+      id: cat.id,
       current_weight: weight
     }
     console.log('newWeight is', newWeight);
     dispatch({type: 'EDIT_WEIGHT', payload: newWeight})
   }
   
+  const handleClick = () =>{
+    history.push(`/cat-info/${cat.id}`)
+  }
 
 
 
@@ -67,7 +70,7 @@ function EditCatPage() {
       <p>Edit info</p>
            <label> Name:
                <input type="text" 
-                      placeholder= {thisCat.name}
+                      placeholder= {cat.name}
                       name="name"
                       value={name}
                       onChange={event => setName(event.target.value)}
@@ -98,13 +101,14 @@ function EditCatPage() {
            </label> <br></br>
            <label> Weight:
                <input type="number" 
-                      placeholder={thisCat.current_weight}
+                      placeholder={cat.current_weight}
                       name="weight"
                       value={weight}
                       onChange={event => setWeight(event.target.value)}
                       />
                       <button onClick={editWeight}>Edit</button>
            </label><br></br>
+           <button onClick={handleClick}>Back</button>
           
       
 

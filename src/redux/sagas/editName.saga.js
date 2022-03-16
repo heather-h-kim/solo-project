@@ -4,7 +4,6 @@ import { put, takeEvery } from 'redux-saga/effects';
 
 function*  editName(action) {
   console.log('in editName saga');
-  console.log('action.payload is', action.payload.name);
   try { 
     yield axios.put(`api/cats/${action.payload.id}`, action.payload);
     yield put({type:'FETCH_CATS'});
