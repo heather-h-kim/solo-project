@@ -72,7 +72,7 @@ router.post('/', (req, res) => {
     }
 });
 
-//edit a cat
+//update cat's name and/or age and/or neuter status and/or current weight
 router.put('/:id', (req, res) =>{
     console.log('in cats/PUT route');
     console.log('req.body is', req.body);
@@ -86,7 +86,7 @@ router.put('/:id', (req, res) =>{
     
     if(name){
         if (req.isAuthenticated()) {
-            const queryText = `UPDATE "cats" SET "name" = $1 WHERE id = $2 AND user_id = $3;`;
+            const queryText = `UPDATE "cats" SET "name" = $1 WHERE "id" = $2 AND "user_id" = $3;`;
             const valueArray = [req.body.name, req.params.id, req.user.id]
     
             pool.query(queryText, valueArray)
@@ -103,7 +103,7 @@ router.put('/:id', (req, res) =>{
         
     } else if(age){
         if (req.isAuthenticated()) {
-            const queryText = `UPDATE "cats" SET "age" = $1 WHERE id = $2 AND user_id = $3;`;
+            const queryText = `UPDATE "cats" SET "age" = $1 WHERE "id" = $2 AND "user_id" = $3;`;
             const valueArray = [req.body.age, req.params.id, req.user.id]
     
             pool.query(queryText, valueArray)
@@ -120,7 +120,7 @@ router.put('/:id', (req, res) =>{
         
     } else if(neutered){
         if (req.isAuthenticated()) {
-            const queryText = `UPDATE "cats" SET "is_neutered" = $1 WHERE id = $2 AND user_id = $3;`;
+            const queryText = `UPDATE "cats" SET "is_neutered" = $1 WHERE "id" = $2 AND "user_id" = $3;`;
             const valueArray = [req.body.is_neutered, req.params.id, req.user.id]
     
             pool.query(queryText, valueArray)
@@ -136,7 +136,7 @@ router.put('/:id', (req, res) =>{
         }
     } else if(weight){
         if (req.isAuthenticated()) {
-            const queryText = `UPDATE "cats" SET "current_weight" = $1 WHERE id = $2 AND user_id = $3;`;
+            const queryText = `UPDATE "cats" SET "current_weight" = $1 WHERE "id" = $2 AND "user_id" = $3;`;
             const valueArray = [req.body.current_weight, req.params.id, req.user.id]
     
             pool.query(queryText, valueArray)
@@ -151,5 +151,55 @@ router.put('/:id', (req, res) =>{
             res.sendStatus(403);
         }
 }})
+
+// calculate the recommended daily calorie and update the database accordingly
+router.put('/', async (req, res) => {
+    console.log('in cats/PUT route to calculate the daily calorie');
+    console.log('req.body is', req.body);
+    console.log('req.user is', req.user);
+    if (req.isAuthenticated()) {
+        const queryText = `
+        UPDATE "cats"
+        SET "goal_weight" = $1
+        WHERE "id" = $1 AND "user_id" = $2;
+        `;
+
+        const valueArray = [req.params.id, req.user.id];
+        
+        const goal_weight = await pool.query(queryText, valueArray)
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('Error PUTting/updating cat weight', error);
+            res.sendStatus(500);
+        });
+
+
+        const queryTextb = `
+        UPDATE "cats"
+        SET "total_daily_cal" =  
+	        (SELECT  
+		        CASE WHEN "age" = 'adult' AND "is_neutered" = true THEN (SELECT 70*1.2*0.8*("goal_weight"*0.453592)^0.75)   
+ 		 	         WHEN "age" = 'adult' AND "is_neutered" = false THEN (SELECT 70*1.4*0.8*("goal_weight"*0.453592)^0.75)
+ 		 	         WHEN "age" = 'kitten' AND "is_neutered" = true THEN (SELECT 70*1.2*2.5*0.8*("goal_weight"*0.453592)^0.75)
+ 		 	         WHEN "age" = 'kitten' AND "is_neutered" = false THEN (SELECT 70*1.4*2.5*0.8*("goal_weight"*0.453592)^0.75)  
+     	    END 
+            FROM "cats" WHERE "id" = $1 AND "user_id" = $2)
+        WHERE "id"=$1 AND "user_id" = $2;
+        `;
+
+       await pool.query(queryTextb, valueArray)
+            .then((result) => {
+                res.sendStatus(200);
+            })
+            .catch((error) => {
+                console.log('Error PUTting/updating cat weight', error);
+                res.sendStatus(500);
+            });
+    } else {
+        res.sendStatus(403);
+    }
+})
 
 module.exports = router;
