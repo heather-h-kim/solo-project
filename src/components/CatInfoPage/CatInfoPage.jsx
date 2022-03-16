@@ -12,7 +12,7 @@ function CatInfoPage() {
   const {id} =useParams();
 
   useEffect( () => {
-    dispatch({type:'FETCH_THIS_CAT', payload: id});
+    dispatch({type:'FETCH_THIS_CAT', payload: Number(id)});
   }, []);
 
 

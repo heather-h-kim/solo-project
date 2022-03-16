@@ -4,17 +4,19 @@ import { put, takeEvery } from 'redux-saga/effects';
 
 function*  calculateCalorie(action) {
   console.log('in calculateCalorie saga');
-  console.log('action.payload is', action.payload.name);
+  console.log('action.payload is', action.payload);
+  
   try { 
-    yield axios.put(`api/cats/${action.payload.id}`, action.payload);
+    yield axios.put(`api/calories/${action.payload.id}`, action.payload);
     yield put({type:'FETCH_CATS'});
+    yield put({type:'FETCH_THIS_CAT', payload: action.payload.id});
   } catch (error) {
-    console.log('edit weight request failed', error);
+    console.log('calculate calorie request failed', error);
   }
 }
 
-function* editWeightSaga() {
-  yield takeEvery('EDIT_WEIGHT', editWeight);
+function* calculateCalorieSaga() {
+  yield takeEvery('CALCULATE_CALORIE', calculateCalorie);
 }
 
-export default editWeightSaga;
+export default calculateCalorieSaga;
