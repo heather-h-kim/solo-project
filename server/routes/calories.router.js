@@ -20,16 +20,38 @@ router.put('/:id', async (req, res) => {
 
             const secondQueryText = `
                                     UPDATE "cats"
-                                    SET "total_daily_cal" =  
-                                        (SELECT  
-                                            CASE WHEN "age" = 'adult' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*0.8*("goal_weight"*0.453592)^0.75)   
-                                                WHEN "age" = 'adult' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*0.8*("goal_weight"*0.453592)^0.75)
-                                                WHEN "age" = 'kitten' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*2.5*0.8*("goal_weight"*0.453592)^0.75)
-                                                WHEN "age" = 'kitten' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*2.5*0.8*("goal_weight"*0.453592)^0.75)  
-                                        END 
-                                        FROM "cats" WHERE "id" = $1 AND "user_id" = $2)
-                                    WHERE "id"=$1 AND "user_id" = $2;
-                                    `;
+                                    SET 
+                                    "total_daily_cal" =  
+                                      (SELECT CASE WHEN "current_weight" > "goal_weight" THEN
+                                                        (SELECT  
+                                                            CASE WHEN "age" = 'adult' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*0.8*("goal_weight"*0.453592)^0.75)   
+                                                                   WHEN "age" = 'adult' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*0.8*("goal_weight"*0.453592)^0.75)
+                                                                   WHEN "age" = 'kitten' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*2.5*0.8*("goal_weight"*0.453592)^0.75)
+                                                                   WHEN "age" = 'kitten' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*2.5*0.8*("goal_weight"*0.453592)^0.75)  
+                                                             END 
+                                                             FROM "cats" WHERE "id"= $1 AND "user_id" = $2)
+                                                   WHEN "current_weight" = "goal_weight" THEN
+                                                         (SELECT  
+                                                            CASE WHEN "age" = 'adult' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*("goal_weight"*0.453592)^0.75)   
+                                                                 WHEN "age" = 'adult' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*("goal_weight"*0.453592)^0.75)
+                                                                 WHEN "age" = 'kitten' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*2.5*("goal_weight"*0.453592)^0.75)
+                                                                 WHEN "age" = 'kitten' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*2.5*("goal_weight"*0.453592)^0.75)  
+                                                            END 
+                                                          FROM "cats" WHERE "id"= $1 AND "user_id" = $2)
+                                                   WHEN "current_weight" < "goal_weight" THEN
+                                                         (SELECT  
+                                                            CASE WHEN "age" = 'adult' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*1.8*("goal_weight"*0.453592)^0.75)   
+                                                                 WHEN "age" = 'adult' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*1.8*("goal_weight"*0.453592)^0.75)
+                                                                 WHEN "age" = 'kitten' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*2.5*1.8*("goal_weight"*0.453592)^0.75)
+                                                                 WHEN "age" = 'kitten' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*2.5*1.8*("goal_weight"*0.453592)^0.75)  
+                                                            END 
+                                                          FROM "cats" WHERE "id"= $1 AND "user_id" = $2)
+                                              END
+                                             FROM "cats" WHERE "id"= $1 AND "user_id" = $2)
+                                             
+                                    WHERE "id"= $1 AND "user_id" = $2;`;
+
+
 
             const secondArray = [req.params.id, req.user.id];
 

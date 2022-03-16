@@ -13,8 +13,9 @@ import { CardActionArea } from '@mui/material';
 function CatItem({ cat }) {
     const history = useHistory();
     const dispatch = useDispatch();
-
+    console.log('in catItem');
     const handleClick = () => {
+        console.log('CatItem cat id is', cat.id);
         dispatch({type:'FETCH_THIS_CAT', payload: cat.id})
         history.push(`/cat-info/${cat.id}`);
     }
