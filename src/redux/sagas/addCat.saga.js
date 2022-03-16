@@ -7,7 +7,7 @@ function* addCat(action) {
   console.log('action.payload is', action.payload);
   try { 
     yield axios.post('api/cats', action.payload);
-    
+    yield put({type:'FETCH_CATS'})
   } catch (error) {
     console.log('add cat request failed', error);
   }

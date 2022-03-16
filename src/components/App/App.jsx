@@ -89,14 +89,14 @@ function App() {
           <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage
             exact
-            path="/edit-cat"
+            path="/edit-cat/:id"
           >
             <EditCatPage />
           </ProtectedRoute>
           <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage
             exact
-            path="/weight-input"
+            path="/weight-input/:id"
           >
             <WeightInputPage />
           </ProtectedRoute>
