@@ -10,6 +10,7 @@ import editAgeSaga from './editAge.saga';
 import editNeuterStatusSaga from './editNeuterStatus.saga';
 import editWeightSaga from './editWeight.saga';
 import calculateCalorieSaga from './calculateCalorie.saga';
+import editTreatsSaga from './editTreats.saga';
 
 
 // rootSaga is the primary saga.
@@ -32,5 +33,6 @@ export default function* rootSaga() {
     editNeuterStatusSaga(),
     editWeightSaga(),
     calculateCalorieSaga(),
+    editTreatsSaga(),
   ]);
 }

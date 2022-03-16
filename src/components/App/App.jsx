@@ -25,6 +25,7 @@ import CatInfoPage from '../CatInfoPage/CatInfoPage';
 import EditCatPage from '../EditCatPage/EditCatPage';
 import WeightInputPage from '../WeightInputPage/WeightInputPage';
 import TreatsPage from '../TreatsPage/TreatsPage';
+import FoodAmountPage from '../FoodAmountPage/FoodAmountPage';
 
 
 import './App.css';
@@ -107,6 +108,13 @@ function App() {
             path="/treats/:id"
           >
             <TreatsPage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows AddCatPage else shows LoginPage
+            exact
+            path="/food-amount/:id"
+          >
+            <FoodAmountPage />
           </ProtectedRoute>
           <ProtectedRoute
             // logged in shows ChartPage else shows LoginPage
