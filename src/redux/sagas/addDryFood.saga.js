@@ -7,7 +7,8 @@ function* addDryFood(action) {
   console.log('action.payload is', action.payload);
   try { 
     yield axios.post('api/foods/dry', action.payload);
-    yield put({type:'FETCH_FOODS'})
+    yield put({type:'CALCULATE_FOOD_AMOUNT'})
+    // yield put({type:'FETCH_FOODS'})
   } catch (error) {
     console.log('add dry food request failed', error);
   }

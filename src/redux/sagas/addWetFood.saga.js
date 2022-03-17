@@ -3,11 +3,11 @@ import { put, takeEvery } from 'redux-saga/effects';
 
 
 function* addWetFood(action) {
-  console.log('in add dry food saga');
+  console.log('in add wet food saga');
   console.log('action.payload is', action.payload);
   try { 
     yield axios.post('api/foods/wet', action.payload);
-    yield put({type:'FETCH_FOODS'})
+    // yield put({type:'FETCH_FOODS'})
   } catch (error) {
     console.log('add wet food request failed', error);
   }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
-function* fetchFoods( ) {
+function* fetchFoods() {
   console.log('in fetchCats saga');
   try { 
     const foods = yield axios.get('/api/foods');

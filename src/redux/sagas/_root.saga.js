@@ -11,6 +11,11 @@ import editNeuterStatusSaga from './editNeuterStatus.saga';
 import editWeightSaga from './editWeight.saga';
 import calculateCalorieSaga from './calculateCalorie.saga';
 import editTreatsSaga from './editTreats.saga';
+import editWetFoodRatioSaga from './editWetFoodRatio.saga';
+import addDryFoodSaga from './addDryFood.saga';
+import addWetFoodSaga from './addWetFood.saga';
+import fetchFoodsSaga from './fetchFoods.saga';
+import calculateFoodAmountSaga from './calculateFoodAmount.saga';
 
 
 // rootSaga is the primary saga.
@@ -34,5 +39,10 @@ export default function* rootSaga() {
     editWeightSaga(),
     calculateCalorieSaga(),
     editTreatsSaga(),
+    editWetFoodRatioSaga(),
+    addDryFoodSaga(),
+    addWetFoodSaga(),
+    fetchFoodsSaga(),
+    calculateFoodAmountSaga(),
   ]);
 }
