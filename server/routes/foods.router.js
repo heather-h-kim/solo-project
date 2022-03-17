@@ -50,18 +50,7 @@ router.post('/dry', (req, res) => {
         pool.query(queryText, valueArray)
         .then((result) => {
             console.log('new food id is', result.rows[0].id);
-            const food_id = result.rows[0].id;
-
-            //handle the cats_foods reference
-            const secondQueryText = `INSERT INTO "cats_foods" ("cat_id", "food_id") VALUES ($1, $2);`;
-            const secondArray = [req.body.cat_id, food_id]
-            pool.query(secondQueryText, secondArray)
-                .then((result) => {
-                    res.sendStatus(201);
-                }).catch((error) => {
-                    console.log('error adding food_id to cats_foods', error);
-                    res.sendStatus(500)
-                })
+            res.send(result.rows);
         }).catch((error) => {
             console.log('error posting dry food', error);
             res.sendStatus(500);
@@ -70,34 +59,6 @@ router.post('/dry', (req, res) => {
         res.sendStatus(403);
     }
 });
-// router.post('/dry', async (req, res) => {
-//     console.log('in foods/Dry Post route');
-//     console.log('req.body is', req.body);
-//     console.log('req.user is', req.user);
-
-//     if (req.isAuthenticated()) {
-//         try{
-//         const queryText = `
-//                             INSERT INTO "foods" ("name", "type", "cal_per_cup", "cal_per_kg")
-//                            VALUES ($1, $2, $3, $4)
-//                             RETURNING "id";
-//                                  `;
-//         const valueArray = [req.body.name, req.body.type, req.body.cal_per_cup, req.body.cal_per_kg]
-//         const secondQueryText = `INSERT INTO "cats_foods" ("cat_id", "food_id") VALUES ($1, $2);`;
-//         const secondArray = [req.body.cat_id, food_id]
-
-//         const food_id = await pool.query(queryText, valueArray);
-//         await pool.query(secondQueryText, secondArray);
-//         res.sendStatus(200);
-//         } catch (error) {
-//             console.log('error posting dry food');
-//             res.sendStatus(500);
-//         }
-//     }
-    
-    
-    
-// })
 
 //add wet food
 router.post('/wet', (req, res) => {
@@ -117,19 +78,7 @@ router.post('/wet', (req, res) => {
         pool.query(queryText, valueArray)
         .then((result) => {
             console.log('new food id is', result.rows[0].id);
-            const food_id = result.rows[0].id;
-
-            //handle the cats_foods reference
-            const secondQueryText = `INSERT INTO "cats_foods" ("cat_id", "food_id") VALUES ($1, $2);`;
-            const secondArray = [req.body.cat_id, food_id]
-
-            pool.query(secondQueryText, secondArray)
-                .then((result) => {
-                    res.sendStatus(201);
-                }).catch((error) => {
-                    console.log('error adding food_id to cats_foods', error);
-                    res.sendStatus(500)
-                })
+            res.send(result.rows);
         }).catch((error) => {
             console.log('error posting wet food', error);
             res.sendStatus(500);
@@ -140,16 +89,34 @@ router.post('/wet', (req, res) => {
 });
 
 //calculate food amount 
-router.put('/dry', (req, res) => {
+router.put('/:id', (req, res) => {
     console.log('in foods PUT route');
     console.log('req.body is', req.body);
     console.log('req.user is', req.user);
-    console.log('req.params.id is', req.params.id);
-
+   
     if (req.isAuthenticated()) {
-         const qeuryText = `
+    const queryText = `UPDATE "foods"
+                       SET "daily_amount_can" = 
+                             (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 
+                                          WHEN "foods"."type" = 'dry' THEN 0
+                                     END) ,
+          
+                            "daily_amount_cup" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN 0
+                                                              WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 	
+                                     END) ,
          
-         `
+                            "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 
+                                                             WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 	
+                                     END)   
+                       WHERE "foods"."id" = $1;
+                        `;
+    pool.query(queryText, [req.body.food_id])
+    .then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('error updating food table with food amount', error);
+        res.sendStatus(500);
+    })
     } else {
         res.sendStatus(403);
     }
