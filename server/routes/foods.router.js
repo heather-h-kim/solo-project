@@ -125,6 +125,9 @@ router.post('/wet', (req, res) => {
 
             pool.query(secondQueryText, secondArray)
                 .then((result) => {
+
+                    // //calculate food amounts
+                    // const thirdQueryText = ``
                     res.sendStatus(201);
                 }).catch((error) => {
                     console.log('error adding food_id to cats_foods', error);

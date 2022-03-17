@@ -50,9 +50,9 @@ function FoodAmountPage() {
 
         dispatch({type:'EDIT_WET_PERCENTAGE', payload: wetFoodPercentage});
         
-        if(wetFoodPercentage === 0){
+        if(wetFoodPercentage.wet_percentage === 0){
             dispatch({type:'ADD_DRY_FOOD', payload: dryFood});
-        } else if(wetFoodPercentage === 100) {
+        } else if(wetFoodPercentage.wet_percentage === 100) {
             dispatch({type:'ADD_WET_FOOD', payload: wetFood});
         } else {
             dispatch({type:'ADD_WET_FOOD', payload: wetFood});
