@@ -8,7 +8,7 @@ function*  calculateFoodAmount(action) {
   
   
   try { 
-    yield axios.put('api/foods/');
+    yield axios.put('api/foods/', action.payload);
     // yield put({type:'FETCH_CATS'});
     // yield put({type:'FETCH_THIS_CAT', payload: action.payload.id});
   } catch (error) {

@@ -125,9 +125,6 @@ router.post('/wet', (req, res) => {
 
             pool.query(secondQueryText, secondArray)
                 .then((result) => {
-
-                    // //calculate food amounts
-                    // const thirdQueryText = ``
                     res.sendStatus(201);
                 }).catch((error) => {
                     console.log('error adding food_id to cats_foods', error);
@@ -143,14 +140,16 @@ router.post('/wet', (req, res) => {
 });
 
 //calculate food amount 
-router.put('/', (req, res) => {
+router.put('/dry', (req, res) => {
     console.log('in foods PUT route');
     console.log('req.body is', req.body);
     console.log('req.user is', req.user);
     console.log('req.params.id is', req.params.id);
 
     if (req.isAuthenticated()) {
+         const qeuryText = `
          
+         `
     } else {
         res.sendStatus(403);
     }

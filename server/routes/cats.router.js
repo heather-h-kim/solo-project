@@ -230,7 +230,6 @@ router.put('/treats/:id', async (req, res) => {
 //update wet_percentage colum to calculate the amount of wet food and the dry food 
 router.put('/wetRatio/:id', async (req, res) => {
     console.log('in cats/wetRatio/PUT route to calculate the amount of the wet food and the dry food');
-    console.log('req.body is', req.body);
     console.log('req.body.wet_percentage is', req.body.wet_percentage);
 
     console.log('req.user is', req.user);
