@@ -151,7 +151,7 @@ router.put('/:id', (req, res) =>{
             res.sendStatus(403);
         }
 }})
-
+//Update treat % column, calculate calories from treats and calories from food, and update the database accordingly
 router.put('/treats/:id', async (req, res) => {
     console.log('in cats/treats/PUT route to calculate the daily calorie');
     console.log('req.body is', req.body);
@@ -173,7 +173,12 @@ router.put('/treats/:id', async (req, res) => {
                                 SET "treat_cal" = (
                                     SELECT "total_daily_cal"*"treat_percentage"*0.01 
                                     FROM "cats"
-                                    WHERE "id" = $1 AND "user_id" = $2)
+                                    WHERE "id" = $1 AND "user_id" = $2),
+                                    "food_cal" = (
+                                    SELECT "total_daily_cal"*(100-"treat_percentage")*0.01 
+                                    FROM "cats"
+                                    WHERE "id" = $1 AND "user_id" = $2
+                                    )
                                 WHERE "id" = $1 AND "user_id" = $2;
                                 `;
         
@@ -191,5 +196,35 @@ router.put('/treats/:id', async (req, res) => {
         res.sendStatus(403);
     }
 })
+
+//update wet_percentage colum to calculate the amount of wet food and the dry food 
+router.put('/wetRatio/:id', async (req, res) => {
+    console.log('in cats/wetRatio/PUT route to calculate the amount of the wet food and the dry food');
+    console.log('req.body is', req.body);
+    console.log('req.body.wet_percentage is', req.body.wet_percentage);
+    
+    console.log('req.user is', req.user);
+    if (req.isAuthenticated()) {
+        const queryText = `
+                                UPDATE "cats"
+                                SET "wet_percentage" = $1
+                                WHERE "id" = $2 AND "user_id" = $3;
+                                `;
+
+        const valueArray = [req.body.wet_percentage, req.params.id, req.user.id];
+
+        pool.query(queryText, valueArray)
+        .then((result) => {
+            res.sendStatus(200);
+        }).catch((error) => {
+            console.log('error updating wet food percentage', error);
+            res.sendStatus(500); 
+        })
+       
+    }  else {
+        res.sendStatus(403);
+    }
+});
+
 
 module.exports = router;
