@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
-// will be fired on 'ADD_CAT' action
 function* fetchCats( ) {
   console.log('in fetchCats saga');
   try { 

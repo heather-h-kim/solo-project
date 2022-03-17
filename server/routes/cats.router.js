@@ -10,14 +10,14 @@ router.get('/', (req, res) => {
     if (req.isAuthenticated()) {
         const queryText = `SELECT * FROM "cats" WHERE "user_id" = ${req.user.id};`;
         pool.query(queryText)
-        .then((result) => {
-            console.log('result.rows is', result.rows);
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.log('error GETing cats', error);
-            res.sendStatus(500);
-        })
+            .then((result) => {
+                console.log('result.rows is', result.rows);
+                res.send(result.rows);
+            })
+            .catch((error) => {
+                console.log('error GETing cats', error);
+                res.sendStatus(500);
+            })
     } else {
         res.sendStatus(403);
     }
@@ -26,20 +26,20 @@ router.get('/', (req, res) => {
 //Fetch one cat from the database
 router.get('/:id', (req, res) => {
     console.log('in cats/GET route to fetch one cat');
-    
+
     if (req.isAuthenticated()) {
         const queryText = `SELECT * FROM "cats" WHERE "user_id" = $1 AND "id" = $2;`;
         const valueArray = [req.user.id, req.params.id];
 
         pool.query(queryText, valueArray)
-        .then((result) => {
-            console.log('result.rows is', result.rows);
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.log('error GETing cats', error);
-            res.sendStatus(500);
-        })
+            .then((result) => {
+                console.log('result.rows is', result.rows);
+                res.send(result.rows);
+            })
+            .catch((error) => {
+                console.log('error GETing cats', error);
+                res.sendStatus(500);
+            })
     } else {
         res.sendStatus(403);
     }
@@ -52,43 +52,72 @@ router.post('/', (req, res) => {
     console.log('req.user is', req.user);
 
     if (req.isAuthenticated()) {
-        const queryText = `
+        // const firstQueryText = `
+        //                     INSERT INTO "cats" ("name", "age", "is_neutered", "current_weight", "user_id")
+        //                     VALUES ($1, $2, $3, $4, $5)
+        //                     RETURNING "id";
+        //                     `;
+
+        // const firstArray = [req.body.name, req.body.age, req.body.is_neutered, req.body.current_weight, req.user.id]
+
+
+
+        // pool.query(firstQueryText, firstArray)
+        //     .then((result) => {
+        //         console.log('result.rows is', result.rows);
+        //         console.log('new cat id is', result.rows[0].id);
+        //         const cat_id = result.rows[0].id;
+
+        //         //handle the cats_foods reference
+        //         const secondQueryText = `INSERT INTO "cats_foods" ("cat_id") VALUES ($1)`
+
+        //         pool.query(secondQueryText, [cat_id])
+        //             .then((result) => {
+        //                 res.sendStatus(201);
+        //             }).catch((error) => {
+        //                 console.log('error adding cat_id to cats_foods', error);
+        //                 res.sendStatus(500)
+        //             })
+        //     }).catch((error) => {
+        //         console.log('error posting a cat', error);
+        //         res.sendStatus(500);
+        //     })
+         const queryText = `
                             INSERT INTO "cats" ("name", "age", "is_neutered", "current_weight", "user_id")
                             VALUES ($1, $2, $3, $4, $5);
                             `;
 
         const valueArray = [req.body.name, req.body.age, req.body.is_neutered, req.body.current_weight, req.user.id]
-
         pool.query(queryText, valueArray)
-            .then((result) => {
-                res.sendStatus(200);
-            })
-            .catch((error) => {
-                console.log('Error POSTing a cat', error);
-                res.sendStatus(500);
-            });
+        .then((result) => {
+            res.sendStatus(200)
+        }).catch((error) => {
+            console.log('error posting a cat');
+            res.sendStatus(500);
+        })
+
     } else {
         res.sendStatus(403);
     }
 });
 
 //update cat's name and/or age and/or neuter status and/or current weight
-router.put('/:id', (req, res) =>{
+router.put('/:id', (req, res) => {
     console.log('in cats/PUT route');
     console.log('req.body is', req.body);
     console.log('req.user is', req.user);
-    
+
     let name = req.body.hasOwnProperty('name');
     let age = req.body.hasOwnProperty('age');
     let neutered = req.body.hasOwnProperty('is_neutered');
     let weight = req.body.hasOwnProperty('current_weight');
     console.log('name is', name);
-    
-    if(name){
+
+    if (name) {
         if (req.isAuthenticated()) {
             const queryText = `UPDATE "cats" SET "name" = $1 WHERE "id" = $2 AND "user_id" = $3;`;
             const valueArray = [req.body.name, req.params.id, req.user.id]
-    
+
             pool.query(queryText, valueArray)
                 .then((result) => {
                     res.sendStatus(200);
@@ -100,12 +129,12 @@ router.put('/:id', (req, res) =>{
         } else {
             res.sendStatus(403);
         }
-        
-    } else if(age){
+
+    } else if (age) {
         if (req.isAuthenticated()) {
             const queryText = `UPDATE "cats" SET "age" = $1 WHERE "id" = $2 AND "user_id" = $3;`;
             const valueArray = [req.body.age, req.params.id, req.user.id]
-    
+
             pool.query(queryText, valueArray)
                 .then((result) => {
                     res.sendStatus(200);
@@ -117,12 +146,12 @@ router.put('/:id', (req, res) =>{
         } else {
             res.sendStatus(403);
         }
-        
-    } else if(neutered){
+
+    } else if (neutered) {
         if (req.isAuthenticated()) {
             const queryText = `UPDATE "cats" SET "is_neutered" = $1 WHERE "id" = $2 AND "user_id" = $3;`;
             const valueArray = [req.body.is_neutered, req.params.id, req.user.id]
-    
+
             pool.query(queryText, valueArray)
                 .then((result) => {
                     res.sendStatus(200);
@@ -134,11 +163,11 @@ router.put('/:id', (req, res) =>{
         } else {
             res.sendStatus(403);
         }
-    } else if(weight){
+    } else if (weight) {
         if (req.isAuthenticated()) {
             const queryText = `UPDATE "cats" SET "current_weight" = $1 WHERE "id" = $2 AND "user_id" = $3;`;
             const valueArray = [req.body.current_weight, req.params.id, req.user.id]
-    
+
             pool.query(queryText, valueArray)
                 .then((result) => {
                     res.sendStatus(200);
@@ -150,25 +179,26 @@ router.put('/:id', (req, res) =>{
         } else {
             res.sendStatus(403);
         }
-}})
+    }
+})
 //Update treat % column, calculate calories from treats and calories from food, and update the database accordingly
 router.put('/treats/:id', async (req, res) => {
     console.log('in cats/treats/PUT route to calculate the daily calorie');
     console.log('req.body is', req.body);
     console.log('req.body.treat_percentage is', req.body.treat_percentage);
-    
+
     console.log('req.user is', req.user);
     if (req.isAuthenticated()) {
-        try{
-        const firstQueryText = `
+        try {
+            const firstQueryText = `
                                 UPDATE "cats"
                                 SET "treat_percentage" = $1
                                 WHERE "id" = $2 AND "user_id" = $3;
                                 `;
 
-        const firstArray = [req.body.treat_percentage, req.params.id, req.user.id];
+            const firstArray = [req.body.treat_percentage, req.params.id, req.user.id];
 
-        const secondQueryText = `
+            const secondQueryText = `
                                 UPDATE "cats"
                                 SET "treat_cal" = (
                                     SELECT "total_daily_cal"*"treat_percentage"*0.01 
@@ -181,18 +211,18 @@ router.put('/treats/:id', async (req, res) => {
                                     )
                                 WHERE "id" = $1 AND "user_id" = $2;
                                 `;
-        
-        const secondArray = [req.params.id, req.user.id];
 
-        await pool.query(firstQueryText, firstArray);
-        await pool.query(secondQueryText, secondArray);
-              res.sendStatus(200);
+            const secondArray = [req.params.id, req.user.id];
+
+            await pool.query(firstQueryText, firstArray);
+            await pool.query(secondQueryText, secondArray);
+            res.sendStatus(200);
         } catch (error) {
             console.log('error updating treat percentage', error);
-            res.sendStatus(500); 
+            res.sendStatus(500);
         }
 
-    }  else {
+    } else {
         res.sendStatus(403);
     }
 })
@@ -200,9 +230,8 @@ router.put('/treats/:id', async (req, res) => {
 //update wet_percentage colum to calculate the amount of wet food and the dry food 
 router.put('/wetRatio/:id', async (req, res) => {
     console.log('in cats/wetRatio/PUT route to calculate the amount of the wet food and the dry food');
-    console.log('req.body is', req.body);
     console.log('req.body.wet_percentage is', req.body.wet_percentage);
-    
+
     console.log('req.user is', req.user);
     if (req.isAuthenticated()) {
         const queryText = `
@@ -214,14 +243,14 @@ router.put('/wetRatio/:id', async (req, res) => {
         const valueArray = [req.body.wet_percentage, req.params.id, req.user.id];
 
         pool.query(queryText, valueArray)
-        .then((result) => {
-            res.sendStatus(200);
-        }).catch((error) => {
-            console.log('error updating wet food percentage', error);
-            res.sendStatus(500); 
-        })
-       
-    }  else {
+            .then((result) => {
+                res.sendStatus(200);
+            }).catch((error) => {
+                console.log('error updating wet food percentage', error);
+                res.sendStatus(500);
+            })
+
+    } else {
         res.sendStatus(403);
     }
 });
