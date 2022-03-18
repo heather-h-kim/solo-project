@@ -7,8 +7,8 @@ function*  deleteThisFood(action) {
   console.log('action.payload is', action.payload);
   
   try { 
-    yield axios.delete(`api/foods/${action.payload}`);
-    yield put({type:'FETCH_FOODS'});
+    yield axios.delete(`api/foods/${action.payload.food_id}`);
+    yield put({type:'FETCH_FOODS', payload: action.payload.cat_id});
     // yield axios.get(`/api/foods/${action.payload.cat_id}`);
   } catch (error) {
     console.log('delete this food request failed', error);

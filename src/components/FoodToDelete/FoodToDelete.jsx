@@ -21,11 +21,11 @@ function FoodToDelete( {food} ) {
     const deleteThisFood = () => {
         console.log('lets delete this food!');
         dispatch({type: 'DELETE_THIS_FOOD', payload: food.id})
-        // const payloadToSend = {
-        //     food_id: food.id,
-        //     cat_id: id
-        // }
-        // dispatch({type: 'DELETE_THIS_FOOD', payload: payloadToSend});
+        const payloadToSend = {
+            food_id: food.id,
+            cat_id: id
+        }
+        dispatch({type: 'DELETE_THIS_FOOD', payload: payloadToSend});
         
       }
 

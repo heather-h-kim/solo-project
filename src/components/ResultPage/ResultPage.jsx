@@ -9,17 +9,23 @@ function ResultPage() {
   const foods = store.foods;
   const {id} = useParams();
   const dispatch = useDispatch();
-  const history = useHistory();
+ 
   
   
   useEffect( () => {
-    dispatch({type:'FETCH_THIS_CAT', payload: id});
+    dispatch({type:'FETCH_THIS_CAT', payload: Number(id)});
+    dispatch({type:'FETCH_FOODS', payload: Number(id)});
   }, []);
 
   console.log('foods are', foods);
   return (
     <div className="container">
-      <h3>{cat.name} </h3>
+      <h3>{cat.name} needs</h3>
+      {foods.map((food,i) => (
+          <ul key={i}>
+              <li>{food.daily_amount_oz} oz of {food.name} a day. </li>
+          </ul>
+      ))}
       </div>
   )};
 

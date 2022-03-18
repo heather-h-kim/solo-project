@@ -19,8 +19,8 @@ function FoodAmountPage() {
     const [perCup, setPerCup] = useState('');
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_THIS_CAT', payload: id });
-        dispatch({ type: 'FETCH_FOODS', payload: id });
+        dispatch({ type: 'FETCH_THIS_CAT', payload: Number(id) });
+        // dispatch({ type: 'FETCH_FOODS', payload: Number(id) });
     }, []);
 
     const handleSubmit = () => {
@@ -144,7 +144,12 @@ function FoodAmountPage() {
                 </label><br></br>
                 <button type="submit">Submit</button>
             </form>
-            {/* <p>{cat.name} needs {food} </p> */}
+            <h3>{cat.name} needs</h3>
+      {foods.map((food,i) => (
+          <ul key={i}>
+              <li>{food.daily_amount_oz} oz of {food.name} a day. </li>
+          </ul>
+      ))}
         </div>
     );
 }
