@@ -15,8 +15,7 @@ function* addWetFood(action) {
     console.log('catsFoodsObject is', catsFoodsObject);
     yield axios.post ('api/cats_foods',catsFoodsObject);
     yield axios.put (`api/foods/${catsFoodsObject.food_id}`, catsFoodsObject);
-
-    // yield put({type:'FETCH_FOODS'})
+    yield put({type:'FETCH_FOODS', payload: action.payload.cat_id})
   } catch (error) {
     console.log('add wet food request failed', error);
   }

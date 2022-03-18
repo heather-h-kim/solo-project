@@ -17,7 +17,12 @@ function FoodAmountPage() {
     const [foodOnePerKg, setFoodOnePerKg] = useState('');
     const [foodTwoPerKg, setFoodTwoPerKg] = useState('');
     const [perCup, setPerCup] = useState('');
+    // const [thisCat, setThisCat] = useState(cat);
+    // const [thisCatFood, setThisCatFood] = useState(foods)
 
+    const changeCat = () => {
+
+    }
     useEffect(() => {
         dispatch({ type: 'FETCH_THIS_CAT', payload: Number(id) });
         dispatch({ type: 'FETCH_FOODS', payload: Number(id) });
