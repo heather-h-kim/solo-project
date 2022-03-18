@@ -20,7 +20,7 @@ function FoodAmountPage() {
 
     useEffect(() => {
         dispatch({ type: 'FETCH_THIS_CAT', payload: Number(id) });
-        // dispatch({ type: 'FETCH_FOODS', payload: Number(id) });
+        dispatch({ type: 'FETCH_FOODS', payload: Number(id) });
     }, []);
 
     const handleSubmit = () => {
@@ -60,7 +60,7 @@ function FoodAmountPage() {
             dispatch({type:'ADD_WET_FOOD', payload: wetFood});
             dispatch({type:'ADD_DRY_FOOD', payload: dryFood});
         }
-        history.push(`/result/${cat.id}`)
+        // history.push(`/result/${cat.id}`)
     }
 
     console.log('foods are', foods);

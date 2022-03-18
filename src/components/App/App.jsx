@@ -28,6 +28,7 @@ import TreatsPage from '../TreatsPage/TreatsPage';
 import FoodAmountPage from '../FoodAmountPage/FoodAmountPage';
 import AdjustCaloriePage from '../AdjustCaloriePage/AdjustCaloriePage';
 import ResultPage from '../ResultPage/ResultPage';
+import ChartEachCatPage from '../ChartEachCatPage/ChartEachCatPage';
 
 import './App.css';
 
@@ -130,6 +131,13 @@ function App() {
             path="/chart"
           >
             <ChartPage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows ChartPage else shows LoginPage
+            exact
+            path="/chart-eachcat/:id"
+          >
+            <ChartEachCatPage />
           </ProtectedRoute>
           <ProtectedRoute
             // logged in shows ChartPage else shows LoginPage
