@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useParams} from 'react-router-dom';
+import FoodItem from '../FoodItem/FoodItem';
 
 
 function CatInfoPage() {
@@ -35,13 +36,25 @@ function CatInfoPage() {
             <li>Neuter-status: {cat.is_neutered} </li>
             <li>Current weight: {cat.current_weight}</li>
         </ul>
-                {/* Current food: 
-                {foods.map((food, i) => (
-                  <ul key={i}> 
-                    <li>{food.name}</li>
-                  </ul>
-                ))} */}
-              
+                Current food: 
+                <table>
+                  <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>daily amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {foods.map((food, i) => (
+                  <tr key={i}> 
+                    <FoodItem food={food}/>
+                  </tr>
+                 ))}
+                  </tbody>
+                </table>
+
+
+             
 
 
           

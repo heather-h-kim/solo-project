@@ -26,7 +26,8 @@ import EditCatPage from '../EditCatPage/EditCatPage';
 import WeightInputPage from '../WeightInputPage/WeightInputPage';
 import TreatsPage from '../TreatsPage/TreatsPage';
 import FoodAmountPage from '../FoodAmountPage/FoodAmountPage';
-
+import AdjustCaloriePage from '../AdjustCaloriePage/AdjustCaloriePage';
+import ResultPage from '../ResultPage/ResultPage';
 
 import './App.css';
 
@@ -117,6 +118,13 @@ function App() {
             <FoodAmountPage />
           </ProtectedRoute>
           <ProtectedRoute
+            // logged in shows AddCatPage else shows LoginPage
+            exact
+            path="/result/:id"
+          >
+            <ResultPage />
+          </ProtectedRoute>
+          <ProtectedRoute
             // logged in shows ChartPage else shows LoginPage
             exact
             path="/chart"
@@ -128,7 +136,7 @@ function App() {
             exact
             path="/adjust-calorie"
           >
-            <ChartPage />
+            <AdjustCaloriePage />
           </ProtectedRoute>
           <Route
             exact

@@ -16,9 +16,6 @@ function CatItem({ cat }) {
     console.log('in catItem');
     const handleClick = () => {
         console.log('CatItem cat id is', cat.id);
-        // const catIdToSend = {
-        //     cat_id: cat.id
-        // }
         dispatch({type:'FETCH_THIS_CAT', payload: cat.id})
         dispatch({type:'FETCH_FOODS', payload: cat.id})
         history.push(`/cat-info/${cat.id}`);

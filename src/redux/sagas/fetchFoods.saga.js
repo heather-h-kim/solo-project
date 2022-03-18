@@ -4,8 +4,6 @@ import { put, takeEvery } from 'redux-saga/effects';
 function* fetchFoods(action) {
   console.log('in fetchFoods saga');
   console.log('action.payload is', action.payload);
-  
-  
   try { 
     const foods = yield axios.get(`/api/foods/${action.payload}`);
     console.log('foods are', foods.data);

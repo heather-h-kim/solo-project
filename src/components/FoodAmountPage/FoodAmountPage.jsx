@@ -6,6 +6,7 @@ import { useHistory, useParams } from 'react-router-dom';
 function FoodAmountPage() {
     const store = useSelector((store) => store);
     const cat = store.thisCat;
+    const foods = store.foods;
     const { id } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -19,6 +20,7 @@ function FoodAmountPage() {
 
     useEffect(() => {
         dispatch({ type: 'FETCH_THIS_CAT', payload: id });
+        dispatch({ type: 'FETCH_FOODS', payload: id });
     }, []);
 
     const handleSubmit = () => {
@@ -58,10 +60,10 @@ function FoodAmountPage() {
             dispatch({type:'ADD_WET_FOOD', payload: wetFood});
             dispatch({type:'ADD_DRY_FOOD', payload: dryFood});
         }
-
+        history.push(`/result/${cat.id}`)
     }
 
-
+    console.log('foods are', foods);
     return (
         <div className="container">
             <h4>{cat.name} needs {cat.food_cal} calories from food! </h4>
@@ -142,7 +144,7 @@ function FoodAmountPage() {
                 </label><br></br>
                 <button type="submit">Submit</button>
             </form>
-            <p>{cat.name} needs </p>
+            {/* <p>{cat.name} needs {food} </p> */}
         </div>
     );
 }

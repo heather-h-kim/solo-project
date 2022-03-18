@@ -9,7 +9,8 @@ const router = express.Router();
     
     if (req.isAuthenticated()) {
         const queryText = `
-                            SELECT * FROM "foods" 
+                            SELECT "foods"."id", "foods"."name", "foods"."type", "foods"."daily_amount_can", "foods"."daily_amount_cup", "foods"."daily_amount_oz"
+                            FROM "foods" 
                             JOIN "cats_foods"
                             ON "foods"."id" = "cats_foods"."food_id"
                             JOIN "cats"
@@ -116,6 +117,30 @@ router.put('/:id', (req, res) => {
         console.log('error updating food table with food amount', error);
         res.sendStatus(500);
     })
+    } else {
+        res.sendStatus(403);
+    }
+});
+
+//delete food
+router.delete('/:id', async (req, res) => {
+    console.log('in foods DELETE route');
+    console.log('req.body is', req.params.id);
+    
+
+    if (req.isAuthenticated()) {
+        try{
+        const firstQueryText = ` DELETE FROM "cats_foods" WHERE "food_id"=$1;`;           
+        const secondQueryText = `DELETE FROM "foods" WHERE "id" = $1;`;
+
+        await pool.query(firstQueryText, [req.params.id]);
+        await pool.query(secondQueryText, [req.params.id]);
+            res.sendStatus(200)
+        } catch (error) {
+            console.log('error deleting this food', error);
+            res.sendStatus(500);
+        }
+           
     } else {
         res.sendStatus(403);
     }

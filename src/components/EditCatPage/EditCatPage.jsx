@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import FoodToDelete from '../FoodToDelete/FoodToDelete';
 
 
 function EditCatPage() {
@@ -11,11 +12,13 @@ function EditCatPage() {
   const [weight, setWeight] = useState('');
   const dispatch = useDispatch();
   const cat = store.thisCat;
+  const foods = store.foods;
   const {id} =useParams();
   const history = useHistory();
 
   useEffect( () => {
     dispatch({type:'FETCH_THIS_CAT', payload: id});
+    dispatch({type: 'FETCH_FOODS', payload: id});
   }, []);
   
  
@@ -59,10 +62,13 @@ function EditCatPage() {
     dispatch({type: 'EDIT_WEIGHT', payload: newWeight})
   }
   
+  
+
   const handleClick = () =>{
     history.push(`/cat-info/${cat.id}`)
   }
 
+  
 
 
   return (
@@ -108,6 +114,19 @@ function EditCatPage() {
                       />
                       <button onClick={editWeight}>Edit</button>
            </label><br></br>
+           <table>
+             <thead>
+               <th>Food name</th>
+               <th> </th>
+             </thead>
+             <tbody>
+               {foods.map((food, i) => (
+                 <tr key={i}>
+                   <FoodToDelete food={food}/>
+                 </tr>
+               ))}
+             </tbody>
+           </table>
            <button onClick={handleClick}>Back</button>
           
       
