@@ -52,45 +52,29 @@ router.post('/', (req, res) => {
     console.log('req.user is', req.user);
 
     if (req.isAuthenticated()) {
-        // const firstQueryText = `
-        //                     INSERT INTO "cats" ("name", "age", "is_neutered", "current_weight", "user_id")
-        //                     VALUES ($1, $2, $3, $4, $5)
-        //                     RETURNING "id";
-        //                     `;
-
-        // const firstArray = [req.body.name, req.body.age, req.body.is_neutered, req.body.current_weight, req.user.id]
-
-
-
-        // pool.query(firstQueryText, firstArray)
-        //     .then((result) => {
-        //         console.log('result.rows is', result.rows);
-        //         console.log('new cat id is', result.rows[0].id);
-        //         const cat_id = result.rows[0].id;
-
-        //         //handle the cats_foods reference
-        //         const secondQueryText = `INSERT INTO "cats_foods" ("cat_id") VALUES ($1)`
-
-        //         pool.query(secondQueryText, [cat_id])
-        //             .then((result) => {
-        //                 res.sendStatus(201);
-        //             }).catch((error) => {
-        //                 console.log('error adding cat_id to cats_foods', error);
-        //                 res.sendStatus(500)
-        //             })
-        //     }).catch((error) => {
-        //         console.log('error posting a cat', error);
-        //         res.sendStatus(500);
-        //     })
+       
          const queryText = `
                             INSERT INTO "cats" ("name", "age", "is_neutered", "current_weight", "user_id")
-                            VALUES ($1, $2, $3, $4, $5);
+                            VALUES ($1, $2, $3, $4, $5)
+                            RETURNING "id";
                             `;
 
         const valueArray = [req.body.name, req.body.age, req.body.is_neutered, req.body.current_weight, req.user.id]
         pool.query(queryText, valueArray)
         .then((result) => {
-            res.sendStatus(200)
+            console.log('new cat id is', result.rows[0].id);
+            const createdCatId = result.rows[0].id
+
+            const secondQueryText = `INSERT INTO "weight" ("current_weight", "cat_id")
+                                    VALUES ($1, $2);`;
+            const secondArray = [req.body.current_weight, createdCatId]
+            pool.query(secondQueryText, secondArray)
+            .then(result => {
+                res.sendStatus(201);
+            }).catch(error => {
+                console.log('error posting on weight table', error);
+                res.sendStatus(500);
+            })
         }).catch((error) => {
             console.log('error posting a cat');
             res.sendStatus(500);
@@ -100,6 +84,11 @@ router.post('/', (req, res) => {
         res.sendStatus(403);
     }
 });
+
+
+
+
+
 
 //update cat's name and/or age and/or neuter status and/or current weight
 router.put('/:id', (req, res) => {

@@ -13,6 +13,7 @@ const catsRouter = require('./routes/cats.router');
 const caloriesRouter = require('./routes/calories.router');
 const foodsRouter = require('./routes/foods.router');
 const cats_foodsRouter = require('./routes/cats_foods.router.js');
+const weightRouter = require('./routes/weight.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -31,6 +32,7 @@ app.use('/api/cats', catsRouter);
 app.use('/api/calories', caloriesRouter);
 app.use('/api/foods', foodsRouter);
 app.use('/api/cats_foods',cats_foodsRouter);
+app.use('/api/weight', weightRouter);
 
 // Serve static files
 app.use(express.static('build'));

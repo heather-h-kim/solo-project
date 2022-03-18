@@ -3,9 +3,8 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 //get foods 
- router.get('/', (req, res) => {
+ router.get('/:id', (req, res) => {
     console.log('in foods/GET route');
-    console.log('req.user is', req.user);
     console.log('req.params.id is', req.params.id);
     
     if (req.isAuthenticated()) {
@@ -15,10 +14,10 @@ const router = express.Router();
                             ON "foods"."id" = "cats_foods"."food_id"
                             JOIN "cats"
                             ON "cats"."id" = "cats_foods"."cat_id"
-                            WHERE "cats_foods"."cat_id" = ${req.params.id};
+                            WHERE "cats"."id" = $1;
                             `;
 
-        pool.query(queryText)
+        pool.query(queryText, [req.params.id])
             .then((result) => {
                 console.log('result.rows is', result.rows);
                 res.send(result.rows);

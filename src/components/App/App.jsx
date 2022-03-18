@@ -123,7 +123,13 @@ function App() {
           >
             <ChartPage />
           </ProtectedRoute>
-
+          <ProtectedRoute
+            // logged in shows ChartPage else shows LoginPage
+            exact
+            path="/adjust-calorie"
+          >
+            <ChartPage />
+          </ProtectedRoute>
           <Route
             exact
             path="/login"

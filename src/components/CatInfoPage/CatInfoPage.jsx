@@ -9,6 +9,7 @@ function CatInfoPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const cat = store.thisCat;
+  const foods = store.foods;
   const {id} =useParams();
 
   useEffect( () => {
@@ -25,7 +26,7 @@ function CatInfoPage() {
       history.push(`/weight-input/${cat.id}`);
   }
   
-
+  console.log('foods are', foods);
   return (
     <div className="container">
         <ul>
@@ -33,9 +34,17 @@ function CatInfoPage() {
             <li>Age: {cat.age}</li>
             <li>Neuter-status: {cat.is_neutered} </li>
             <li>Current weight: {cat.current_weight}</li>
-            <li>Current food: </li>
-            
         </ul>
+                {/* Current food: 
+                {foods.map((food, i) => (
+                  <ul key={i}> 
+                    <li>{food.name}</li>
+                  </ul>
+                ))} */}
+              
+
+
+          
         <button onClick={sendToEditInfo}>Edit</button>
         <button onClick={sendToWeightInputPage}>Get the daily calorie!</button>
       

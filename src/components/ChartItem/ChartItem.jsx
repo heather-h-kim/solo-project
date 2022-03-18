@@ -10,18 +10,15 @@ import { CardActionArea } from '@mui/material';
 
 
 
-function CatItem({ cat }) {
+function ChartItem({ cat }) {
     const history = useHistory();
     const dispatch = useDispatch();
-    console.log('in catItem');
+    console.log('in ChartItem');
+
     const handleClick = () => {
-        console.log('CatItem cat id is', cat.id);
-        // const catIdToSend = {
-        //     cat_id: cat.id
-        // }
+        console.log('ChartItem cat id is', cat.id);
         dispatch({type:'FETCH_THIS_CAT', payload: cat.id})
-        dispatch({type:'FETCH_FOODS', payload: cat.id})
-        history.push(`/cat-info/${cat.id}`);
+        dispatch({type:'FETCH_WEIGHT_HISTORY', payload: cat.id})
     }
 
     return (
@@ -34,11 +31,8 @@ function CatItem({ cat }) {
         alt="green iguana"
       /> */}
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h6" component="div">
                         {cat.name}
-                    </Typography>
-                    <Typography variant="body1" color="text.secondary">
-                        Current weight: {cat.current_weight}lbs
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -47,4 +41,4 @@ function CatItem({ cat }) {
     );
 }
 
-export default CatItem;
+export default ChartItem;

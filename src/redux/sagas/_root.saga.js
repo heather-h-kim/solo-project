@@ -16,6 +16,7 @@ import addDryFoodSaga from './addDryFood.saga';
 import addWetFoodSaga from './addWetFood.saga';
 import fetchFoodsSaga from './fetchFoods.saga';
 import calculateFoodAmountSaga from './calculateFoodAmount.saga';
+import fetchWeightHistorySaga from './fetchWeightHistory.saga';
 
 
 // rootSaga is the primary saga.
@@ -44,5 +45,6 @@ export default function* rootSaga() {
     addWetFoodSaga(),
     fetchFoodsSaga(),
     calculateFoodAmountSaga(),
+    fetchWeightHistorySaga(),
   ]);
 }
