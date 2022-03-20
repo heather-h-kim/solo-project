@@ -9,6 +9,7 @@ function Nav() {
 
   return (
     <div className="nav">
+      
       <Link to="/landing">
         <h2 className="nav-title">Kitty Weight Watcher</h2>
       </Link>
@@ -25,11 +26,11 @@ function Nav() {
         {user.id && (
           <>
             <Link className="navLink" to="/user">
-              Loggedin
-            </Link>
-            <Link className="navLink" to="/home">
               Home
             </Link>
+            {/* <Link className="navLink" to="/home">
+              Home
+            </Link> */}
 
             <Link className="navLink" to="/chart">
               Chart
@@ -39,9 +40,9 @@ function Nav() {
           </>
         )}
 
-        <Link className="navLink" to="/about">
+        {/* <Link className="navLink" to="/about">
           About
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

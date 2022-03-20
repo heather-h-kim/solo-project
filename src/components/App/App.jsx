@@ -14,7 +14,7 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
+import UserHomePage from '../UserHomePage/UserHomePage';
 import ChartPage from '../ChartPage/ChartPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -44,20 +44,20 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        {/* <Nav /> */}
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/landing */}
           <Redirect exact from="/" to="/landing" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
+          {/* <Route
             // shows AboutPage at all times (logged in or not)
             exact
             path="/about"
           >
             <AboutPage />
-          </Route>
-
+          </Route> */}
+         
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
@@ -67,15 +67,18 @@ function App() {
             exact
             path="/user"
           >
-            <UserPage />
+             <Nav />
+            <UserHomePage />
           </ProtectedRoute>
-          <ProtectedRoute
+           
+          {/* <ProtectedRoute
             // logged in shows HomePage else shows LoginPage
             exact
             path="/home"
           >
+            <Nav />
             <HomePage />
-          </ProtectedRoute>
+          </ProtectedRoute> */}
           <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage
             exact
