@@ -86,11 +86,6 @@ router.post('/', (req, res) => {
     }
 });
 
-
-
-
-
-
 //update cat's name and/or age and/or neuter status and/or current weight
 router.put('/:id', (req, res) => {
     console.log('in cats/PUT route');
@@ -172,6 +167,7 @@ router.put('/:id', (req, res) => {
     }
 })
 
+//calculate daily calorie
 router.put('/calorie/:id', async (req, res) => {
     console.log('in cats/PUT route to calculate the daily calorie');
     console.log('req.body is', req.body);
@@ -242,7 +238,6 @@ router.put('/treats/:id', async (req, res) => {
     console.log('req.body is', req.body);
     console.log('req.body.treat_percentage is', req.body.treat_percentage);
 
-    console.log('req.user is', req.user);
     if (req.isAuthenticated()) {
         try {
             const firstQueryText = `

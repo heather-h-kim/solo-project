@@ -17,12 +17,8 @@ function FoodAmountPage() {
     const [foodOnePerKg, setFoodOnePerKg] = useState('');
     const [foodTwoPerKg, setFoodTwoPerKg] = useState('');
     const [perCup, setPerCup] = useState('');
-    // const [thisCat, setThisCat] = useState(cat);
-    // const [thisCatFood, setThisCatFood] = useState(foods)
+  
 
-    const changeCat = () => {
-
-    }
     useEffect(() => {
         dispatch({ type: 'FETCH_THIS_CAT', payload: Number(id) });
         dispatch({ type: 'FETCH_FOODS', payload: Number(id) });
@@ -81,16 +77,7 @@ function FoodAmountPage() {
                     />
                 </label><br></br>
                 <p>Wet food info</p>
-                {/* <label>Type:
-                    <select
-                        name="type"
-                        value={wetFoodType}
-                        onChange={event => setWetFoodType(event.target.value)}
-                    >
-                        <option value="wet">Wet food</option>
-                        <option value="dry">Dry food</option>
-                    </select>
-                </label><br></br> */}
+                
                 <label>Food name:
                     <input type="text"
                         placeholder="food name"

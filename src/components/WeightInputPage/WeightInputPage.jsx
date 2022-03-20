@@ -9,31 +9,32 @@ function WeightInputPage() {
   const {id} = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [goal, setGoal] = useState('');
-  const [dCal, setDCal] = useState(cat.total_daily_cal);
+  const [goalWeight, setGoalWeight] = useState('');
+  const [treat, setTreat] = useState('');
 
-  
-  console.log('dailyCalories is', dCal);
 
   useEffect( () => {
-    dispatch({type:'FETCH_THIS_CAT', payload: id});
+    dispatch({type:'FETCH_THIS_CAT', payload: Number(id)});
   }, []);
  
   const calculateCalorie = () => {
     console.log('calculate!');
-    console.log('goal is', goal);
-    const goalWeight = {
-      id: cat.id,
-      goal_weight: Number(goal)
-    }
     console.log('goalWeight is', goalWeight);
-    dispatch({type:'CALCULATE_CALORIE', payload: goalWeight })
-    setGoal('');
+    console.log('treat is', treat);
+    const goal = {
+      id: cat.id,
+      goal_weight: Number(goalWeight),
+      treat_percentage: Number(treat)
+    }
+    console.log('goal is', goal);
+    dispatch({type:'CALCULATE_CALORIE', payload: goal })
+    setGoalWeight('');
+    setTreat('');
   }
 
-  const sendToTreats = () => {
-    console.log('sending the user to TreatsPage');
-    history.push(`/treats/${cat.id}`)
+  const sendToFoodAmount = () => {
+    console.log('sending the user to FoodAmountPage');
+    history.push(`/food-amount/${cat.id}`)
   }
   console.log('this cat is', cat);
   return (
@@ -43,15 +44,32 @@ function WeightInputPage() {
         <label>Goal weight:
           <input type="number"
                  placeholder="goal weight"
-                 value={goal}
-                 onChange={event => setGoal(event.target.value)}
+                 value={goalWeight}
+                 onChange={event => setGoalWeight(event.target.value)}
                  />
         </label><br></br>
+        <p>How much treats do you want to feed {cat.name}? It is recommended that you limit treats up to 10% of the daily calorie needs.</p>
+        <label>Desired % of the daily calories from treats:
+          <input type="number"
+                 placeholder="treat %"
+                 value={treat}
+                 onChange={event => setTreat(event.target.value)} 
+                 /> %
+        </label><br></br>
+
+
         <button type="submit">Calculate</button>
         </form>
-       <p>goal weight: {cat.goal_weight} <br></br>daily calorie: {cat.total_daily_cal}</p>
+
+       <ul>
+         <li>goal weight: {cat.goal_weight}lbs</li>
+         <li>treat %: {cat.treat_percentage}%</li>
+         <li>recommended daily calorie: {cat.total_daily_cal}kcal</li>
+         <li>recommended calories from treats: {cat.treat_cal}kcal</li>
+         <li>recommended calories from foods: {cat.food_cal}kcal</li>
+       </ul>
         
-       <button onClick={sendToTreats}>Next</button>
+       <button onClick={sendToFoodAmount}>Next</button>
     </div>
   );
 }
