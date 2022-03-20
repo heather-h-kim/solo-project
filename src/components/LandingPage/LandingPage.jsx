@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './LandingPage.css';
+import Header from '../Header/Header';
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterForm/RegisterForm';
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome');
+  const [heading, setHeading] = useState('Kitty Weight Watcher');
   const history = useHistory();
 
   const onLogin = (event) => {
@@ -14,27 +15,16 @@ function LandingPage() {
   };
 
   return (
-    <div className="container">
-      <h2>{heading}</h2>
-
-      <div>
-        <div>
-          <p>
-            Fluffy or fat..?
-          </p>
-
-          
-        </div>
-        <div>
-          <RegisterForm />
-
-          <center>
-            <h4>Already a Member?</h4>
-            <button className="btn btn_sizeSm" onClick={onLogin}>
-              Login
-            </button>
-          </center>
-        </div>
+    <div>
+      <Header />
+      <div className="container">
+        <RegisterForm />
+        <center>
+          <h4>Already a Member?</h4>
+          <button className="btn btn_sizeSm" onClick={onLogin}>
+            Login
+          </button>
+        </center>
       </div>
     </div>
   );
