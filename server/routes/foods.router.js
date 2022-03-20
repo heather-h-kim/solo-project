@@ -8,14 +8,10 @@ const router = express.Router();
     console.log('req.params.id is', req.params.id);
     
     if (req.isAuthenticated()) {
-        const queryText = `
-                            SELECT "foods"."id", "foods"."name", "foods"."type", "foods"."daily_amount_can", "foods"."daily_amount_cup", "foods"."daily_amount_oz"
-                            FROM "foods" 
-                            JOIN "cats_foods"
-                            ON "foods"."id" = "cats_foods"."food_id"
-                            JOIN "cats"
-                            ON "cats"."id" = "cats_foods"."cat_id"
-                            WHERE "cats"."id" = $1;
+        const queryText = `SELECT "foods"."id", "foods"."name","foods"."type", "cats_foods"."daily_amount_oz", "cats_foods"."daily_amount_can", "cats_foods"."daily_amount_cup"
+                           FROM "foods" 
+                           JOIN "cats_foods" ON "foods"."id" = "cats_foods"."food_id" 
+                           WHERE "cat_id"= $1 AND "foods"."current" = true;
                             `;
 
         pool.query(queryText, [req.params.id])

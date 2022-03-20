@@ -16,7 +16,7 @@ function CatInfoPage() {
 
   useEffect( () => {
     dispatch({type:'FETCH_THIS_CAT', payload: Number(id)});
-    
+    dispatch({type:'FETCH_FOODS', payload: Number(id)});
   }, []);
 
 
