@@ -52,33 +52,34 @@ router.post('/', (req, res) => {
     console.log('req.user is', req.user);
 
     if (req.isAuthenticated()) {
-       
-         const queryText = `
+        //Get the new cat's ID to post the cat's current weight to the weight table
+        const queryText = `
                             INSERT INTO "cats" ("name", "age", "is_neutered", "current_weight", "user_id")
                             VALUES ($1, $2, $3, $4, $5)
-                            RETURNING "id";
+                            RETURNING "id"; 
                             `;
 
         const valueArray = [req.body.name, req.body.age, req.body.is_neutered, req.body.current_weight, req.user.id]
         pool.query(queryText, valueArray)
-        .then((result) => {
-            console.log('new cat id is', result.rows[0].id);
-            const createdCatId = result.rows[0].id
+            .then((result) => {
+                console.log('new cat id is', result.rows[0].id);
+                const createdCatId = result.rows[0].id
 
-            const secondQueryText = `INSERT INTO "weight" ("current_weight", "cat_id")
+                const secondQueryText = `INSERT INTO "weight" ("current_weight", "cat_id")
                                     VALUES ($1, $2);`;
-            const secondArray = [req.body.current_weight, createdCatId]
-            pool.query(secondQueryText, secondArray)
-            .then(result => {
-                res.sendStatus(201);
-            }).catch(error => {
-                console.log('error posting on weight table', error);
+                const secondArray = [req.body.current_weight, createdCatId]
+                //Post the cat's weight to the weight table
+                pool.query(secondQueryText, secondArray)
+                    .then(result => {
+                        res.sendStatus(201);
+                    }).catch(error => {
+                        console.log('error posting to the weight table', error);
+                        res.sendStatus(500);
+                    })
+            }).catch((error) => {
+                console.log('error posting a cat');
                 res.sendStatus(500);
             })
-        }).catch((error) => {
-            console.log('error posting a cat');
-            res.sendStatus(500);
-        })
 
     } else {
         res.sendStatus(403);
@@ -170,6 +171,71 @@ router.put('/:id', (req, res) => {
         }
     }
 })
+
+router.put('/calorie/:id', async (req, res) => {
+    console.log('in cats/PUT route to calculate the daily calorie');
+    console.log('req.body is', req.body);
+    console.log('req.user is', req.user);
+    if (req.isAuthenticated()) {
+        try {
+            const firstQueryText = `
+                                    UPDATE "cats"
+                                    SET "goal_weight" = $1
+                                    WHERE "id" = $2 AND "user_id" = $3;
+                                    `;
+
+            const firstArray = [req.body.goal_weight, req.params.id, req.user.id]
+
+            const secondQueryText = `
+                                    UPDATE "cats"
+                                    SET 
+                                    "total_daily_cal" =  
+                                      (SELECT CASE WHEN "current_weight" > "goal_weight" THEN
+                                                        (SELECT  
+                                                            CASE WHEN "age" = 'adult' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*0.8*("goal_weight"*0.453592)^0.75)   
+                                                                   WHEN "age" = 'adult' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*0.8*("goal_weight"*0.453592)^0.75)
+                                                                   WHEN "age" = 'kitten' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*2.5*0.8*("goal_weight"*0.453592)^0.75)
+                                                                   WHEN "age" = 'kitten' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*2.5*0.8*("goal_weight"*0.453592)^0.75)  
+                                                             END 
+                                                             FROM "cats" WHERE "id"= $1 AND "user_id" = $2)
+                                                   WHEN "current_weight" = "goal_weight" THEN
+                                                         (SELECT  
+                                                            CASE WHEN "age" = 'adult' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*("goal_weight"*0.453592)^0.75)   
+                                                                 WHEN "age" = 'adult' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*("goal_weight"*0.453592)^0.75)
+                                                                 WHEN "age" = 'kitten' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*2.5*("goal_weight"*0.453592)^0.75)
+                                                                 WHEN "age" = 'kitten' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*2.5*("goal_weight"*0.453592)^0.75)  
+                                                            END 
+                                                          FROM "cats" WHERE "id"= $1 AND "user_id" = $2)
+                                                   WHEN "current_weight" < "goal_weight" THEN
+                                                         (SELECT  
+                                                            CASE WHEN "age" = 'adult' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*1.8*("goal_weight"*0.453592)^0.75)   
+                                                                 WHEN "age" = 'adult' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*1.8*("goal_weight"*0.453592)^0.75)
+                                                                 WHEN "age" = 'kitten' AND "is_neutered" = 'neutered' THEN (SELECT 70*1.2*2.5*1.8*("goal_weight"*0.453592)^0.75)
+                                                                 WHEN "age" = 'kitten' AND "is_neutered" = 'intact' THEN (SELECT 70*1.4*2.5*1.8*("goal_weight"*0.453592)^0.75)  
+                                                            END 
+                                                          FROM "cats" WHERE "id"= $1 AND "user_id" = $2)
+                                              END
+                                             FROM "cats" WHERE "id"= $1 AND "user_id" = $2)
+                                             
+                                    WHERE "id"= $1 AND "user_id" = $2;`;
+
+
+
+            const secondArray = [req.params.id, req.user.id];
+
+            await pool.query(firstQueryText, firstArray);
+            await pool.query(secondQueryText, secondArray);
+            res.sendStatus(200);
+        } catch (error) {
+            console.log('error updating daily calorie', error);
+            res.sendStatus(500);
+        }
+
+    } else {
+        res.sendStatus(403);
+    }
+});
+
 //Update treat % column, calculate calories from treats and calories from food, and update the database accordingly
 router.put('/treats/:id', async (req, res) => {
     console.log('in cats/treats/PUT route to calculate the daily calorie');

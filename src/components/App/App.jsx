@@ -65,7 +65,7 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/user"
+            path="/user-home"
           >
              <Nav />
             <UserHomePage />
@@ -84,6 +84,7 @@ function App() {
             exact
             path="/add-cat"
           >
+            <Nav />
             <AddCatPage />
           </ProtectedRoute>
           <ProtectedRoute
@@ -91,6 +92,7 @@ function App() {
             exact
             path="/cat-info/:id"
           >
+            <Nav />
             <CatInfoPage />
           </ProtectedRoute>
           <ProtectedRoute
@@ -98,6 +100,7 @@ function App() {
             exact
             path="/edit-cat/:id"
           >
+            <Nav />
             <EditCatPage />
           </ProtectedRoute>
           <ProtectedRoute
@@ -105,6 +108,7 @@ function App() {
             exact
             path="/weight-input/:id"
           >
+            <Nav />
             <WeightInputPage />
           </ProtectedRoute>
           <ProtectedRoute
@@ -112,6 +116,7 @@ function App() {
             exact
             path="/treats/:id"
           >
+            <Nav />
             <TreatsPage />
           </ProtectedRoute>
           <ProtectedRoute
@@ -119,6 +124,7 @@ function App() {
             exact
             path="/food-amount/:id"
           >
+            <Nav />
             <FoodAmountPage />
           </ProtectedRoute>
           <ProtectedRoute
@@ -126,6 +132,7 @@ function App() {
             exact
             path="/result/:id"
           >
+            <Nav />
             <ResultPage />
           </ProtectedRoute>
           <ProtectedRoute
@@ -133,6 +140,7 @@ function App() {
             exact
             path="/chart"
           >
+            <Nav />
             <ChartPage />
           </ProtectedRoute>
           <ProtectedRoute
@@ -140,6 +148,7 @@ function App() {
             exact
             path="/chart-eachcat/:id"
           >
+            <Nav />
             <ChartEachCatPage />
           </ProtectedRoute>
           <ProtectedRoute
@@ -147,6 +156,7 @@ function App() {
             exact
             path="/adjust-calorie"
           >
+            <Nav />
             <AdjustCaloriePage />
           </ProtectedRoute>
           <Route
@@ -156,7 +166,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/user-home" />
               :
               // Otherwise, show the login page
               <LoginPage />
@@ -170,7 +180,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/user-home" />
               :
               // Otherwise, show the registration page
               <RegisterPage />
@@ -184,7 +194,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/user-home" />
               :
               // Otherwise, show the Landing page
               <LandingPage />

@@ -10,7 +10,7 @@ const passport = require('./strategies/user.strategy');
 // Route includes
 const userRouter = require('./routes/user.router');
 const catsRouter = require('./routes/cats.router');
-const caloriesRouter = require('./routes/calories.router');
+// const caloriesRouter = require('./routes/calories.router');
 const foodsRouter = require('./routes/foods.router');
 const cats_foodsRouter = require('./routes/cats_foods.router.js');
 const weightRouter = require('./routes/weight.router');
@@ -29,7 +29,7 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/cats', catsRouter);
-app.use('/api/calories', caloriesRouter);
+// app.use('/api/calories', caloriesRouter);
 app.use('/api/foods', foodsRouter);
 app.use('/api/cats_foods',cats_foodsRouter);
 app.use('/api/weight', weightRouter);

@@ -12,21 +12,26 @@ function CatInfoPage() {
   const cat = store.thisCat;
   const foods = store.foods;
   const {id} =useParams();
+  console.log('id is', id);
 
   useEffect( () => {
     dispatch({type:'FETCH_THIS_CAT', payload: Number(id)});
+    
   }, []);
 
 
   console.log('this cat is', cat);
   const sendToEditInfo = () => {
-    history.push(`/edit-cat/${cat.id}`)
+    history.push(`/edit-cat/${id}`)
   }
 
   const sendToWeightInputPage = () => {
-      history.push(`/weight-input/${cat.id}`);
+      history.push(`/weight-input/${id}`);
   }
   
+  const sendToHome = () => {
+    history.push('/user-home');
+  }
   console.log('foods are', foods);
   return (
     <div className="container">
@@ -60,6 +65,7 @@ function CatInfoPage() {
           
         <button onClick={sendToEditInfo}>Edit</button>
         <button onClick={sendToWeightInputPage}>Get the daily calorie!</button>
+        <button onClick={sendToHome}>Back</button>
       
       
     </div>

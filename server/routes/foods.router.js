@@ -88,39 +88,39 @@ router.post('/wet', (req, res) => {
     }
 });
 
-//calculate food amount 
-router.put('/:id', (req, res) => {
-    console.log('in foods PUT route');
-    console.log('req.body is', req.body);
-    console.log('req.user is', req.user);
+// //calculate food amount 
+// router.put('/:id', (req, res) => {
+//     console.log('in foods PUT route');
+//     console.log('req.body is', req.body);
+//     console.log('req.user is', req.user);
    
-    if (req.isAuthenticated()) {
-    const queryText = `UPDATE "foods"
-                       SET "daily_amount_can" = 
-                             (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 
-                                          WHEN "foods"."type" = 'dry' THEN 0
-                                     END) ,
+//     if (req.isAuthenticated()) {
+//     const queryText = `UPDATE "foods"
+//                        SET "daily_amount_can" = 
+//                              (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 
+//                                           WHEN "foods"."type" = 'dry' THEN 0
+//                                      END) ,
           
-                            "daily_amount_cup" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN 0
-                                                              WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 	
-                                     END) ,
+//                             "daily_amount_cup" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN 0
+//                                                               WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 	
+//                                      END) ,
          
-                            "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 
-                                                             WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 	
-                                     END)   
-                       WHERE "foods"."id" = $1;
-                        `;
-    pool.query(queryText, [req.body.food_id])
-    .then((result) => {
-        res.sendStatus(200);
-    }).catch((error) => {
-        console.log('error updating food table with food amount', error);
-        res.sendStatus(500);
-    })
-    } else {
-        res.sendStatus(403);
-    }
-});
+//                             "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 
+//                                                              WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 	
+//                                      END)   
+//                        WHERE "foods"."id" = $1;
+//                         `;
+//     pool.query(queryText, [req.body.food_id])
+//     .then((result) => {
+//         res.sendStatus(200);
+//     }).catch((error) => {
+//         console.log('error updating food table with food amount', error);
+//         res.sendStatus(500);
+//     })
+//     } else {
+//         res.sendStatus(403);
+//     }
+// });
 
 //delete food
 router.delete('/:id', async (req, res) => {
