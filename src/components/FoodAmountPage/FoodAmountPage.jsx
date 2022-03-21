@@ -56,6 +56,18 @@ function FoodAmountPage() {
             cal_per_kg: Number(foodTwoPerKg)
         }
 
+        const wetAndDry = {
+            cat_id: cat.id,
+            wet_name: foodOneName,
+            wet_type: 'wet',
+            cal_per_can: Number(perCan),
+            wet_cal_per_kg: Number(foodOnePerKg),
+            dry_name: foodTwoName,
+            dry_type: 'dry',
+            cal_per_cup: Number(perCup),
+            dry_cal_per_kg: Number(foodTwoPerKg)
+        }
+
         const existingWetFood = {
             cat_id: cat.id,
             food_id: wetFoodId
@@ -65,6 +77,16 @@ function FoodAmountPage() {
             cat_id: cat.id,
             food_id: dryFoodId
         }
+
+        const newDryOldWet = {
+            cat_id: cat.id,
+            wetFood_id: Number(wetFoodId),
+            dry_name: foodTwoName,
+            dry_type: 'dry',
+            cal_per_cup: Number(perCup),
+            dry_cal_per_kg: Number(foodTwoPerKg)
+        }
+
         console.log('wetFoodPercentage is', wetFoodPercentage);
         console.log('wetFood is', wetFood);
         console.log('dryFood is', dryFood);
@@ -86,117 +108,122 @@ function FoodAmountPage() {
                 dispatch({ type: 'ADD_WET_FOOD', payload: wetFood });
             }
         } else {
-            if (dryFood.name === '' && wetFood.name === '') {
-                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingDryFood })
-                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingWetFood })
-            } else if (dryFood.name === '' && wetFood.name !== '') {
-                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingDryFood });
-                dispatch({ type: 'ADD_WET_FOOD', payload: wetFood });
-            } else if (dryFood.name !== '' && wetFood.name === '') {
-                dispatch({ type: 'ADD_DRY_FOOD', payload: dryFood });
-                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingWetFood });
+            // if (dryFood.name === '' && wetFood.name === '') {
+            //     dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingDryFood })
+            //     dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingWetFood })
+            // } else if (dryFood.name === '' && wetFood.name !== '') {
+            //     dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingDryFood });
+            //     dispatch({ type: 'ADD_WET_FOOD', payload: wetFood });
+            if (dryFood.name !== '' && wetFood.name === '') {
+                dispatch({ type: 'ADD_DRY_FOOD_AND_UPDATE_WET_FOOD', payload: newDryOldWet })
+                // dispatch({ type: 'ADD_DRY_FOOD', payload: dryFood });
+                // dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingWetFood });
             } else if (dryFood.name !== '' && wetFood.name !== '') {
-                dispatch({ type: 'ADD_WET_FOOD', payload: wetFood });
-                dispatch({ type: 'ADD_DRY_FOOD', payload: dryFood });
+                dispatch({ type: 'ADD_WET_DRY_FOOD', payload: wetAndDry })
+                // dispatch({ type: 'ADD_WET_FOOD', payload: wetFood });
+                // dispatch({ type: 'ADD_DRY_FOOD', payload: dryFood });
             }
         }
-        // history.push(`/result/${cat.id}`)
     }
+        // history.push(`/result/${cat.id}`)
 
-    console.log('foods are', foods);
-    console.log('wetFoodId is', wetFoodId);
-    console.log('dryFoodId is', dryFoodId);
-    // console.log('wetFoodId is', wetFoodId);
-    return (
-        <div className="container">
-            <form onSubmit={handleSubmit}>
-                <label>Desired % of calories from wet food:
-                    <input type="number"
-                        placeholder="wet food %"
-                        value={wetPercent}
-                        onChange={event => setWetPercent(event.target.value)}
-                    />
-                </label><br></br>
-                <p>Wet food info</p>
-                <p>Select from the dropdown </p>
-                <select
-                    name="wetfood"
-                    value={wetFoodId}
-                    onChange={event => setWetFoodId(event.target.value)}>
-                    <option value="none">Select from the existing foods</option>
-                    {foods.filter(wet).map((food, i) => {
-                        return <option key={i} value={food.id}>{food.name} </option>
-                    }
-                    )}
-                </select><br></br>
-                <p>or enter the information</p>
-                <label>Food name:
-                    <input type="text"
-                        placeholder="food name"
-                        value={foodOneName}
-                        onChange={event => setFoodOneName(event.target.value)}
-                    />
-                </label><br></br>
-                <label>Calories per kg:
-                    <input type="number"
-                        placeholder="calorie"
-                        value={foodOnePerKg}
-                        onChange={event => setFoodOnePerKg(event.target.value)}
-                    />
-                </label><br></br>
-                <label>Calories per can
-                    <input type="number"
-                        placeholder="calorie"
-                        value={perCan}
-                        onChange={event => setPerCan(event.target.value)}
-                    />
-                </label><br></br>
 
-                <p>Dry food info</p>
-                <p>Select from the dropdown </p>
-                <select
-                    name="dryfood"
-                    value={dryFoodId}
-                    onChange={event => setDryFoodId(event.target.value)}>
-                    <option value="none">Select from the existing foods</option>
-                    {foods.filter(dry).map((food, i) => {
+        console.log('foods are', foods);
+        console.log('wetFoodId is', wetFoodId);
+        console.log('dryFoodId is', dryFoodId);
+        // console.log('wetFoodId is', wetFoodId);
 
-                        return <option key={i} value={food.id}>{food.name} </option>
-                    }
-                    )}
-                </select><br></br>
-                <p>or enter the information</p>
-                <label>Food name:
-                    <input type="text"
-                        placeholder="food name"
-                        value={foodTwoName}
-                        onChange={event => setFoodTwoName(event.target.value)}
-                    />
-                </label><br></br>
-                <label>Calories per kg:
-                    <input type="number"
-                        placeholder="calorie"
-                        value={foodTwoPerKg}
-                        onChange={event => setFoodTwoPerKg(event.target.value)}
-                    />
-                </label><br></br>
-                <label>Calories per cup
-                    <input type="number"
-                        placeholder="calorie"
-                        value={perCup}
-                        onChange={event => setPerCup(event.target.value)}
-                    />
-                </label><br></br>
-                <button type="submit">Submit</button>
-            </form>
-            <h3>{cat.name} needs</h3>
-            {foods.map((food, i) => (
-                <ul key={i}>
-                    <li>{food.daily_amount_oz} oz of {food.name} a day. </li>
-                </ul>
-            ))}
-        </div>
-    );
+        return (
+            <div className="container">
+                <form onSubmit={handleSubmit}>
+                    <label>Desired % of calories from wet food:
+                        <input type="number"
+                            placeholder="wet food %"
+                            value={wetPercent}
+                            onChange={event => setWetPercent(event.target.value)}
+                        />
+                    </label><br></br>
+                    <p>Wet food info</p>
+                    <p>Select from the dropdown </p>
+                    <select
+                        name="wetfood"
+                        value={wetFoodId}
+                        onChange={event => setWetFoodId(event.target.value)}>
+                        <option value="none">Select from the existing foods</option>
+                        {foods.filter(wet).map((food, i) => {
+                            return <option key={i} value={food.id}>{food.name} </option>
+                        }
+                        )}
+                    </select><br></br>
+                    <p>or enter the information</p>
+                    <label>Food name:
+                        <input type="text"
+                            placeholder="food name"
+                            value={foodOneName}
+                            onChange={event => setFoodOneName(event.target.value)}
+                        />
+                    </label><br></br>
+                    <label>Calories per kg:
+                        <input type="number"
+                            placeholder="calorie"
+                            value={foodOnePerKg}
+                            onChange={event => setFoodOnePerKg(event.target.value)}
+                        />
+                    </label><br></br>
+                    <label>Calories per can
+                        <input type="number"
+                            placeholder="calorie"
+                            value={perCan}
+                            onChange={event => setPerCan(event.target.value)}
+                        />
+                    </label><br></br>
+
+                    <p>Dry food info</p>
+                    <p>Select from the dropdown </p>
+                    <select
+                        name="dryfood"
+                        value={dryFoodId}
+                        onChange={event => setDryFoodId(event.target.value)}>
+                        <option value="none">Select from the existing foods</option>
+                        {foods.filter(dry).map((food, i) => {
+
+                            return <option key={i} value={food.id}>{food.name} </option>
+                        }
+                        )}
+                    </select><br></br>
+                    <p>or enter the information</p>
+                    <label>Food name:
+                        <input type="text"
+                            placeholder="food name"
+                            value={foodTwoName}
+                            onChange={event => setFoodTwoName(event.target.value)}
+                        />
+                    </label><br></br>
+                    <label>Calories per kg:
+                        <input type="number"
+                            placeholder="calorie"
+                            value={foodTwoPerKg}
+                            onChange={event => setFoodTwoPerKg(event.target.value)}
+                        />
+                    </label><br></br>
+                    <label>Calories per cup
+                        <input type="number"
+                            placeholder="calorie"
+                            value={perCup}
+                            onChange={event => setPerCup(event.target.value)}
+                        />
+                    </label><br></br>
+                    <button type="submit">Submit</button>
+                </form>
+                <h3>{cat.name} needs</h3>
+                {foods.map((food, i) => (
+                    <ul key={i}>
+                        <li>{food.daily_amount_oz} of {food.name} a day. </li>
+                    </ul>
+                ))}
+            </div>
+        );
+    
 }
 
 export default FoodAmountPage;

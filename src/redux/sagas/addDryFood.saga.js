@@ -13,10 +13,12 @@ function* addDryFood(action) {
       food_id: response.data[0].id
     }
     console.log('catsFoodsObject is', catsFoodsObject);
+   
+    // yield axios.delete(`api/cats_foods/${catsFoodsObject.cat_id}`, {data: catsFoodsObject});
     yield axios.post ('api/cats_foods',catsFoodsObject);
-    yield dispatch({type:'CALCULATE_FOOD_AMOUNT', payload: catsFoodsObject});
-    // yield axios.put ('api/cats_foods/', catsFoodsObject);
-    yield put({type:'FETCH_FOODS', payload: action.payload.cat_id});
+
+    yield put({type:'CALCULATE_FOOD_AMOUNT', payload: catsFoodsObject});
+  
   } catch (error) {
     console.log('add dry food request failed', error);
   }

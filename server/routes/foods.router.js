@@ -11,7 +11,7 @@ const router = express.Router();
         const queryText = `SELECT "foods"."id", "foods"."name","foods"."type", "cats_foods"."daily_amount_oz", "cats_foods"."daily_amount_can", "cats_foods"."daily_amount_cup"
                            FROM "foods" 
                            JOIN "cats_foods" ON "foods"."id" = "cats_foods"."food_id" 
-                           WHERE "cat_id"= $1 AND "foods"."current" = true;
+                           WHERE "cat_id"= $1;
                             `;
 
         pool.query(queryText, [req.params.id])
