@@ -8,9 +8,8 @@ function*  calculateFoodAmount(action) {
   
   
   try { 
-    yield axios.put('api/foods/', action.payload);
-    // yield put({type:'FETCH_CATS'});
-    // yield put({type:'FETCH_THIS_CAT', payload: action.payload.id});
+    yield axios.put(`api/cats_foods/${action.payload.cat_id}`, action.payload);
+    yield put({type:'FETCH_FOODS', payload: action.payload.cat_id});
   } catch (error) {
     console.log('calculate calorie request failed', error);
   }

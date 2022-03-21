@@ -59,6 +59,7 @@ function AddCatPage() {
                 value={age}
                 onChange={event => setAge(event.target.value)}
             >
+                <option value="none">Select from options</option>
                 <option value="kitten">Kitten</option>
                 <option value="adult">Adult</option>
             </select>
@@ -68,7 +69,8 @@ function AddCatPage() {
                 name="neuter-status"
                 value={neutered}
                 onChange={event => setNeutered(event.target.value)}
-            >
+            > 
+                <option value="none">Select from options</option>
                 <option value="neutered">Neutered</option>
                 <option value="intact">Intact</option>
             </select>
