@@ -3,50 +3,26 @@ import { put, takeEvery } from 'redux-saga/effects';
 
 
 function* addWetUpdateDry(action) {
-  
+  console.log('in add Dry update Wet saga');
+  console.log('action.payload is', action.payload);
   try { 
-    console.log('in add Dry update Wet saga');
-    console.log('action.payload is', action.payload);
-
-    const wetFood = {
+    const foods = {
+      wet_food: {
         cat_id: action.payload.cat_id,
         name: action.payload.wet_name,
         type: 'wet',
         cal_per_can: action.payload.cal_per_can,
         cal_per_kg: action.payload.wet_cal_per_kg
-    }
-
-    const responseWet = yield axios.post('api/foods/dry', dryFood);
-    console.log('responseDry is', responseWet);
-    const wetFoodId = responseWet.data[0].id;
-
-    console.log('wetFoodId is', wetFoodId);
-
-
-    const wetFoodObject = {
-        cat_id: action.payload.cat_id,
-        food_id: wetFoodId
-    }
-
-    const dryFoodObject = {
-        cat_id:action.payload.cat_id,
+      },
+      dry_food: {
         food_id: action.payload.dryFood_id
-    }
-    
-    const foodsNotToDelete = {
-        cat_id: action.payload.cat_id,
-        wetFood_id: wetFoodId,
-        dryFood_id: action.payload.dryFood_id,
+      }
     }
 
-    yield axios.post ('/api/cats_foods',wetFoodObject);
-    
-    
-    yield put({type:'CALCULATE_FOOD_AMOUNT', payload: wetFoodObject});
-    yield put({type:'CALCULATE_FOOD_AMOUNT', payload: dryFoodObject});
-    
-    yield axios.delete (`/api/cats_foods/${action.payload.cat_id}`, {data: {cat_id: action.payload.cat_id, wetFood_id: wetFoodId, dryFood_id: action.payload.dryFood_id }});
-    
+    yield axios.post('/api/cats_foods/new-wet-old-dry', foods);
+    yield put({type:'FETCH_FOODS', payload: action.payload.cat_id});
+
+   
   } catch (error) {
     console.log('add wet food update dry food request failed', error);
   }
