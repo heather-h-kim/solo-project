@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 function FoodAmountPage() {
     const store = useSelector((store) => store);
+    const user = store.user;
     const cat = store.thisCat;
     const foods = store.foods;
     const { id } = useParams();
@@ -22,6 +23,7 @@ function FoodAmountPage() {
 
     useEffect(() => {
         dispatch({ type: 'FETCH_THIS_CAT', payload: Number(id) });
+        // dispatch({type: 'FETCH_USER_FOODS', payload: {user_id:user.id, cat_id: Number(id)}});
         dispatch({ type: 'FETCH_FOODS', payload: Number(id) });
     }, []);
     const wet = (food) => {
@@ -42,6 +44,7 @@ function FoodAmountPage() {
 
         const wetFood = {
             cat_id: cat.id,
+            user_id: user.id,
             name: foodOneName,
             type: 'wet',
             cal_per_can: Number(perCan),
@@ -50,6 +53,7 @@ function FoodAmountPage() {
 
         const dryFood = {
             cat_id: cat.id,
+            user_id: user.id,
             name: foodTwoName,
             type: 'dry',
             cal_per_cup: Number(perCup),
@@ -58,6 +62,7 @@ function FoodAmountPage() {
 
         const wetAndDry = {
             cat_id: cat.id,
+            user_id: user.id,
             wet_name: foodOneName,
             wet_type: 'wet',
             cal_per_can: Number(perCan),
@@ -80,11 +85,28 @@ function FoodAmountPage() {
 
         const newDryOldWet = {
             cat_id: cat.id,
+            user_id: user.id,
             wetFood_id: Number(wetFoodId),
             dry_name: foodTwoName,
             dry_type: 'dry',
             cal_per_cup: Number(perCup),
             dry_cal_per_kg: Number(foodTwoPerKg)
+        }
+
+        const newWetOldDry = {
+            cat_id: cat.id,
+            user_id: user.id,
+            dryFood_id: Number(dryFoodId),
+            wet_name: foodOneName,
+            wet_type: 'wet',
+            cal_per_can: Number(perCan),
+            wet_cal_per_kg: Number(foodOnePerKg)
+        }
+
+        const existingWetAndDryFood = {
+            cat_id: cat.id,
+            wetFood_id: wetFoodId,
+            dryFood_id: dryFoodId
         }
 
         console.log('wetFoodPercentage is', wetFoodPercentage);
@@ -108,20 +130,17 @@ function FoodAmountPage() {
                 dispatch({ type: 'ADD_WET_FOOD', payload: wetFood });
             }
         } else {
-            // if (dryFood.name === '' && wetFood.name === '') {
-            //     dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingDryFood })
-            //     dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingWetFood })
-            // } else if (dryFood.name === '' && wetFood.name !== '') {
-            //     dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingDryFood });
-            //     dispatch({ type: 'ADD_WET_FOOD', payload: wetFood });
-            if (dryFood.name !== '' && wetFood.name === '') {
+            if (dryFood.name === '' && wetFood.name === '') {
+                dispatch({type:'CALCULATE_WET_DRY_AMOUNT', payload: existingWetAndDryFood})
+              
+            } else if (dryFood.name === '' && wetFood.name !== '') {
+                dispatch({type:'ADD_WET_FOOD_AND_UPDATE_DRY_FOOD', payload: newWetOldDry})
+            } else if (dryFood.name !== '' && wetFood.name === '') {
                 dispatch({ type: 'ADD_DRY_FOOD_AND_UPDATE_WET_FOOD', payload: newDryOldWet })
-                // dispatch({ type: 'ADD_DRY_FOOD', payload: dryFood });
-                // dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingWetFood });
+            
             } else if (dryFood.name !== '' && wetFood.name !== '') {
                 dispatch({ type: 'ADD_WET_DRY_FOOD', payload: wetAndDry })
-                // dispatch({ type: 'ADD_WET_FOOD', payload: wetFood });
-                // dispatch({ type: 'ADD_DRY_FOOD', payload: dryFood });
+            
             }
         }
     }
@@ -131,6 +150,7 @@ function FoodAmountPage() {
         console.log('foods are', foods);
         console.log('wetFoodId is', wetFoodId);
         console.log('dryFoodId is', dryFoodId);
+        console.log('user is', user);
         // console.log('wetFoodId is', wetFoodId);
 
         return (

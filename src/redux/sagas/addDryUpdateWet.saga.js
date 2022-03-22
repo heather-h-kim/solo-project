@@ -48,7 +48,7 @@ function* addDryUpdateWet(action) {
     yield axios.delete (`api/cats_foods/${action.payload.cat_id}`, {data: {cat_id: action.payload.cat_id, wetFood_id:action.payload.wetFood_id, dryFood_id: dryFoodId }});
     
   } catch (error) {
-    console.log('add dry food request failed', error);
+    console.log('add dry food update wet food request failed', error);
   }
 }
 

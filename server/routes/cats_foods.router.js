@@ -145,4 +145,27 @@ router.delete('/:id', (req, res) => {
     }
 });
 
+//delete food that was not updated when only one type of food is updated
+router.delete('/oneFood/:id', (req, res) => {
+    console.log('in cats_foods DELETE route to delete food');
+    console.log('req.body is', req.body);
+    
+   
+    if (req.isAuthenticated()) {
+    const queryText = `DELETE FROM "cats_foods" 
+                        WHERE "cat_id" = $1 AND "food_id" != $2;`;
+                      
+    pool.query(queryText, [req.body.cat_id, req.body.food_id])
+    .then((result) => {
+        console.log('deleted row that is not updated');
+        
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('error deleting cats_foods food status', error);
+        res.sendStatus(500);
+    })
+    } else {
+        res.sendStatus(403);
+    }
+});
 module.exports = router;

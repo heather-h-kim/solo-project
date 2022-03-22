@@ -26,6 +26,8 @@ router.get('/', (req, res) => {
 //Fetch one cat from the database
 router.get('/:id', (req, res) => {
     console.log('in cats/GET route to fetch one cat');
+    console.log('req.params.id is', req.params.id);
+    
 
     if (req.isAuthenticated()) {
         const queryText = `SELECT * FROM "cats" WHERE "user_id" = $1 AND "id" = $2;`;

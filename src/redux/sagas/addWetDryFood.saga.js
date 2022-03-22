@@ -57,7 +57,7 @@ function* addWetDryFood(action) {
     yield put({type:'CALCULATE_FOOD_AMOUNT', payload: wetFoodObject});
     yield put({type:'CALCULATE_FOOD_AMOUNT', payload: dryFoodObject});
     
-    yield axios.delete (`api/cats_foods/${action.payload.cat_id}`, {data: {foodsNotToDelete}});
+    yield axios.delete (`api/cats_foods/${action.payload.cat_id}`, {data: {cat_id: action.payload.cat_id, wetFood_id: wetFoodId, dryFood_id: dryFoodId}});
 
   } catch (error) {
     console.log('add dry food request failed', error);
