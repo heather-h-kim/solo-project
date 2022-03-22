@@ -7,7 +7,7 @@ import Header from '../Header/Header';
 import RegisterForm from '../RegisterForm/RegisterForm';
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Kitty Weight Watcher');
+  
   const history = useHistory();
 
   const onLogin = (event) => {

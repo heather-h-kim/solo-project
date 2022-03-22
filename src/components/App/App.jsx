@@ -5,31 +5,23 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
-import AboutPage from '../AboutPage/AboutPage';
 import UserHomePage from '../UserHomePage/UserHomePage';
 import ChartPage from '../ChartPage/ChartPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import HomePage from '../HomePage/HomePage';
 import AddCatPage from '../AddCatPage/AddCatPage';
 import CatInfoPage from '../CatInfoPage/CatInfoPage';
 import EditCatPage from '../EditCatPage/EditCatPage';
 import WeightInputPage from '../WeightInputPage/WeightInputPage';
-import TreatsPage from '../TreatsPage/TreatsPage';
 import FoodAmountPage from '../FoodAmountPage/FoodAmountPage';
 import AdjustCaloriePage from '../AdjustCaloriePage/AdjustCaloriePage';
 import ResultPage from '../ResultPage/ResultPage';
 import ChartEachCatPage from '../ChartEachCatPage/ChartEachCatPage';
-
 import './App.css';
 
 function App() {
@@ -49,14 +41,7 @@ function App() {
           {/* Visiting localhost:3000 will redirect to localhost:3000/landing */}
           <Redirect exact from="/" to="/landing" />
 
-          {/* Visiting localhost:3000/about will show the about page. */}
-          {/* <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
-            <AboutPage />
-          </Route> */}
+        
          
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
@@ -111,14 +96,8 @@ function App() {
             <Nav />
             <WeightInputPage />
           </ProtectedRoute>
-          <ProtectedRoute
-            // logged in shows AddCatPage else shows LoginPage
-            exact
-            path="/treats/:id"
-          >
-            <Nav />
-            <TreatsPage />
-          </ProtectedRoute>
+          
+          
           <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage
             exact

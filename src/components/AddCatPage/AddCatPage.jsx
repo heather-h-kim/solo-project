@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+
 
 
 
@@ -86,6 +89,8 @@ function AddCatPage() {
            <button type="submit">Add</button>
         </form>
             <button onClick={handleClick}>Back</button>
+      
+            
         </div>
     );
 }

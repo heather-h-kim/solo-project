@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-//Fetch all cats from the database
+//Fetch all cats of one user 
 router.get('/', (req, res) => {
     console.log('in cats/GET route');
     console.log('req.user is', req.user);
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
     }
 });
 
-//Fetch one cat from the database
+//Fetch one cat 
 router.get('/:id', (req, res) => {
     console.log('in cats/GET route to fetch one cat');
     console.log('req.params.id is', req.params.id);

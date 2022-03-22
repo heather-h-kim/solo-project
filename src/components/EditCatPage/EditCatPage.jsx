@@ -28,11 +28,12 @@ function EditCatPage() {
       name: name
     }
     console.log('newName is', newName);
-    dispatch({type:'EDIT_NAME', payload: newName})
-    // let second = Object.keys(newName);
-    // console.log('second is', second[1]);
-    // let result = newName.hasOwnProperty('name');
-    // console.log('result is', result);
+    const confirmation = confirm("Are you sure?")
+        if(confirmation === true) {
+          dispatch({type:'EDIT_NAME', payload: newName})
+          setName('');
+          alert('Success!')
+        }   
   }
 
   const editAge = () => {
@@ -41,7 +42,12 @@ function EditCatPage() {
       age: age
     }
     console.log('newAge is', newAge);
-    dispatch({type:'EDIT_AGE', payload: newAge});
+    const confirmation = confirm("Are you sure?")
+    if(confirmation === true) {
+      dispatch({type:'EDIT_AGE', payload: newAge});
+      setAge('');
+      alert('Success!')
+    }  
   }
   
   const editNeuterStatus = () => {
@@ -50,7 +56,12 @@ function EditCatPage() {
       is_neutered: neutered
     }
     console.log('newNeuterStatus is', newNeuterStatus);
-    dispatch({type: 'EDIT_NEUTER_STATUS', payload: newNeuterStatus});
+    const confirmation = confirm("Are you sure?")
+    if(confirmation === true) {
+      dispatch({type: 'EDIT_NEUTER_STATUS', payload: newNeuterStatus});
+      setNeutered('');
+      alert('Success!')
+    }
   }
 
   const editWeight = () => {
@@ -59,7 +70,12 @@ function EditCatPage() {
       current_weight: weight
     }
     console.log('newWeight is', newWeight);
-    dispatch({type: 'EDIT_WEIGHT', payload: newWeight})
+    const confirmation = confirm("Are you sure?")
+    if(confirmation === true) {
+      dispatch({type: 'EDIT_WEIGHT', payload: newWeight})
+      setWeight('');
+      alert('Success!')
+    }
   }
   
   
@@ -76,7 +92,7 @@ function EditCatPage() {
       <p>Edit info</p>
            <label> Name:
                <input type="text" 
-                      placeholder= {cat.name}
+                      placeholder= "new name"
                       name="name"
                       value={name}
                       onChange={event => setName(event.target.value)}
@@ -89,6 +105,7 @@ function EditCatPage() {
                 value={age}
                 onChange={event => setAge(event.target.value)}
             >
+                <option>Select from the options</option>
                 <option value="kitten">Kitten</option>
                 <option value="adult">Adult</option>
             </select>
@@ -100,6 +117,7 @@ function EditCatPage() {
                 value={neutered}
                 onChange={event => setNeutered(event.target.value)}
             >
+              <option>Select from the options</option>
                 <option value="neutered">Neutered</option>
                 <option value="intact">Intact</option>
             </select>
@@ -107,7 +125,7 @@ function EditCatPage() {
            </label> <br></br>
            <label> Weight:
                <input type="number" 
-                      placeholder={cat.current_weight}
+                      placeholder="new weight"
                       name="weight"
                       value={weight}
                       onChange={event => setWeight(event.target.value)}

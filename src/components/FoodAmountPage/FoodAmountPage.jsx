@@ -109,9 +109,7 @@ function FoodAmountPage() {
             dryFood_id: dryFoodId
         }
 
-        console.log('wetFoodPercentage is', wetFoodPercentage);
-        console.log('wetFood is', wetFood);
-        console.log('dryFood is', dryFood);
+       
 
         //Update the wet food percentage of this cat
         dispatch({ type: 'EDIT_WET_PERCENTAGE', payload: wetFoodPercentage });
@@ -146,12 +144,6 @@ function FoodAmountPage() {
     }
         // history.push(`/result/${cat.id}`)
 
-
-        console.log('foods are', foods);
-        console.log('wetFoodId is', wetFoodId);
-        console.log('dryFoodId is', dryFoodId);
-        console.log('user is', user);
-        // console.log('wetFoodId is', wetFoodId);
 
         return (
             <div className="container">

@@ -13,10 +13,12 @@ function WeightInputPage() {
   const [treat, setTreat] = useState('');
 
 
+
   useEffect( () => {
     dispatch({type:'FETCH_THIS_CAT', payload: Number(id)});
   }, []);
  
+  //calculate recommended daily calories based on the user input(goal weight and treat%)
   const calculateCalorie = () => {
     console.log('calculate!');
     console.log('goalWeight is', goalWeight);
@@ -30,13 +32,14 @@ function WeightInputPage() {
     dispatch({type:'CALCULATE_CALORIE', payload: goal })
     setGoalWeight('');
     setTreat('');
+    setClick(!click);
   }
 
   const sendToFoodAmount = () => {
     console.log('sending the user to FoodAmountPage');
     history.push(`/food-amount/${cat.id}`)
   }
-  console.log('this cat is', cat);
+  
   return (
     <div className="container">
         <p>How many calories does {cat.name} need per day to reach the goal weight?</p>
@@ -60,16 +63,19 @@ function WeightInputPage() {
 
         <button type="submit">Calculate</button>
         </form>
+       
+ 
 
        <ul>
          <li>goal weight: {cat.goal_weight}lbs</li>
          <li>treat %: {cat.treat_percentage}%</li>
-         <li>recommended daily calorie: {cat.total_daily_cal}kcal</li>
+         <li>recommended daily calories: {cat.total_daily_cal}kcal</li>
          <li>recommended calories from treats: {cat.treat_cal}kcal</li>
          <li>recommended calories from foods: {cat.food_cal}kcal</li>
        </ul>
         
        <button onClick={sendToFoodAmount}>Next</button>
+        
     </div>
   );
 }
