@@ -39,13 +39,13 @@ function* addWetUpdateDry(action) {
         dryFood_id: action.payload.dryFood_id,
     }
 
-    yield axios.post ('api/cats_foods',wetFoodObject);
+    yield axios.post ('/api/cats_foods',wetFoodObject);
     
     
     yield put({type:'CALCULATE_FOOD_AMOUNT', payload: wetFoodObject});
     yield put({type:'CALCULATE_FOOD_AMOUNT', payload: dryFoodObject});
     
-    yield axios.delete (`api/cats_foods/${action.payload.cat_id}`, {data: {cat_id: action.payload.cat_id, wetFood_id: wetFoodId, dryFood_id: action.payload.dryFood_id }});
+    yield axios.delete (`/api/cats_foods/${action.payload.cat_id}`, {data: {cat_id: action.payload.cat_id, wetFood_id: wetFoodId, dryFood_id: action.payload.dryFood_id }});
     
   } catch (error) {
     console.log('add wet food update dry food request failed', error);

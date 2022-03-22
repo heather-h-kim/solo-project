@@ -6,7 +6,7 @@ function* addCat(action) {
   console.log('in addCat saga');
   console.log('action.payload is', action.payload);
   try { 
-    yield axios.post('api/cats', action.payload);
+    yield axios.post('/api/cats', action.payload);
     yield 
     yield put({type:'FETCH_CATS'})
   } catch (error) {

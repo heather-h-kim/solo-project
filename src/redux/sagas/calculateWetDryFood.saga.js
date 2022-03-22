@@ -22,9 +22,9 @@ function*  calculateWetDryFood(action) {
 }
   
   try { 
-    yield axios.put(`api/cats_foods/${action.payload.cat_id}`, action.wetFood);
-    yield axios.put(`api/cats_foods/${action.payload.cat_id}`, action.dryFood);
-    yield axios.delete (`api/cats_foods/${action.payload.cat_id}`, {data: {cat_id: action.payload.cat_id, wetFood_id:action.payload.wetFood_id, dryFood_id: dryFoodId }});
+    yield axios.put(`/api/cats_foods/${action.payload.cat_id}`, action.wetFood);
+    yield axios.put(`/api/cats_foods/${action.payload.cat_id}`, action.dryFood);
+    yield axios.delete (`/api/cats_foods/${action.payload.cat_id}`, {data: {cat_id: action.payload.cat_id, wetFood_id:action.payload.wetFood_id, dryFood_id: dryFoodId }});
     yield put({type:'FETCH_FOODS', payload: action.payload.cat_id});
   } catch (error) {
     console.log('calculate calorie request failed', error);
