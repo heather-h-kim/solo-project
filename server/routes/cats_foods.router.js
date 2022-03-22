@@ -116,4 +116,29 @@ router.delete('/oneFood/:id', (req, res) => {
         res.sendStatus(403);
     }
 });
+
+//delete food
+router.delete('/edit/:id', (req, res) => {
+    console.log('in food DELETE route');
+    console.log('req.body is', req.body);
+    
+
+    if (req.isAuthenticated()) {
+        
+        const firstQueryText = ` DELETE FROM "cats_foods" WHERE "food_id"=$1 AND "cat_id" = $2;`;           
+        // const secondQueryText = `DELETE FROM "foods" WHERE "id" = $1;`;
+
+        pool.query(firstQueryText, [req.body.food_id, req.body.cat_id])
+        .then(result => {
+            res.sendStatus(200)
+        }).catch(error => {
+            console.log('error deleting this food', error);
+            res.sendStatus(500);
+        })
+           
+    } else {
+        res.sendStatus(403);
+    }
+});
+
 module.exports = router;

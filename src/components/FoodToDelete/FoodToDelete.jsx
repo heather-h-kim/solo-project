@@ -8,22 +8,22 @@ function FoodToDelete( {food} ) {
     const history = useHistory();
     const dispatch = useDispatch();
     const store = useSelector((store) => store);
-    const cats = store.cats;
+    const cat = store.thisCat;
     const {id} =useParams();
 
     console.log('in FoodToDelete');
 
     useEffect( () => {
-        dispatch({type:'FETCH_FOODS', payload:id});
+        dispatch({type:'FETCH_FOODS', payload:cat.id});
       }, [])
    
 
     const deleteThisFood = () => {
         console.log('lets delete this food!');
-        dispatch({type: 'DELETE_THIS_FOOD', payload: food.id})
+        // dispatch({type: 'DELETE_THIS_FOOD', payload: food.id})
         const payloadToSend = {
             food_id: food.id,
-            cat_id: id
+            cat_id: cat.id
         }
         dispatch({type: 'DELETE_THIS_FOOD', payload: payloadToSend});
         

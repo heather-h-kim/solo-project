@@ -109,62 +109,30 @@ router.post('/wet', (req, res) => {
     }
 });
 
-// //calculate food amount 
-// router.put('/:id', (req, res) => {
-//     console.log('in foods PUT route');
+
+
+// //delete food
+// router.delete('/:id', (req, res) => {
+//     console.log('in foods DELETE route');
 //     console.log('req.body is', req.body);
-//     console.log('req.user is', req.user);
-   
+    
+
 //     if (req.isAuthenticated()) {
-//     const queryText = `UPDATE "foods"
-//                        SET "daily_amount_can" = 
-//                              (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 
-//                                           WHEN "foods"."type" = 'dry' THEN 0
-//                                      END) ,
-          
-//                             "daily_amount_cup" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN 0
-//                                                               WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 	
-//                                      END) ,
-         
-//                             "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 
-//                                                              WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "foods"."id" =$1) 	
-//                                      END)   
-//                        WHERE "foods"."id" = $1;
-//                         `;
-//     pool.query(queryText, [req.body.food_id])
-//     .then((result) => {
-//         res.sendStatus(200);
-//     }).catch((error) => {
-//         console.log('error updating food table with food amount', error);
-//         res.sendStatus(500);
-//     })
+        
+//         const firstQueryText = ` DELETE FROM "cats_foods" WHERE "food_id"=$1 AND "cat_id" = $2;`;           
+//         // const secondQueryText = `DELETE FROM "foods" WHERE "id" = $1;`;
+
+//         pool.query(firstQueryText, [req.body.food_id, req.body.cat_id])
+//         .then(result => {
+//             res.sendStatus(200)
+//         }).catch(error => {
+//             console.log('error deleting this food', error);
+//             res.sendStatus(500);
+//         })
+           
 //     } else {
 //         res.sendStatus(403);
 //     }
 // });
-
-//delete food
-router.delete('/:id', async (req, res) => {
-    console.log('in foods DELETE route');
-    console.log('req.body is', req.params.id);
-    
-
-    if (req.isAuthenticated()) {
-        try{
-        const firstQueryText = ` DELETE FROM "cats_foods" WHERE "food_id"=$1;`;           
-        const secondQueryText = `DELETE FROM "foods" WHERE "id" = $1;`;
-
-        await pool.query(firstQueryText, [req.params.id]);
-        await pool.query(secondQueryText, [req.params.id]);
-            res.sendStatus(200)
-        } catch (error) {
-            console.log('error deleting this food', error);
-            res.sendStatus(500);
-        }
-           
-    } else {
-        res.sendStatus(403);
-    }
-});
 
 module.exports = router;
