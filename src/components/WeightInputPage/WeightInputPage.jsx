@@ -12,6 +12,11 @@ function WeightInputPage() {
   const [goalWeight, setGoalWeight] = useState('');
   const [treat, setTreat] = useState('');
   const [clicked, setClicked] = useState(false);
+  const [goal, setGoal] = useState({
+    id:'',
+    goal_weight:'',
+    treat_percentage:''
+  })
   
 
 
@@ -25,11 +30,11 @@ function WeightInputPage() {
     console.log('calculate!');
     console.log('goalWeight is', goalWeight);
     console.log('treat is', treat);
-    const goal = {
-      id: cat.id,
-      goal_weight: Number(goalWeight),
-      treat_percentage: Number(treat)
-    }
+    // const goal = {
+    //   id: cat.id,
+    //   goal_weight: Number(goalWeight),
+    //   treat_percentage: Number(treat)
+    // }
     console.log('goal is', goal);
     dispatch({type:'CALCULATE_CALORIE', payload: goal })
     setGoalWeight('');
@@ -43,6 +48,7 @@ function WeightInputPage() {
     history.push(`/food-amount/${cat.id}`)
   }
   
+  console.log('goal is', goal);
   return (
     <div className="container">
         <p>How many calories does {cat.name} need per day to reach the goal weight?</p>
@@ -50,8 +56,9 @@ function WeightInputPage() {
         Goal weight:
           <input type="number"
                  placeholder="goal weight"
-                 value={goalWeight}
-                 onChange={event => setGoalWeight(event.target.value)}
+                 name="goal_weight"
+                 value={goal}
+                 onChange={event => {setGoal({...goal, [event.target.name]: event.target.value})}}
                  />
         <br></br>
         <p>How much treats do you want to feed {cat.name}? It is recommended that you limit treats up to 10% of the daily calorie needs.</p>
