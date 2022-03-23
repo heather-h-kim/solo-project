@@ -30,9 +30,9 @@ function WeightInputPage() {
     }
     console.log('goal is', goal);
     dispatch({type:'CALCULATE_CALORIE', payload: goal })
-    setGoalWeight('');
-    setTreat('');
-    setClick(!click);
+    // setGoalWeight('');
+    // setTreat('');
+    
   }
 
   const sendToFoodAmount = () => {

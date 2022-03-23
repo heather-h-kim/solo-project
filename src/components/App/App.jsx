@@ -133,7 +133,7 @@ function App() {
           <ProtectedRoute
             // logged in shows ChartPage else shows LoginPage
             exact
-            path="/adjust-calorie"
+            path="/adjust-calorie/:id"
           >
             <Nav />
             <AdjustCaloriePage />

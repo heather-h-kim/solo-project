@@ -20,10 +20,10 @@ function ChartEachCatPage() {
     dispatch({type:'FETCH_WEIGHT_HISTORY', payload: Number(id)})
   }, [])
 
-//   const handleClick = () => {
-//     console.log('in chartpage handleClick!');
-//     history.push('/adjust-calorie');
-//   }
+  const handleClick = () => {
+    console.log('in chartEachCatpage handleClick!');
+    history.push(`/adjust-calorie/${cat.id}`);
+  }
   
   console.log('cat is', cat);
   console.log('weightHistory is', weightHistory);
@@ -47,7 +47,7 @@ function ChartEachCatPage() {
         </tbody>
       </table>
       <p>All cats are different! Individual cat's calorie needs can vary by as much as 50% from the calculated values. If you think the recommended daily calorie does not work click the adjust button and make adjustment to the current daily calories.</p>
-      <button>Adjust</button>
+      <button onClick={handleClick}>Adjust</button>
       
     </div>
   );

@@ -17,9 +17,9 @@ function ChartItem({ cat }) {
 
     const handleClick = () => {
         console.log('ChartItem cat id is', cat.id);
-        dispatch({type:'FETCH_THIS_CAT', payload: cat.id})
-        dispatch({type:'FETCH_WEIGHT_HISTORY', payload: cat.id})
-        history.push(`/chart-eachcat/${cat.id}`)
+        dispatch({type:'FETCH_THIS_CAT', payload: cat.id});
+        dispatch({type:'FETCH_WEIGHT_HISTORY', payload: cat.id});
+        history.push(`/chart-eachcat/${cat.id}`);
     }
 
     return (

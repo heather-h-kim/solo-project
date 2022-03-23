@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     console.log('in cats/GET route to fetch one cat');
     console.log('req.params.id is', req.params.id);
-    
+
 
     if (req.isAuthenticated()) {
         const queryText = `SELECT * FROM "cats" WHERE "user_id" = $1 AND "id" = $2;`;
@@ -182,7 +182,7 @@ router.put('/calorie/:id', async (req, res) => {
                                     WHERE "id" = $2 AND "user_id" = $3;
                                     `;
 
-            const firstArray = [req.body.goal_weight, req.params.id, req.user.id]
+            const firstArray = [req.body.goal_weight, req.body.id, req.user.id]
 
             const secondQueryText = `
                                     UPDATE "cats"
@@ -219,7 +219,7 @@ router.put('/calorie/:id', async (req, res) => {
 
 
 
-            const secondArray = [req.params.id, req.user.id];
+            const secondArray = [req.body.id, req.user.id];
 
             await pool.query(firstQueryText, firstArray);
             await pool.query(secondQueryText, secondArray);
@@ -248,7 +248,7 @@ router.put('/treats/:id', async (req, res) => {
                                 WHERE "id" = $2 AND "user_id" = $3;
                                 `;
 
-            const firstArray = [req.body.treat_percentage, req.params.id, req.user.id];
+            const firstArray = [req.body.treat_percentage, req.body.id, req.user.id];
 
             const secondQueryText = `
                                 UPDATE "cats"
@@ -280,7 +280,7 @@ router.put('/treats/:id', async (req, res) => {
 })
 
 //update wet_percentage colum to calculate the amount of wet food and the dry food 
-router.put('/wetRatio/:id', async (req, res) => {
+router.put('/wetRatio/:id', (req, res) => {
     console.log('in cats/wetRatio/PUT route to calculate the amount of the wet food and the dry food');
     console.log('req.body.wet_percentage is', req.body.wet_percentage);
 
@@ -301,6 +301,54 @@ router.put('/wetRatio/:id', async (req, res) => {
                 console.log('error updating wet food percentage', error);
                 res.sendStatus(500);
             })
+
+    } else {
+        res.sendStatus(403);
+    }
+});
+
+//add the calorie adjustment direction and percentage and adjust the total daily calorie
+router.put('/adj-calorie/:id', async (req, res) => {
+    console.log('in cats/adj-calorie/ put route');
+    console.log('req.body is', req.body);
+
+    if (req.isAuthenticated()) {
+
+        const connection = await pool.connect();
+
+        try {
+            await connection.query('BEGIN');
+            const queryText =
+            `UPDATE "cats" 
+            SET "adjustment_direction" = $1,  "adjustment_percentage" = $2, "treat_percentage" = $3
+            WHERE "cats"."id" = $4 AND "cats"."user_id" = $5;`;
+
+            const valueArray = [req.body.adjustment_direction, req.body.adjustment_percentage, req.body.treat_percentage, req.body.cat_id, req.user.id];
+
+            await connection.query(queryText, valueArray);
+            const sqlAdjustCalorie =
+            `UPDATE "cats"
+            SET "total_daily_cal" = 
+                (SELECT 
+                    CASE WHEN "cats"."adjustment_direction" = 'increase' THEN (SELECT "cats"."total_daily_cal"*(100+"adjustment_percentage")/100 FROM "cats")
+                        WHEN "cats"."adjustment_direction" = 'decrease' THEN (SELECT "cats"."total_daily_cal"*(100-"adjustment_percentage")/100 FROM "cats")
+                    END
+                )
+            WHERE "cats"."id" = $1 AND "cats"."user_id" = $2;`;
+
+            const adjCalorieArray = [req.body.cat_id, req.user.id];
+
+            await connection.query(sqlAdjustCalorie, adjCalorieArray);
+            await connection.query('COMMIT;');
+            res.sendStatus(200);
+
+        } catch (error) {
+            await connection.query('ROLLBACK;');
+            console.log('Transaction error', error);
+            res.sendStatus(500);
+        } finally {
+            connection.release();
+        }
 
     } else {
         res.sendStatus(403);
