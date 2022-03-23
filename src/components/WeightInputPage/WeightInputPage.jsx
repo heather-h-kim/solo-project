@@ -11,7 +11,8 @@ function WeightInputPage() {
   const history = useHistory();
   const [goalWeight, setGoalWeight] = useState('');
   const [treat, setTreat] = useState('');
-  const [clicked, setClicked] = useState(false)
+  const [clicked, setClicked] = useState(false);
+  
 
 
 
