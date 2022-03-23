@@ -37,17 +37,17 @@ router.put('/:id', (req, res) => {
 
     if (req.isAuthenticated()) {
         const queryText = `UPDATE "cats_foods"
-                       SET "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id"= $1 AND "foods"."id" =$2) 
-                                                            WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
+                       SET "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id"= $1 AND "foods"."id" =$2) 
+                                                            WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
                                                            END
                                                 FROM "foods" WHERE "foods"."id" = $2),
 
-                            "daily_amount_can" = (SELECT CASE WHEN "foods"."type" = 'wet' THEN (SELECT "cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods". "food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 
+                            "daily_amount_can" = (SELECT CASE WHEN "foods"."type" = 'wet' THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods". "food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 
                                                                   WHEN "foods"."type" = 'dry' THEN 0
                                                               END
                                                       FROM "foods" WHERE "foods"."id" = $2),
                             "daily_amount_cup" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN 0
-                                                              WHEN "foods"."type" = 'dry' THEN (SELECT "cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup" FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
+                                                              WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
                                                             END
                                                     FROM "foods" WHERE "foods"."id" = $2)
                        WHERE "cat_id" = $1 AND "food_id" = $2;`;

@@ -36,24 +36,7 @@ function ChartPage() {
         )}
       <p>Click on the cat to see the weight history!</p>    
       </section>
-      {/* <table>
-        <thead>
-          <tr>
-            <th>Weight</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {weightHistory.map((weight, i) =>{
-            return <tr key={i}>
-              <td>{weight.current_weight}</td>
-              <td>{weight.date}</td>
-            </tr>
-          })}
-        </tbody>
-      </table>
-      <p>All cats are different! Individual cat's calorie needs can vary by as much as 50% from the calculated values. If you think the recommended daily calorie does not work click the adjust button and make adjustment to the current daily calories.</p>
-      <button onClick={handleClick}>Adjust</button> */}
+    
       
     </div>
   );

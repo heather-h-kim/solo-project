@@ -41,7 +41,7 @@ function ChartEachCatPage() {
           {weightHistory.map((weight, i) =>{
             return <tr key={i}>
               <td>{weight.current_weight}</td>
-              <td>{weight.date}</td>
+              <td>{weight.new_date}</td>
             </tr>
           })}
         </tbody>

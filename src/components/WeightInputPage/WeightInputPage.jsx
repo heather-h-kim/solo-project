@@ -11,6 +11,7 @@ function WeightInputPage() {
   const history = useHistory();
   const [goalWeight, setGoalWeight] = useState('');
   const [treat, setTreat] = useState('');
+  const [clicked, setClicked] = useState(false)
 
 
 
@@ -30,8 +31,9 @@ function WeightInputPage() {
     }
     console.log('goal is', goal);
     dispatch({type:'CALCULATE_CALORIE', payload: goal })
-    // setGoalWeight('');
-    // setTreat('');
+    setGoalWeight('');
+    setTreat('');
+    setClicked(!clicked)
     
   }
 
@@ -44,38 +46,35 @@ function WeightInputPage() {
     <div className="container">
         <p>How many calories does {cat.name} need per day to reach the goal weight?</p>
         <form onSubmit={calculateCalorie}>
-        <label>Goal weight:
+        Goal weight:
           <input type="number"
                  placeholder="goal weight"
                  value={goalWeight}
                  onChange={event => setGoalWeight(event.target.value)}
                  />
-        </label><br></br>
+        <br></br>
         <p>How much treats do you want to feed {cat.name}? It is recommended that you limit treats up to 10% of the daily calorie needs.</p>
-        <label>Desired % of the daily calories from treats:
+        Desired % of the daily calories from treats:
           <input type="number"
                  placeholder="treat %"
                  value={treat}
                  onChange={event => setTreat(event.target.value)} 
                  /> %
-        </label><br></br>
-
-
+        <br></br>
         <button type="submit">Calculate</button>
         </form>
-       
- 
-
-       <ul>
+        {clicked && 
+      <div>
+        <ul>
          <li>goal weight: {cat.goal_weight}lbs</li>
          <li>treat %: {cat.treat_percentage}%</li>
          <li>recommended daily calories: {cat.total_daily_cal}kcal</li>
          <li>recommended calories from treats: {cat.treat_cal}kcal</li>
          <li>recommended calories from foods: {cat.food_cal}kcal</li>
-       </ul>
-        
+       </ul><br></br>
        <button onClick={sendToFoodAmount}>Next</button>
-        
+      </div>
+}
     </div>
   );
 }

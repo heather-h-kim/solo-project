@@ -10,7 +10,7 @@ router.get('/:id', (req, res) => {
     console.log('req.params.id is', req.params.id);
     
     if (req.isAuthenticated()) {
-        const queryText = ` SELECT "current_weight", "date" 
+        const queryText = ` SELECT "current_weight", TO_CHAR("date", 'mm-dd-yyyy') AS "new_date"
                             FROM "weight" 
                             WHERE "cat_id" = $1;
                             `;
