@@ -3,14 +3,20 @@ import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { useSelector } from 'react-redux';
-
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
 function Nav() {
   const user = useSelector((store) => store.user);
 
   return (
     <div className="nav">
-      
+
       <Link to="/landing">
         <h2 className="nav-title">Kitty Weight Watcher</h2>
       </Link>
@@ -41,9 +47,9 @@ function Nav() {
           </>
         )}
 
-        
       </div>
-    </div>
+     </div>
+     
   );
 }
 

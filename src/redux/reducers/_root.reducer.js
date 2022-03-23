@@ -5,7 +5,7 @@ import cats from './cats.reducer';
 import foods from './foods.reducer';
 import thisCat from './thisCat.reducer';
 import weightHistory from './weight.reducer';
-import userFoods from './userFoods.reducer'
+
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   foods, // contains all foods of a cat
   thisCat, // contains info on a cat
   weightHistory, //contains weight history of a cat
-  userFoods, //contains foods that one user has
+  
 });
 
 export default rootReducer;

@@ -17,7 +17,7 @@ function AddCatPage() {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         console.log('in add cat handleSubmit');
         const newCat = {
