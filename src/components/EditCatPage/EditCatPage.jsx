@@ -4,6 +4,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import FoodToDelete from '../FoodToDelete/FoodToDelete';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import { FormControl } from '@mui/material';
+import { InputLabel } from '@mui/material';
+import { Input } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 
 function EditCatPage() {
@@ -92,7 +99,44 @@ function EditCatPage() {
   return (
     <div className="container">
       <p>Edit info</p>
-      <label> Name:
+      <FormControl fullWidth>
+        <TextField label="name" variant="outlined" value={name} onChange={event => setName(event.target.value)}
+          InputProps={{ endAdornment: <Button onClick={editName} variant="contained">Edit</Button> }} /> <br></br>
+        <TextField label="weight" variant="outlined" value={weight} onChange={event => setWeight(event.target.value)}
+          InputProps={{ endAdornment: <Button onClick={editWeight} variant="contained">Edit</Button> }} /> <br></br>
+      </FormControl>
+      <Box sx={{ display: 'flex' }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select" value={age} label="Age" onChange={event => setAge(event.target.value)}>
+            <MenuItem value={'kitten'}>Kitten</MenuItem>
+            <MenuItem value={'adult'}>Adult</MenuItem>
+          </Select><br></br>
+        </FormControl><br></br>
+        <Box>
+          <Button sx={{mt:1, ml:1}}onClick={editAge} variant="contained">Edit</Button>
+        </Box>
+      </Box>
+
+      <Box sx={{ display: 'flex', justifyContent:'center' , alignItems:'center'}}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Neuter status</InputLabel>
+          <Select  sx={{p:0}}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select" value={neutered} label="Neuter-status" onChange={event => setNeutered(event.target.value)}>
+            <MenuItem value={'kitten'}>Kitten</MenuItem>
+            <MenuItem value={'adult'}>Adult</MenuItem>
+          </Select><br></br>
+        </FormControl>
+       
+          <Button sx={{mb:3, ml:1}} onClick={editNeuterStatus} variant="contained">Edit</Button>
+        
+      </Box>
+
+
+      {/* <label> Name:
         <input type="text"
           placeholder="new name"
           name="name"
@@ -133,7 +177,7 @@ function EditCatPage() {
           onChange={event => setWeight(event.target.value)}
         />
         <button onClick={editWeight}>Edit</button>
-      </label><br></br>
+      </label><br></br>*/}
       <table>
         <thead>
           <th>Food name</th>
@@ -146,7 +190,7 @@ function EditCatPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> 
 
       <Stack direction="row" spacing={2}>
         <Button variant="contained" onClick={handleClick}>Back</Button>

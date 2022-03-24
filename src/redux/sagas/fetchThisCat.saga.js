@@ -6,6 +6,7 @@ function* fetchThisCat(action) {
   console.log('in fetchThisCat saga');
   console.log('id is', action.payload);
   try { 
+    
     const cat = yield axios.get(`/api/cats/${action.payload}`);
     console.log('this cat is', cat.data);
     

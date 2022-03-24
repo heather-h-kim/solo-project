@@ -61,12 +61,12 @@ router.post('/dry', (req, res) => {
 
     if (req.isAuthenticated()) {
         const queryText = `
-                            INSERT INTO "foods" ("name", "type", "cal_per_cup", "cal_per_kg", "user_id")
-                            VALUES ($1, $2, $3, $4, $5)
+                            INSERT INTO "foods" ("name", "type", "cal_per_cup", "cal_per_kg")
+                            VALUES ($1, $2, $3, $4)
                             RETURNING "id";
                             `;
 
-        const valueArray = [req.body.name, req.body.type, req.body.cal_per_cup, req.body.cal_per_kg, req.user.id]
+        const valueArray = [req.body.name, req.body.type, req.body.cal_per_cup, req.body.cal_per_kg]
 
         pool.query(queryText, valueArray)
         .then((result) => {
@@ -89,12 +89,12 @@ router.post('/wet', (req, res) => {
 
     if (req.isAuthenticated()) {
         const queryText = `
-                            INSERT INTO "foods" ("name", "type", "cal_per_can", "cal_per_kg", "user_id")
-                            VALUES ($1, $2, $3, $4, $5)
+                            INSERT INTO "foods" ("name", "type", "cal_per_can", "cal_per_kg")
+                            VALUES ($1, $2, $3, $4)
                             RETURNING "id";
                             `;
 
-        const valueArray = [req.body.name, req.body.type, req.body.cal_per_can, req.body.cal_per_kg, req.user.id]
+        const valueArray = [req.body.name, req.body.type, req.body.cal_per_can, req.body.cal_per_kg]
 
         pool.query(queryText, valueArray)
         .then((result) => {
@@ -111,28 +111,6 @@ router.post('/wet', (req, res) => {
 
 
 
-// //delete food
-// router.delete('/:id', (req, res) => {
-//     console.log('in foods DELETE route');
-//     console.log('req.body is', req.body);
-    
 
-//     if (req.isAuthenticated()) {
-        
-//         const firstQueryText = ` DELETE FROM "cats_foods" WHERE "food_id"=$1 AND "cat_id" = $2;`;           
-//         // const secondQueryText = `DELETE FROM "foods" WHERE "id" = $1;`;
-
-//         pool.query(firstQueryText, [req.body.food_id, req.body.cat_id])
-//         .then(result => {
-//             res.sendStatus(200)
-//         }).catch(error => {
-//             console.log('error deleting this food', error);
-//             res.sendStatus(500);
-//         })
-           
-//     } else {
-//         res.sendStatus(403);
-//     }
-// });
 
 module.exports = router;
