@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
+import TableCell from '@mui/material/TableCell';
 
 
 function FoodItem({ food }) {
@@ -12,8 +12,8 @@ function FoodItem({ food }) {
 
     return (
     <>
-      <td>{food.name}</td> 
-      <td>{food.daily_amount_oz} oz per day</td>
+      <TableCell align="center" sx={{width:'100px', fontSize:"22px"}}>{food.name}</TableCell>
+      <TableCell align="center" sx={{width:'250px', fontSize:"22px"}}>{food.daily_amount_oz} oz per day</TableCell>
     </>
     );
 }
