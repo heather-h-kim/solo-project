@@ -11,7 +11,12 @@ function WeightInputPage() {
   const history = useHistory();
   const [goalWeight, setGoalWeight] = useState('');
   const [treat, setTreat] = useState('');
-  const [clicked, setClicked] = useState(false);
+  // const [clicked, setClicked] = useState(false);
+  // const [goal, setGoal] = useState({
+  //   id:'',
+  //   goal_weight:'',
+  //   treat_percentage:''
+  // })
   
 
 
@@ -25,16 +30,16 @@ function WeightInputPage() {
     console.log('calculate!');
     console.log('goalWeight is', goalWeight);
     console.log('treat is', treat);
-    const goal = {
-      id: cat.id,
-      goal_weight: Number(goalWeight),
-      treat_percentage: Number(treat)
-    }
-    console.log('goal is', goal);
-    dispatch({type:'CALCULATE_CALORIE', payload: goal })
+    // const goal = {
+    //   id: cat.id,
+    //   goal_weight: Number(goalWeight),
+    //   treat_percentage: Number(treat)
+    // }
+   
+    dispatch({type:'CALCULATE_CALORIE', payload: {id:cat.id, goal_weight: Number(goalWeight), treat_percentage: Number(treat)}})
     setGoalWeight('');
     setTreat('');
-    setClicked(!clicked)
+    // setClicked(!clicked)
     
   }
 
@@ -43,6 +48,7 @@ function WeightInputPage() {
     history.push(`/food-amount/${cat.id}`)
   }
   
+  
   return (
     <div className="container">
         <p>How many calories does {cat.name} need per day to reach the goal weight?</p>
@@ -50,8 +56,10 @@ function WeightInputPage() {
         Goal weight:
           <input type="number"
                  placeholder="goal weight"
+                 name="goal_weight"
                  value={goalWeight}
-                 onChange={event => setGoalWeight(event.target.value)}
+                 onChange={event => {setGoalWeight(event.target.value)}}
+                  //  setGoal({...goal, [event.target.name]: event.target.value})}}
                  />
         <br></br>
         <p>How much treats do you want to feed {cat.name}? It is recommended that you limit treats up to 10% of the daily calorie needs.</p>
@@ -64,7 +72,7 @@ function WeightInputPage() {
         <br></br>
         <button type="submit">Calculate</button>
         </form>
-        {clicked && 
+        
       <div>
         <ul>
          <li>goal weight: {cat.goal_weight}lbs</li>
@@ -75,7 +83,7 @@ function WeightInputPage() {
        </ul><br></br>
        <button onClick={sendToFoodAmount}>Next</button>
       </div>
-}
+
     </div>
   );
 }

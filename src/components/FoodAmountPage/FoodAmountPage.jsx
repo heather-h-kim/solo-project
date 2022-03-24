@@ -37,112 +37,99 @@ function FoodAmountPage() {
     const handleSubmit = () => {
         console.log('in food amount handle submit');
 
-        const wetFoodPercentage = {
-            id: cat.id,
-            wet_percentage: Number(wetPercent)
-        }
+        // const wetFoodPercentage = {
+        //     id: cat.id,
+        //     wet_percentage: Number(wetPercent)
+        // }
 
-        const wetFood = {
-            cat_id: cat.id,
-            name: foodOneName,
-            type: 'wet',
-            cal_per_can: Number(perCan),
-            cal_per_kg: Number(foodOnePerKg),
-        }
+        // const wetFood = {
+        //     cat_id: cat.id,
+        //     name: foodOneName,
+        //     type: 'wet',
+        //     cal_per_can: Number(perCan),
+        //     cal_per_kg: Number(foodOnePerKg),
+        // }
 
-        const dryFood = {
-            cat_id: cat.id,
-            name: foodTwoName,
-            type: 'dry',
-            cal_per_cup: Number(perCup),
-            cal_per_kg: Number(foodTwoPerKg)
-        }
+        // const dryFood = {
+        //     cat_id: cat.id,
+        //     name: foodTwoName,
+        //     type: 'dry',
+        //     cal_per_cup: Number(perCup),
+        //     cal_per_kg: Number(foodTwoPerKg)
+        // }
 
-        const wetAndDry = {
-            cat_id: cat.id,
-            wet_name: foodOneName,
-            wet_type: 'wet',
-            cal_per_can: Number(perCan),
-            wet_cal_per_kg: Number(foodOnePerKg),
-            dry_name: foodTwoName,
-            dry_type: 'dry',
-            cal_per_cup: Number(perCup),
-            dry_cal_per_kg: Number(foodTwoPerKg)
-        }
-
-        const existingWetFood = {
-            cat_id: cat.id,
-            food_id: Number(wetFoodId)
-        }
-
-        const existingDryFood = {
-            cat_id: cat.id,
-            food_id: Number(dryFoodId)
-        }
-
-        const newDryOldWet = {
-            cat_id: cat.id,
-            wetFood_id: Number(wetFoodId),
-            dry_name: foodTwoName,
-            dry_type: 'dry',
-            cal_per_cup: Number(perCup),
-            dry_cal_per_kg: Number(foodTwoPerKg)
-        }
-
-        const newWetOldDry = {
-            cat_id: cat.id,
-            dryFood_id: Number(dryFoodId),
-            wet_name: foodOneName,
-            wet_type: 'wet',
-            cal_per_can: Number(perCan),
-            wet_cal_per_kg: Number(foodOnePerKg)
-        }
-
-        const existingWetAndDryFood = {
-            cat_id: cat.id,
-            wetFood_id: Number(wetFoodId),
-            dryFood_id: Number(dryFoodId)
-        }
-
-       
-
+        
         //Update the wet food percentage of this cat
-        dispatch({ type: 'EDIT_WET_PERCENTAGE', payload: wetFoodPercentage });
+        dispatch({ type: 'EDIT_WET_PERCENTAGE', payload: { id: cat.id, wet_percentage: Number(wetPercent)}});
 
 
-        if (wetFoodPercentage.wet_percentage === 0) {
+        if (Number(wetPercent) === 0) {
             //if the user feeds the cat dry food only
-            if (dryFood.name === '') {
+            if (foodTwoName === '') {
                 //if the user keeps feeding the cat the current dry food
-                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingDryFood })
+                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: { cat_id: cat.id, food_id: Number(dryFoodId)} })
             } else {
                 //if the user feeds the cat new dry food
-                dispatch({ type: 'ADD_DRY_FOOD', payload: dryFood });
+                dispatch({ type: 'ADD_DRY_FOOD', 
+                    payload: {cat_id: cat.id,
+                              name: foodTwoName,
+                              type: 'dry',
+                              cal_per_cup: Number(perCup),
+                              cal_per_kg: Number(foodTwoPerKg)} 
+                        });
             } 
           //if the user feeds the cat wet food only
-        } else if (wetFoodPercentage.wet_percentage === 100) {
+        } else if (Number(wetPercent) === 100) {
             // if the user keeps feeding the cat the current wet food
-            if (wetFood.name === '') {
-                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: existingWetFood })
+            if (foodOneName === '') {
+                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: {cat_id: cat.id, food_id: Number(wetFoodId)}})
                 //if the user feeds the cat new wet food
             } else {
-                dispatch({ type: 'ADD_WET_FOOD', payload: wetFood });
+                dispatch({ type: 'ADD_WET_FOOD',
+                        payload: {cat_id: cat.id,
+                                  name: foodOneName,
+                                  type: 'wet',
+                                  cal_per_can: Number(perCan),
+                                  cal_per_kg: Number(foodOnePerKg)} });
             }
             //if the user feeds the cat both dry food and wet food
         } else {
             //if the user feeds the cat current foods
-            if (dryFood.name === '' && wetFood.name === '') {
-                dispatch({type:'CALCULATE_WET_DRY_AMOUNT', payload: existingWetAndDryFood})
+            if (foodTwoName === '' && foodOneName === '') {
+                dispatch({type:'CALCULATE_WET_DRY_AMOUNT', 
+                         payload: { cat_id: cat.id,
+                                  wetFood_id: Number(wetFoodId),
+                                  dryFood_id: Number(dryFoodId)}})
             //if the user feeds the cat new wet food and the current dry food
-            } else if (dryFood.name === '' && wetFood.name !== '') {
-                dispatch({type:'ADD_WET_FOOD_AND_UPDATE_DRY_FOOD', payload: newWetOldDry})
+            } else if (foodTwoName === '' && foodTwoName !== '') {
+                dispatch({type:'ADD_WET_FOOD_AND_UPDATE_DRY_FOOD', 
+                         payload: { cat_id: cat.id,
+                                  dryFood_id: Number(dryFoodId),
+                                  wet_name: foodOneName,
+                                  wet_type: 'wet',
+                                  cal_per_can: Number(perCan),
+                                  wet_cal_per_kg: Number(foodOnePerKg)}})
             //if the user feeds the cat new dry food and the current wet food
-            } else if (dryFood.name !== '' && wetFood.name === '') {
-                dispatch({ type: 'ADD_DRY_FOOD_AND_UPDATE_WET_FOOD', payload: newDryOldWet })
+            } else if (foodTwoName !== '' && foodOneName === '') {
+                dispatch({ type: 'ADD_DRY_FOOD_AND_UPDATE_WET_FOOD', 
+                           payload: {cat_id: cat.id,
+                                     wetFood_id: Number(wetFoodId),
+                                     dry_name: foodTwoName,
+                                     dry_type: 'dry',
+                                     cal_per_cup: Number(perCup),
+                                     dry_cal_per_kg: Number(foodTwoPerKg)}})
             //if the user feeds the cat new dry food and new wet food
-            } else if (dryFood.name !== '' && wetFood.name !== '') {
-                dispatch({ type: 'ADD_WET_DRY_FOOD', payload: wetAndDry })
-            
+            } else if (foodTwoName !== '' && foodOneName !== '') {
+                dispatch({ type: 'ADD_WET_DRY_FOOD', 
+                           payload: { cat_id: cat.id,
+                                      wet_name: foodOneName,
+                                      wet_type: 'wet',
+                                      cal_per_can: Number(perCan),
+                                      wet_cal_per_kg: Number(foodOnePerKg),
+                                      dry_name: foodTwoName,
+                                      dry_type: 'dry',
+                                      cal_per_cup: Number(perCup),
+                                      dry_cal_per_kg: Number(foodTwoPerKg)}})
             }
         }
     }
