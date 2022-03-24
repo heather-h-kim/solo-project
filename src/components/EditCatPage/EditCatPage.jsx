@@ -32,62 +32,40 @@ function EditCatPage() {
 
 
   const editName = () => {
-    const newName = {
-      id: cat.id,
-      name: name
-    }
-    console.log('newName is', newName);
     const confirmation = confirm("Are you sure?")
     if (confirmation === true) {
-      dispatch({ type: 'EDIT_NAME', payload: newName })
+      dispatch({ type: 'EDIT_NAME', payload: { id: cat.id, name: name } })
       setName('');
       alert('Success!')
     }
   }
 
   const editAge = () => {
-    const newAge = {
-      id: cat.id,
-      age: age
-    }
-    console.log('newAge is', newAge);
     const confirmation = confirm("Are you sure?")
     if (confirmation === true) {
-      dispatch({ type: 'EDIT_AGE', payload: newAge });
+      dispatch({ type: 'EDIT_AGE', payload: { id: cat.id, age: age } });
       setAge('');
       alert('Success!')
     }
   }
 
   const editNeuterStatus = () => {
-    const newNeuterStatus = {
-      id: cat.id,
-      is_neutered: neutered
-    }
-    console.log('newNeuterStatus is', newNeuterStatus);
     const confirmation = confirm("Are you sure?")
     if (confirmation === true) {
-      dispatch({ type: 'EDIT_NEUTER_STATUS', payload: newNeuterStatus });
+      dispatch({ type: 'EDIT_NEUTER_STATUS', payload: { id: cat.id, is_neutered: neutered } });
       setNeutered('');
       alert('Success!')
     }
   }
 
   const editWeight = () => {
-    const newWeight = {
-      id: cat.id,
-      current_weight: weight
-    }
-    console.log('newWeight is', newWeight);
     const confirmation = confirm("Are you sure?")
     if (confirmation === true) {
-      dispatch({ type: 'EDIT_WEIGHT', payload: newWeight })
+      dispatch({ type: 'EDIT_WEIGHT', payload: { id: cat.id, current_weight: weight } })
       setWeight('');
       alert('Success!')
     }
   }
-
-
 
   const handleClick = () => {
     history.push(`/cat-info/${cat.id}`)
@@ -116,68 +94,24 @@ function EditCatPage() {
           </Select><br></br>
         </FormControl><br></br>
         <Box>
-          <Button sx={{mt:1, ml:1}}onClick={editAge} variant="contained">Edit</Button>
+          <Button sx={{ mt: 1, ml: 1 }} onClick={editAge} variant="contained">Edit</Button>
         </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent:'center' , alignItems:'center'}}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Neuter status</InputLabel>
-          <Select  sx={{p:0}}
+          <Select sx={{ p: 0 }}
             labelId="demo-simple-select-label"
             id="demo-simple-select" value={neutered} label="Neuter-status" onChange={event => setNeutered(event.target.value)}>
-            <MenuItem value={'kitten'}>Kitten</MenuItem>
-            <MenuItem value={'adult'}>Adult</MenuItem>
+            <MenuItem value={'neutered'}>Neutered</MenuItem>
+            <MenuItem value={'intact'}>Intact</MenuItem>
           </Select><br></br>
         </FormControl>
-       
-          <Button sx={{mb:3, ml:1}} onClick={editNeuterStatus} variant="contained">Edit</Button>
-        
+
+        <Button sx={{ mb: 3, ml: 1 }} onClick={editNeuterStatus} variant="contained">Edit</Button>
+
       </Box>
-
-
-      {/* <label> Name:
-        <input type="text"
-          placeholder="new name"
-          name="name"
-          value={name}
-          onChange={event => setName(event.target.value)}
-        />
-        <button onClick={editName}>Edit</button>
-      </label><br></br>
-      <label>Age:
-        <select
-          name="age"
-          value={age}
-          onChange={event => setAge(event.target.value)}
-        >
-          <option>Select from the options</option>
-          <option value="kitten">Kitten</option>
-          <option value="adult">Adult</option>
-        </select>
-        <button onClick={editAge}>Edit</button>
-      </label><br></br>
-      <label>Neutered?
-        <select
-          name="neuter-status"
-          value={neutered}
-          onChange={event => setNeutered(event.target.value)}
-        >
-          <option>Select from the options</option>
-          <option value="neutered">Neutered</option>
-          <option value="intact">Intact</option>
-        </select>
-        <button onClick={editNeuterStatus}>Edit</button>
-      </label> <br></br>
-      <label> Weight:
-        <input type="number"
-          placeholder="new weight"
-          name="weight"
-          value={weight}
-          onChange={event => setWeight(event.target.value)}
-        />
-        <button onClick={editWeight}>Edit</button>
-      </label><br></br>*/}
       <table>
         <thead>
           <th>Food name</th>
@@ -190,13 +124,11 @@ function EditCatPage() {
             </tr>
           ))}
         </tbody>
-      </table> 
+      </table>
 
       <Stack direction="row" spacing={2}>
-        <Button variant="contained" onClick={handleClick}>Back</Button>
+        <Button variant="contained" onClick={handleClick}>Back to your cat</Button>
       </Stack>
-
-
     </div>
   );
 }

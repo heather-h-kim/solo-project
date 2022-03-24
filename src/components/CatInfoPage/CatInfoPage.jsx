@@ -61,16 +61,16 @@ function CatInfoPage() {
       <nav aria-label="secondary mailbox folders">
      
         <List>
-          <ListItem sx={{fontSize:"23px", mt:"10px", mb:"4px"}} disablePadding>
+          <ListItem sx={{fontSize:"20px", mt:"10px", mb:"4px"}} disablePadding>
           Name: {cat.name}
           </ListItem>
-          <ListItem sx={{fontSize:"23px", mb:"4px"}}disablePadding>
+          <ListItem sx={{fontSize:"20px", mb:"4px"}}disablePadding>
           Age: {cat.age}
           </ListItem>
-          <ListItem sx={{fontSize:"23px", mb:"4px"}}disablePadding>
+          <ListItem sx={{fontSize:"20px", mb:"4px"}}disablePadding>
           Neuter-status: {cat.is_neutered}
           </ListItem>
-          <ListItem sx={{fontSize:"23px", mb:"15px"}}disablePadding>
+          <ListItem sx={{fontSize:"20px", mb:"15px"}}disablePadding>
           Current weight: {cat.current_weight}
           </ListItem>
         </List>
@@ -82,8 +82,8 @@ function CatInfoPage() {
       <Table sx={{ minWidth: 350 }} aria-label="simple table">
         <TableHead>
           <TableRow >
-            <TableCell align="center" sx={{width:'100px', fontSize:"24px"}}>Name</TableCell>
-            <TableCell align="center" sx={{width:'250px', fontSize:"24px"}}>Daily amount</TableCell>
+            <TableCell align="center" sx={{width:'100px', fontSize:"21px"}}>Name</TableCell>
+            <TableCell align="center" sx={{width:'250px', fontSize:"21px"}}>Daily amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
