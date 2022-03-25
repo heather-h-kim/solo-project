@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useParams} from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 
 function ResultPage() {
@@ -9,6 +10,7 @@ function ResultPage() {
   const foods = store.foods;
   const {id} = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
  
   
   
@@ -16,7 +18,10 @@ function ResultPage() {
     dispatch({type:'FETCH_THIS_CAT', payload: Number(id)});
     dispatch({type:'FETCH_FOODS', payload: Number(id)});
   }, []);
-
+  
+  const handleClick = () => {
+    history.push(`/food-amount/${cat.id}`);
+  }
   console.log('foods are', foods);
   return (
     <div className="container">
@@ -26,6 +31,8 @@ function ResultPage() {
               <li>{food.daily_amount_oz} oz of {food.name} a day. </li>
           </ul>
       ))}
+
+    <Button variant="contained" onClick={handleClick}>Prev</Button> 
       </div>
   )};
 

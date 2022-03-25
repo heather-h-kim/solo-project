@@ -8,9 +8,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,10 +15,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -82,7 +75,7 @@ function CatInfoPage() {
       <Table sx={{ minWidth: 350 }} aria-label="simple table">
         <TableHead>
           <TableRow >
-            <TableCell align="center" sx={{width:'100px', fontSize:"21px"}}>Name</TableCell>
+            <TableCell align="center" sx={{width:'100px', fontSize:"21px"}}>Food</TableCell>
             <TableCell align="center" sx={{width:'250px', fontSize:"21px"}}>Daily amount</TableCell>
           </TableRow>
         </TableHead>

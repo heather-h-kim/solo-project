@@ -6,6 +6,7 @@ function* addWetFood(action) {
   console.log('in add wet food saga');
   console.log('action.payload is', action.payload);
   try { 
+    yield axios.put(`/api/cats/wetRatio/${action.payload.cat_id}`, action.payload);
     const response = yield axios.post('/api/foods/wet', action.payload);
     console.log('response is', response);
     const foodId = response.data[0].id;

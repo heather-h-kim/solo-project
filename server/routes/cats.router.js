@@ -282,6 +282,7 @@ router.put('/treats/:id', async (req, res) => {
 //update wet_percentage colum to calculate the amount of wet food and the dry food 
 router.put('/wetRatio/:id', (req, res) => {
     console.log('in cats/wetRatio/PUT route to calculate the amount of the wet food and the dry food');
+    console.log('req.body is', req.body);
     console.log('req.body.wet_percentage is', req.body.wet_percentage);
 
     console.log('req.user is', req.user);
@@ -292,7 +293,7 @@ router.put('/wetRatio/:id', (req, res) => {
                                 WHERE "id" = $2 AND "user_id" = $3;
                                 `;
 
-        const valueArray = [req.body.wet_percentage, req.params.id, req.user.id];
+        const valueArray = [req.body.wet_percentage, req.body.cat_id, req.user.id];
 
         pool.query(queryText, valueArray)
             .then((result) => {
@@ -321,9 +322,9 @@ router.put('/adj-calorie/:id', async (req, res) => {
             const queryText =
             `UPDATE "cats" 
             SET "adjustment_direction" = $1,  "adjustment_percentage" = $2, "treat_percentage" = $3
-            WHERE "cats"."id" = $4 AND "cats"."user_id" = $5;`;
+            WHERE "cats"."id" = $4;`;
 
-            const valueArray = [req.body.adjustment_direction, req.body.adjustment_percentage, req.body.treat_percentage, req.body.cat_id, req.user.id];
+            const valueArray = [req.body.adjustment_direction, req.body.adjustment_percentage, req.body.treat_percentage, req.body.cat_id];
 
             await connection.query(queryText, valueArray);
             const sqlAdjustCalorie =
@@ -334,11 +335,21 @@ router.put('/adj-calorie/:id', async (req, res) => {
                         WHEN "cats"."adjustment_direction" = 'decrease' THEN (SELECT "cats"."total_daily_cal"*(100-"adjustment_percentage")/100 FROM "cats")
                     END
                 )
-            WHERE "cats"."id" = $1 AND "cats"."user_id" = $2;`;
+            WHERE "cats"."id" = $1;`;
 
-            const adjCalorieArray = [req.body.cat_id, req.user.id];
+            const adjCalorieArray = [req.body.cat_id];
 
             await connection.query(sqlAdjustCalorie, adjCalorieArray);
+
+            const sqlAdjTreatFoodCalories = 
+            `UPDATE "cats"
+            SET "treat_cal" = (SELECT "total_daily_cal"*"treat_percentage"*0.01 FROM "cats"),
+                "food_cal" = (SELECT "total_daily_cal"*(100-"treat_percentage")*0.01 FROM "cats")
+            WHERE "cats"."id" = $1;`;
+
+            const adjTreatFoodCalArray = [req.body.cat_id];
+            await connection.query(sqlAdjTreatFoodCalories, adjTreatFoodCalArray);
+
             await connection.query('COMMIT;');
             res.sendStatus(200);
 

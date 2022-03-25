@@ -63,9 +63,9 @@ function AddCatPage() {
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
                 <Select  
-                labelId="demo-simple-select-label" 
+              
                 // sx={{ width: '100px', height: '50px'}}
-                         id="demo-simple-select" value={age} label="Age" onChange={event => setAge(event.target.value)}>
+                          value={age} label="Age" onChange={event => setAge(event.target.value)}>
                     <MenuItem value={'kitten'}>Kitten</MenuItem>
                     <MenuItem value={'adult'}>Adult</MenuItem>
                 </Select><br></br>

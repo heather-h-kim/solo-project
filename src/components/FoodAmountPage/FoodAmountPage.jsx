@@ -1,6 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import { FormControl } from '@mui/material';
+import { InputLabel } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import { sizing } from '@mui/system';
+import './FoodAmountPage.css';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
 
 
 function FoodAmountPage() {
@@ -37,196 +57,178 @@ function FoodAmountPage() {
     const handleSubmit = () => {
         console.log('in food amount handle submit');
 
-        // const wetFoodPercentage = {
-        //     id: cat.id,
-        //     wet_percentage: Number(wetPercent)
-        // }
-
-        // const wetFood = {
-        //     cat_id: cat.id,
-        //     name: foodOneName,
-        //     type: 'wet',
-        //     cal_per_can: Number(perCan),
-        //     cal_per_kg: Number(foodOnePerKg),
-        // }
-
-        // const dryFood = {
-        //     cat_id: cat.id,
-        //     name: foodTwoName,
-        //     type: 'dry',
-        //     cal_per_cup: Number(perCup),
-        //     cal_per_kg: Number(foodTwoPerKg)
-        // }
-
-        
-        //Update the wet food percentage of this cat
-        dispatch({ type: 'EDIT_WET_PERCENTAGE', payload: { id: cat.id, wet_percentage: Number(wetPercent)}});
+        // //Update the wet food percentage of this cat
+        // dispatch({ type: 'EDIT_WET_PERCENTAGE', payload: { id: cat.id, wet_percentage: Number(wetPercent) } });
 
 
         if (Number(wetPercent) === 0) {
             //if the user feeds the cat dry food only
             if (foodTwoName === '') {
                 //if the user keeps feeding the cat the current dry food
-                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: { cat_id: cat.id, food_id: Number(dryFoodId)} })
+                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: { cat_id: cat.id, food_id: Number(dryFoodId), wet_percentage: Number(wetPercent) } })
             } else {
                 //if the user feeds the cat new dry food
-                dispatch({ type: 'ADD_DRY_FOOD', 
-                    payload: {cat_id: cat.id,
-                              name: foodTwoName,
-                              type: 'dry',
-                              cal_per_cup: Number(perCup),
-                              cal_per_kg: Number(foodTwoPerKg)} 
-                        });
-            } 
-          //if the user feeds the cat wet food only
+                dispatch({
+                    type: 'ADD_DRY_FOOD',
+                    payload: {
+                        cat_id: cat.id,
+                        name: foodTwoName,
+                        type: 'dry',
+                        cal_per_cup: Number(perCup),
+                        cal_per_kg: Number(foodTwoPerKg),
+                        wet_percentage: Number(wetPercent)
+                    }
+                });
+            }
+            //if the user feeds the cat wet food only
         } else if (Number(wetPercent) === 100) {
             // if the user keeps feeding the cat the current wet food
             if (foodOneName === '') {
-                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: {cat_id: cat.id, food_id: Number(wetFoodId)}})
+                dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: { cat_id: cat.id, food_id: Number(wetFoodId), wet_percentage: Number(wetPercent) } })
                 //if the user feeds the cat new wet food
             } else {
-                dispatch({ type: 'ADD_WET_FOOD',
-                        payload: {cat_id: cat.id,
-                                  name: foodOneName,
-                                  type: 'wet',
-                                  cal_per_can: Number(perCan),
-                                  cal_per_kg: Number(foodOnePerKg)} });
+                dispatch({
+                    type: 'ADD_WET_FOOD',
+                    payload: {
+                        cat_id: cat.id,
+                        name: foodOneName,
+                        type: 'wet',
+                        cal_per_can: Number(perCan),
+                        cal_per_kg: Number(foodOnePerKg),
+                        wet_percentage: Number(wetPercent)
+                    }
+                });
             }
             //if the user feeds the cat both dry food and wet food
         } else {
             //if the user feeds the cat current foods
             if (foodTwoName === '' && foodOneName === '') {
-                dispatch({type:'CALCULATE_WET_DRY_AMOUNT', 
-                         payload: { cat_id: cat.id,
-                                  wetFood_id: Number(wetFoodId),
-                                  dryFood_id: Number(dryFoodId)}})
-            //if the user feeds the cat new wet food and the current dry food
-            } else if (foodTwoName === '' && foodTwoName !== '') {
-                dispatch({type:'ADD_WET_FOOD_AND_UPDATE_DRY_FOOD', 
-                         payload: { cat_id: cat.id,
-                                  dryFood_id: Number(dryFoodId),
-                                  wet_name: foodOneName,
-                                  wet_type: 'wet',
-                                  cal_per_can: Number(perCan),
-                                  wet_cal_per_kg: Number(foodOnePerKg)}})
-            //if the user feeds the cat new dry food and the current wet food
+                dispatch({
+                    type: 'CALCULATE_WET_DRY_AMOUNT',
+                    payload: {
+                        cat_id: cat.id,
+                        wetFood_id: Number(wetFoodId),
+                        dryFood_id: Number(dryFoodId),
+                        wet_percentage: Number(wetPercent)
+                    }
+                })
+                //if the user feeds the cat new wet food and the current dry food
+            } else if (foodTwoName === '' && foodOneName !== '') {
+                dispatch({
+                    type: 'ADD_WET_FOOD_AND_UPDATE_DRY_FOOD',
+                    payload: {
+                        cat_id: cat.id,
+                        dryFood_id: Number(dryFoodId),
+                        wet_name: foodOneName,
+                        wet_type: 'wet',
+                        cal_per_can: Number(perCan),
+                        wet_cal_per_kg: Number(foodOnePerKg),
+                        wet_percentage: Number(wetPercent)
+                    }
+                })
+                //if the user feeds the cat new dry food and the current wet food
             } else if (foodTwoName !== '' && foodOneName === '') {
-                dispatch({ type: 'ADD_DRY_FOOD_AND_UPDATE_WET_FOOD', 
-                           payload: {cat_id: cat.id,
-                                     wetFood_id: Number(wetFoodId),
-                                     dry_name: foodTwoName,
-                                     dry_type: 'dry',
-                                     cal_per_cup: Number(perCup),
-                                     dry_cal_per_kg: Number(foodTwoPerKg)}})
-            //if the user feeds the cat new dry food and new wet food
+                dispatch({
+                    type: 'ADD_DRY_FOOD_AND_UPDATE_WET_FOOD',
+                    payload: {
+                        cat_id: cat.id,
+                        wetFood_id: Number(wetFoodId),
+                        dry_name: foodTwoName,
+                        dry_type: 'dry',
+                        cal_per_cup: Number(perCup),
+                        dry_cal_per_kg: Number(foodTwoPerKg),
+                        wet_percentage: Number(wetPercent)
+                    }
+                })
+                //if the user feeds the cat new dry food and new wet food
             } else if (foodTwoName !== '' && foodOneName !== '') {
-                dispatch({ type: 'ADD_WET_DRY_FOOD', 
-                           payload: { cat_id: cat.id,
-                                      wet_name: foodOneName,
-                                      wet_type: 'wet',
-                                      cal_per_can: Number(perCan),
-                                      wet_cal_per_kg: Number(foodOnePerKg),
-                                      dry_name: foodTwoName,
-                                      dry_type: 'dry',
-                                      cal_per_cup: Number(perCup),
-                                      dry_cal_per_kg: Number(foodTwoPerKg)}})
+                dispatch({
+                    type: 'ADD_WET_DRY_FOOD',
+                    payload: {
+                        cat_id: cat.id,
+                        wet_name: foodOneName,
+                        wet_type: 'wet',
+                        cal_per_can: Number(perCan),
+                        wet_cal_per_kg: Number(foodOnePerKg),
+                        dry_name: foodTwoName,
+                        dry_type: 'dry',
+                        cal_per_cup: Number(perCup),
+                        dry_cal_per_kg: Number(foodTwoPerKg),
+                        wet_percentage: Number(wetPercent)
+                    }
+                })
             }
         }
+
+        setWetPercent('');
+        setFoodOneName('');
+        setFoodTwoName('');
+        setPerCan('');
+        setFoodOnePerKg('');
+        setFoodTwoPerKg('');
+        setPerCup('');
+        setWetFoodId('');
+        setDryFoodId('');
+        history.push(`/result/${cat.id}`);
     }
-        
 
-
-        return (
-            <div className="container">
-                <form onSubmit={handleSubmit}>
-                    <label>Desired % of calories from wet food:
-                        <input type="number"
-                            placeholder="wet food %"
-                            value={wetPercent}
-                            onChange={event => setWetPercent(event.target.value)}
-                        />
-                    </label><br></br>
-                    <p>Wet food info</p>
-                    <p>Select from the dropdown </p>
-                    <select
-                        name="wetfood"
+    return (
+        <div className="container">
+            <form onSubmit={handleSubmit}>
+                <FormControl fullWidth >
+                    <p className="title">Desired % of calories from wet food:</p>
+                    <TextField sx={{ mb: '8px' }} size='small' label="Wet food %" variant="outlined" value={wetPercent} onChange={event => setWetPercent(event.target.value)} />
+                </FormControl>
+                    <p className="title">Wet food Info</p>
+                    <p>Select your wet food from the current foods</p>
+                    <FormControl fullWidth >
+                    <InputLabel id="demo-simple-select-label">Wet foods</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
                         value={wetFoodId}
+                        label="Age"
                         onChange={event => setWetFoodId(event.target.value)}>
-                        <option value="none">Select from the existing foods</option>
                         {foods.filter(wet).map((food, i) => {
-                            return <option key={i} value={food.id}>{food.name} </option>
-                        }
-                        )}
-                    </select><br></br>
-                    <p>or enter the information</p>
-                    <label>Food name:
-                        <input type="text"
-                            placeholder="food name"
-                            value={foodOneName}
-                            onChange={event => setFoodOneName(event.target.value)}
-                        />
-                    </label><br></br>
-                    <label>Calories per kg:
-                        <input type="number"
-                            placeholder="calorie"
-                            value={foodOnePerKg}
-                            onChange={event => setFoodOnePerKg(event.target.value)}
-                        />
-                    </label><br></br>
-                    <label>Calories per can
-                        <input type="number"
-                            placeholder="calorie"
-                            value={perCan}
-                            onChange={event => setPerCan(event.target.value)}
-                        />
-                    </label><br></br>
+                            return <MenuItem key={i} value={food.id}>{food.name} </MenuItem>
+                        })}
+                    </Select>
+                    </FormControl>
+                    <FormControl fullWidth >
+                    <p>or Enter the new food information</p>
 
-                    <p>Dry food info</p>
-                    <p>Select from the dropdown </p>
-                    <select
-                        name="dryfood"
+                    <TextField sx={{ mb: '8px' }} label="Food name" variant="outlined" value={foodOneName} onChange={event => setFoodOneName(event.target.value)} />
+                    <TextField sx={{ mb: '8px' }} label="Calories per kg" variant="outlined" value={foodOnePerKg} onChange={event => setFoodOnePerKg(event.target.value)} />
+                    <TextField sx={{ mb: '8px' }} label="Calories per can" variant="outlined" value={perCan} onChange={event => setPerCan(event.target.value)} />
+                    </FormControl>
+                    <p className="title">Dry food Info</p>
+                    <p>Select your dry food from the current foods</p>
+                    <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Dry foods</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
                         value={dryFoodId}
+                        label="Age"
                         onChange={event => setDryFoodId(event.target.value)}>
-                        <option value="none">Select from the existing foods</option>
                         {foods.filter(dry).map((food, i) => {
+                            return <MenuItem key={i} value={food.id}>{food.name} </MenuItem>
+                        })}
+                    </Select>
+                    </FormControl>
+                    <FormControl fullWidth>
+                    <p>or Enter the new food information</p>
+                    <TextField sx={{ mb: '8px' }} label="Food name" variant="outlined" value={foodTwoName} onChange={event => setFoodTwoName(event.target.value)} />
+                    <TextField sx={{ mb: '8px' }} label="Calories per kg" variant="outlined" value={foodTwoPerKg} onChange={event => setFoodTwoPerKg(event.target.value)} />
+                    <TextField sx={{ mb: '8px' }} label="Calories per cup" variant="outlined" value={perCup} onChange={event => setPerCup(event.target.value)} />
+                    <Button variant="contained" type="submit">Submit</Button>
+                </FormControl><br></br>
+               
+            </form>
+          
+        </div>
+    );
 
-                            return <option key={i} value={food.id}>{food.name} </option>
-                        }
-                        )}
-                    </select><br></br>
-                    <p>or enter the information</p>
-                    <label>Food name:
-                        <input type="text"
-                            placeholder="food name"
-                            value={foodTwoName}
-                            onChange={event => setFoodTwoName(event.target.value)}
-                        />
-                    </label><br></br>
-                    <label>Calories per kg:
-                        <input type="number"
-                            placeholder="calorie"
-                            value={foodTwoPerKg}
-                            onChange={event => setFoodTwoPerKg(event.target.value)}
-                        />
-                    </label><br></br>
-                    <label>Calories per cup
-                        <input type="number"
-                            placeholder="calorie"
-                            value={perCup}
-                            onChange={event => setPerCup(event.target.value)}
-                        />
-                    </label><br></br>
-                    <button type="submit">Submit</button>
-                </form>
-                <h3>{cat.name} needs</h3>
-                {foods.map((food, i) => (
-                    <ul key={i}>
-                        <li>{food.daily_amount_oz} of {food.name} a day. </li>
-                    </ul>
-                ))}
-            </div>
-        );
-    
 }
 
 export default FoodAmountPage;

@@ -7,6 +7,7 @@ function* addDryUpdateWet(action) {
   console.log('action.payload is', action.payload);
 
   try {
+    yield axios.put(`/api/cats/wetRatio/${action.payload.cat_id}`, action.payload);
     const foods = {
       dry_food: {
         cat_id: action.payload.cat_id,

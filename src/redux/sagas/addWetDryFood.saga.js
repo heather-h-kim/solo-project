@@ -7,6 +7,8 @@ function* addWetDryFood(action) {
   try { 
     console.log('in add wet and dry food saga');
     console.log('action.payload is', action.payload);
+
+    yield axios.put(`/api/cats/wetRatio/${action.payload.cat_id}`, action.payload);
  
     const wetAndDry = {
       wet_food: {

@@ -22,6 +22,7 @@ function*  calculateWetDryFood(action) {
 }
   
   try { 
+    yield axios.put(`/api/cats/wetRatio/${action.payload.cat_id}`, action.payload);
     yield axios.put(`/api/cats_foods/${action.payload.cat_id}`, wetFood);
     yield axios.put(`/api/cats_foods/${action.payload.cat_id}`, dryFood);
     yield axios.delete (`/api/cats_foods/${action.payload.cat_id}`, {data: {cat_id: action.payload.cat_id, wetFood_id:action.payload.wetFood_id, dryFood_id: action.payload.dryFood_id }});

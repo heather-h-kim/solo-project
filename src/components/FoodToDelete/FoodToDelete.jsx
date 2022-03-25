@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import TableCell from '@mui/material/TableCell';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 
 
@@ -31,8 +34,11 @@ function FoodToDelete( {food} ) {
 
     return (
     <>
-      <td>{food.name}</td> 
-      <td><button onClick={deleteThisFood}>Delete</button></td>
+     <TableCell align="left" sx={{width:'300px', fontSize:"20px"}}>{food.name}</TableCell>
+      <TableCell align="right" sx={{width:'100px', fontSize:"20px"}} onClick={deleteThisFood}><Button>Delete</Button></TableCell>
+      
+{/* 
+      <td><button onClick={deleteThisFood}>Delete</button></td> */}
     </>
     );
 }

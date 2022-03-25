@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
 
 //calculate food amount 
 router.put('/:id', (req, res) => {
-    console.log('in cats_foods PUT route');
+    console.log('in cats_foods PUT route to calculate food amount');
     console.log('req.body is', req.body);
 
     if (req.isAuthenticated()) {
@@ -305,9 +305,10 @@ router.post('/new-dry-old-wet', async (req, res) => {
 router.post('/new-wet-old-dry', async (req, res) => {
     console.log('in cats_foods/new-wet-old-dry post route ');
     console.log('req.body is', req.body);
-    const cat_id = req.body.wet_food.cat_id;
+   
     if (req.isAuthenticated()) {
         const connection = await pool.connect();
+        const cat_id = req.body.wet_food.cat_id;
 
         try {
             await connection.query('BEGIN');

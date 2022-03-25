@@ -8,9 +8,15 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormControl } from '@mui/material';
 import { InputLabel } from '@mui/material';
-import { Input } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 
 function EditCatPage() {
@@ -76,7 +82,7 @@ function EditCatPage() {
 
   return (
     <div className="container">
-      <p>Edit info</p>
+ 
       <FormControl fullWidth>
         <TextField label="name" variant="outlined" value={name} onChange={event => setName(event.target.value)}
           InputProps={{ endAdornment: <Button onClick={editName} variant="contained">Edit</Button> }} /> <br></br>
@@ -112,7 +118,30 @@ function EditCatPage() {
         <Button sx={{ mb: 3, ml: 1 }} onClick={editNeuterStatus} variant="contained">Edit</Button>
 
       </Box>
-      <table>
+      <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 350 }} aria-label="simple table">
+        <TableHead>
+          <TableRow >
+            <TableCell align="left" sx={{width:'300px', fontSize:"21px"}}>Food</TableCell>
+            <TableCell align="center" sx={{width:'100px', fontSize:"21px"}}> </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {foods.map((food, i) => (
+            <TableRow
+              key={i}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              
+              <FoodToDelete food={food}/>
+              
+            </TableRow>
+          ))}
+        </TableBody> 
+      </Table>
+    </TableContainer><br></br>
+      
+      {/* <table>
         <thead>
           <th>Food name</th>
           <th> </th>
@@ -124,7 +153,7 @@ function EditCatPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
 
       <Stack direction="row" spacing={2}>
         <Button variant="contained" onClick={handleClick}>Back to your cat</Button>
