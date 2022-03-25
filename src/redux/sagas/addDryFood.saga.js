@@ -6,8 +6,8 @@ function* addDryFood(action) {
   console.log('in add dry food saga');
   console.log('action.payload is', action.payload);
   try { 
-    yield axios.put(`/api/cats/wetRatio/${action.payload.cat_id}`, action.payload);
-    const response = yield axios.post('/api/foods/dry', action.payload);
+    yield axios.put(`/api/cats/wetRatio/${action.payload.cat_id}`, action.payload.cat_id);
+    const response = yield axios.post('/api/foods/dry', action.payload.cat_id);
     console.log('response is', response);
     const foodId = response.data[0].id;
     const catsFoodsObject = {

@@ -41,7 +41,8 @@ function AdjustDailyCalorie() {
     dispatch({ type: 'FETCH_THIS_CAT', payload: Number(id) });
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     console.log('in handleSubmit!');
 
 

@@ -30,7 +30,8 @@ function WeightInputPage() {
   }, []);
 
   //calculate recommended daily calories based on the user input(goal weight and treat%)
-  const calculateCalorie = () => {
+  const calculateCalorie = (event) => {
+    event.preventDefault();
     console.log('calculate!');
     console.log('goalWeight is', goalWeight);
     console.log('treat is', treat);

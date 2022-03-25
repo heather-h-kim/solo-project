@@ -40,6 +40,21 @@ function FoodAmountPage() {
     const [perCup, setPerCup] = useState('');
     const [wetFoodId, setWetFoodId] = useState('');
     const [dryFoodId, setDryFoodId] = useState('');
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 300,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+      };
 
     useEffect(() => {
         dispatch({ type: 'FETCH_THIS_CAT', payload: Number(id) });
@@ -54,7 +69,8 @@ function FoodAmountPage() {
         return food.type === 'dry';
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
         console.log('in food amount handle submit');
 
         // //Update the wet food percentage of this cat
@@ -159,7 +175,7 @@ function FoodAmountPage() {
                 })
             }
         }
-
+        // history.push(`/result/${cat.id}`);
         setWetPercent('');
         setFoodOneName('');
         setFoodTwoName('');
@@ -169,7 +185,9 @@ function FoodAmountPage() {
         setPerCup('');
         setWetFoodId('');
         setDryFoodId('');
-        history.push(`/result/${cat.id}`);
+
+     
+
     }
 
     return (
@@ -179,9 +197,9 @@ function FoodAmountPage() {
                     <p className="title">Desired % of calories from wet food:</p>
                     <TextField sx={{ mb: '8px' }} size='small' label="Wet food %" variant="outlined" value={wetPercent} onChange={event => setWetPercent(event.target.value)} />
                 </FormControl>
-                    <p className="title">Wet food Info</p>
-                    <p>Select your wet food from the current foods</p>
-                    <FormControl fullWidth >
+                <p className="title">Wet food Info</p>
+                <p>Select your wet food from the current foods</p>
+                <FormControl fullWidth >
                     <InputLabel id="demo-simple-select-label">Wet foods</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -193,17 +211,17 @@ function FoodAmountPage() {
                             return <MenuItem key={i} value={food.id}>{food.name} </MenuItem>
                         })}
                     </Select>
-                    </FormControl>
-                    <FormControl fullWidth >
+                </FormControl>
+                <FormControl fullWidth >
                     <p>or Enter the new food information</p>
 
                     <TextField sx={{ mb: '8px' }} label="Food name" variant="outlined" value={foodOneName} onChange={event => setFoodOneName(event.target.value)} />
                     <TextField sx={{ mb: '8px' }} label="Calories per kg" variant="outlined" value={foodOnePerKg} onChange={event => setFoodOnePerKg(event.target.value)} />
                     <TextField sx={{ mb: '8px' }} label="Calories per can" variant="outlined" value={perCan} onChange={event => setPerCan(event.target.value)} />
-                    </FormControl>
-                    <p className="title">Dry food Info</p>
-                    <p>Select your dry food from the current foods</p>
-                    <FormControl fullWidth>
+                </FormControl>
+                <p className="title">Dry food Info</p>
+                <p>Select your dry food from the current foods</p>
+                <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Dry foods</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -215,17 +233,37 @@ function FoodAmountPage() {
                             return <MenuItem key={i} value={food.id}>{food.name} </MenuItem>
                         })}
                     </Select>
-                    </FormControl>
-                    <FormControl fullWidth>
+                </FormControl>
+                <FormControl fullWidth>
                     <p>or Enter the new food information</p>
                     <TextField sx={{ mb: '8px' }} label="Food name" variant="outlined" value={foodTwoName} onChange={event => setFoodTwoName(event.target.value)} />
                     <TextField sx={{ mb: '8px' }} label="Calories per kg" variant="outlined" value={foodTwoPerKg} onChange={event => setFoodTwoPerKg(event.target.value)} />
                     <TextField sx={{ mb: '8px' }} label="Calories per cup" variant="outlined" value={perCup} onChange={event => setPerCup(event.target.value)} />
-                    <Button variant="contained" type="submit">Submit</Button>
+                    <Button variant="contained" type="submit" onClick={handleOpen}>Submit</Button>
                 </FormControl><br></br>
-               
+
             </form>
-          
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    {cat.name} needs
+                    </Typography>
+                    <div id="modal-modal-description" sx={{ mt: 2 }}>
+                        
+                        {foods.map((food, i) => (
+                            <ul key={i}>
+                                <li>{food.daily_amount_oz} oz of {food.name} a day. </li>
+                            </ul>
+                        ))}
+                    </div>
+                </Box>
+            </Modal>
+
         </div>
     );
 
