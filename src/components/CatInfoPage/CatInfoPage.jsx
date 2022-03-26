@@ -5,9 +5,6 @@ import FoodItem from '../FoodItem/FoodItem';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,9 +12,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+
+const styles = {
+  "&.MuiButton-contained": {
+    bgcolor: "#d88cb2"
+  },
+};
 
 function CatInfoPage() {
   const store = useSelector((store) => store);
@@ -50,9 +52,7 @@ function CatInfoPage() {
   console.log('foods are', foods);
   return (
     <div className="container">
-      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <nav aria-label="secondary mailbox folders">
-     
+      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: '#ffe6ee', mb:'20px' }}>
         <List>
           <ListItem sx={{fontSize:"20px", mt:"10px", mb:"4px"}} disablePadding>
           Name: {cat.name}
@@ -64,18 +64,15 @@ function CatInfoPage() {
           Neuter-status: {cat.is_neutered}
           </ListItem>
           <ListItem sx={{fontSize:"20px", mb:"15px"}}disablePadding>
-          Current weight: {cat.current_weight}
+          Current weight: {cat.current_weight}lbs
           </ListItem>
         </List>
-       
-      </nav>
     </Box>
-
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 350 }} aria-label="simple table">
+      <Table sx={{ minWidth: 350, bgcolor: 'rgb(255, 230, 255, 0.5)'}}>
         <TableHead>
           <TableRow >
-            <TableCell align="center" sx={{width:'100px', fontSize:"21px"}}>Food</TableCell>
+            <TableCell align="center" sx={{width:'200px', fontSize:"21px"}}>Food</TableCell>
             <TableCell align="center" sx={{width:'250px', fontSize:"21px"}}>Daily amount</TableCell>
           </TableRow>
         </TableHead>
@@ -95,9 +92,9 @@ function CatInfoPage() {
     </TableContainer><br></br>
        
     <Stack spacing={2} direction="row">
-      <Button onClick={sendToEditInfo} variant="contained">Edit</Button>
-      <Button onClick={sendToWeightInputPage} variant="contained">Get the daily calorie!</Button>
-      <Button onClick={sendToHome} variant="contained">Back</Button>
+      <Button sx={styles} onClick={sendToEditInfo} variant="contained">Edit</Button>
+      <Button sx={styles} onClick={sendToWeightInputPage} variant="contained">Get the daily calorie!</Button>
+      <Button sx={styles} onClick={sendToHome} variant="contained">Back</Button>
     </Stack>
 
       

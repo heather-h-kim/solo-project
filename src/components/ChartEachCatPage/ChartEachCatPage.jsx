@@ -15,6 +15,13 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { FormControl } from '@mui/material';
 
+const styles = {
+  "&.MuiButton-contained": {
+    bgcolor: "#d88cb2",
+    mt:'30px',
+    fontSize:'17px'
+  },
+};
 
 function ChartEachCatPage() {
   const store = useSelector((store) => store);
@@ -41,8 +48,8 @@ function ChartEachCatPage() {
   return (
     <div className="container">
       <FormControl >
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 350 }} aria-label="simple table">
+      <TableContainer sx={{mb: '12px'}} component={Paper}>
+        <Table sx={{ minWidth: 350, bgcolor: 'rgb(255, 230, 238, 0.5)' }}>
           <TableHead>
             <TableRow >
               <TableCell align="center" sx={{ fontSize: "20px" }}>Weight</TableCell>
@@ -64,7 +71,7 @@ function ChartEachCatPage() {
       </TableContainer><br></br>
      
       <p>All cats are different! Individual cat's calorie needs can vary by as much as 50% from the calculated values. If you think the recommended daily calorie does not work click the adjust button and make adjustment to the current daily calories.</p>
-      <Button sx={{mt:2}} variant="contained" onClick={handleClick}>Adjust</Button>
+      <Button sx={styles} variant="contained" onClick={handleClick}>Adjust</Button>
       </FormControl>
     </div>
   );

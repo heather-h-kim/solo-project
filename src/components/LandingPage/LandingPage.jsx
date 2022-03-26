@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import './LandingPage.css';
+
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterForm/RegisterForm';
@@ -14,18 +14,19 @@ function LandingPage() {
   };
 
   return (
-    <div className="landing-background">
-      <div className="container">
+ 
+      <div className="container bg"> 
       <header>Kitty Weight Watcher</header>
         <RegisterForm />
         <center>
-          <h4>Already a Member?</h4>
+          <h4 style={{marginTop: '120px'}}>Already a Member?</h4>
           <button className="btn btn_sizeSm" onClick={onLogin}>
             Login
           </button>
         </center>
-      </div>
-    </div>
+       
+      </div> 
+  
   );
 }
 

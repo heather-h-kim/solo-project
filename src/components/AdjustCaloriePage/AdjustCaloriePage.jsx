@@ -24,6 +24,12 @@ import { sizing } from '@mui/system';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+const styles = {
+  "&.MuiButton-contained": {
+    bgcolor: "#d88cb2",
+    mt: '8px'
+  },
+};
 
 function AdjustDailyCalorie() {
 
@@ -85,7 +91,7 @@ function AdjustDailyCalorie() {
             <FormControl fullWidth >
               <p>By how much?</p>
 
-              <TextField sx={{ mb: '8px' }} label="%" variant="outlined" value={adjustment} onChange={event => setAdjustment(event.target.value)} />
+              <TextField sx={{ mb: '8px', bgcolor:'#ffffff' }} label="%" variant="outlined" value={adjustment} onChange={event => setAdjustment(event.target.value)} />
             </FormControl>
           </RadioGroup>
         </FormControl>
@@ -93,15 +99,15 @@ function AdjustDailyCalorie() {
         <FormControl fullWidth>
           <p>Do you still want the treat % at {cat.treat_percentage}%?</p>
           Desired % of the daily calories from treats:
-          <TextField label="treat %" variant="outlined" value={treat} onChange={event => setTreat(event.target.value)} /><br></br>
-          <Button type="submit" variant="contained">Submit</Button><br></br>
+          <TextField sx={{ mt: '8px', bgcolor:'#ffffff' }} label="treat %" variant="outlined" value={treat} onChange={event => setTreat(event.target.value)} /><br></br>
+          <Button sx={styles} type="submit" variant="contained">Submit</Button><br></br>
         </FormControl>
 
       </form>
       {clicked &&
         <>
           {cat.name} now needs {cat.total_daily_cal}kcal a day. {cat.treat_cal}kcal is from treats and {cat.food_cal}kcal is from food.
-          <Button fullWidth variant="contained" onClick={handleClick}>Get the food amount</Button>
+          <Button sx={styles} fullWidth variant="contained" onClick={handleClick}>Get the food amount</Button>
         </>
       }
 

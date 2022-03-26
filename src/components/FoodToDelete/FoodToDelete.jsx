@@ -5,6 +5,11 @@ import TableCell from '@mui/material/TableCell';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
+const styles = {
+  "&.MuiButton-contained": {
+    bgcolor: "#d88cb2"
+  },
+};
 
 
 function FoodToDelete( {food} ) {
@@ -35,10 +40,8 @@ function FoodToDelete( {food} ) {
     return (
     <>
      <TableCell align="left" sx={{width:'300px', fontSize:"20px"}}>{food.name}</TableCell>
-      <TableCell align="right" sx={{width:'100px', fontSize:"20px"}} onClick={deleteThisFood}><Button>Delete</Button></TableCell>
-      
-{/* 
-      <td><button onClick={deleteThisFood}>Delete</button></td> */}
+      <TableCell align="right" sx={{width:'100px', fontSize:"20px"}} onClick={deleteThisFood}><Button sx={styles} variant="contained">Delete</Button></TableCell>
+
     </>
     );
 }

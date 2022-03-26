@@ -63,8 +63,6 @@ function AddCatPage() {
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
                 <Select  
-              
-                // sx={{ width: '100px', height: '50px'}}
                           value={age} label="Age" onChange={event => setAge(event.target.value)}>
                     <MenuItem value={'kitten'}>Kitten</MenuItem>
                     <MenuItem value={'adult'}>Adult</MenuItem>
@@ -84,53 +82,11 @@ function AddCatPage() {
            
             <Stack spacing={2} direction="row">
                 
-                <Button type="submit" variant="contained">Add</Button>
+                <Button sx={{bgcolor: '#d98cb3'}} fullWidth type="submit" variant="contained">Add</Button>
               
             </Stack>
             </form>
-            {/* <form onSubmit={handleSubmit}>
-                <label> Name:
-                    <input type="text"
-                        placeholder="name"
-                        name="name"
-                        value={name}
-                        onChange={event => setName(event.target.value)}
-                    />
-                </label><br></br>
-                <label>Age:
-                    <select
-                        name="age"
-                        value={age}
-                        onChange={event => setAge(event.target.value)}
-                    >
-                        <option value="none">Select from options</option>
-                        <option value="kitten">Kitten</option>
-                        <option value="adult">Adult</option>
-                    </select>
-                </label><br></br>
-                <label>Neutered?
-                    <select
-                        name="neuter-status"
-                        value={neutered}
-                        onChange={event => setNeutered(event.target.value)}
-                    >
-                        <option value="none">Select from options</option>
-                        <option value="neutered">Neutered</option>
-                        <option value="intact">Intact</option>
-                    </select>
-                </label> <br></br>
-                <label> Weight:
-                    <input type="number"
-                        placeholder="weight"
-                        name="weight"
-                        value={weight}
-                        onChange={event => setWeight(event.target.value)}
-                    />
-                </label><br></br>
-                <button type="submit">Add</button>
-            </form>
-            <button onClick={handleClick}>Back</button> */}
-
+        
 
         </div>
     );

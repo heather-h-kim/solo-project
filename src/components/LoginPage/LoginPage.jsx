@@ -2,14 +2,13 @@ import React from 'react';
 import LoginForm from '../LoginForm/LoginForm';
 import { useHistory } from 'react-router-dom';
 import Header from '../Header/Header';
-import './LoginPage.css'
 
 function LoginPage() {
   const history = useHistory();
 
   return (
     <div>
-      <div className="container">
+      <div className="container bg">
       <header>Kitty Weight Watcher</header>
         <LoginForm />
 
@@ -20,6 +19,7 @@ function LoginPage() {
             onClick={() => {
               history.push('/registration');
             }}
+            style={{marginTop: '100px'}}
           >
             Register
           </button>

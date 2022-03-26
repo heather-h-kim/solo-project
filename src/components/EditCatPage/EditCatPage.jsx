@@ -18,6 +18,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+const styles = {
+  "&.MuiButton-contained": {
+    bgcolor: "#d88cb2"
+  },
+};
 
 function EditCatPage() {
   const store = useSelector((store) => store);
@@ -82,12 +87,11 @@ function EditCatPage() {
 
   return (
     <div className="container">
- 
       <FormControl fullWidth>
         <TextField label="name" variant="outlined" value={name} onChange={event => setName(event.target.value)}
-          InputProps={{ endAdornment: <Button onClick={editName} variant="contained">Edit</Button> }} /> <br></br>
+          InputProps={{ endAdornment: <Button sx={styles} onClick={editName} variant="contained">Edit</Button> }} /> <br></br>
         <TextField label="weight" variant="outlined" value={weight} onChange={event => setWeight(event.target.value)}
-          InputProps={{ endAdornment: <Button onClick={editWeight} variant="contained">Edit</Button> }} /> <br></br>
+          InputProps={{ endAdornment: <Button sx={styles} onClick={editWeight} variant="contained">Edit</Button> }} /> <br></br>
       </FormControl>
       <Box sx={{ display: 'flex' }}>
         <FormControl fullWidth>
@@ -100,7 +104,7 @@ function EditCatPage() {
           </Select><br></br>
         </FormControl><br></br>
         <Box>
-          <Button sx={{ mt: 1, ml: 1 }} onClick={editAge} variant="contained">Edit</Button>
+          <Button sx={{ mt: 1, ml: 1, bgcolor:'#d88cb2' }} onClick={editAge} variant="contained">Edit</Button>
         </Box>
       </Box>
 
@@ -115,11 +119,11 @@ function EditCatPage() {
           </Select><br></br>
         </FormControl>
 
-        <Button sx={{ mb: 3, ml: 1 }} onClick={editNeuterStatus} variant="contained">Edit</Button>
+        <Button sx={{ mb: 3, ml: 1, bgcolor:'#d88cb2' }} onClick={editNeuterStatus} variant="contained">Edit</Button>
 
       </Box>
       <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 350 }} aria-label="simple table">
+      <Table sx={{ minWidth: 350, bgcolor:'#ffe6e6' }} >
         <TableHead>
           <TableRow >
             <TableCell align="left" sx={{width:'300px', fontSize:"21px"}}>Food</TableCell>
@@ -140,24 +144,9 @@ function EditCatPage() {
         </TableBody> 
       </Table>
     </TableContainer><br></br>
-      
-      {/* <table>
-        <thead>
-          <th>Food name</th>
-          <th> </th>
-        </thead>
-        <tbody>
-          {foods.map((food, i) => (
-            <tr key={i}>
-              <FoodToDelete food={food} />
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
 
-      <Stack direction="row" spacing={2}>
-        <Button variant="contained" onClick={handleClick}>Back to your cat</Button>
-      </Stack>
+        <Button sx={styles} fullWidth variant="contained" onClick={handleClick}>Back to your cat</Button>
+      
     </div>
   );
 }

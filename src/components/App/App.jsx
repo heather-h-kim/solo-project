@@ -22,7 +22,9 @@ import FoodAmountPage from '../FoodAmountPage/FoodAmountPage';
 import AdjustCaloriePage from '../AdjustCaloriePage/AdjustCaloriePage';
 import ResultPage from '../ResultPage/ResultPage';
 import ChartEachCatPage from '../ChartEachCatPage/ChartEachCatPage';
+import AboutPage from '../AboutPage/AboutPage';
 import './App.css';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -36,17 +38,27 @@ function App() {
   return (
     <Router>
       <div>
-        {/* <Nav /> */}
+    
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/landing */}
           <Redirect exact from="/" to="/landing" />
 
-        
+   
          
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
+            <ProtectedRoute
+            // for presentation
+            exact
+            path="/about"
+          >
+           <Nav />
+            <AboutPage />
+
+          </ProtectedRoute>
+
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
@@ -56,14 +68,6 @@ function App() {
             <UserHomePage />
           </ProtectedRoute>
            
-          {/* <ProtectedRoute
-            // logged in shows HomePage else shows LoginPage
-            exact
-            path="/home"
-          >
-            <Nav />
-            <HomePage />
-          </ProtectedRoute> */}
           <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage
             exact
@@ -81,7 +85,7 @@ function App() {
             <CatInfoPage />
           </ProtectedRoute>
           <ProtectedRoute
-            // logged in shows AddCatPage else shows LoginPage
+            // logged in shows EditCatPage else shows LoginPage
             exact
             path="/edit-cat/:id"
           >
@@ -89,7 +93,7 @@ function App() {
             <EditCatPage />
           </ProtectedRoute>
           <ProtectedRoute
-            // logged in shows AddCatPage else shows LoginPage
+            // logged in shows WeightInputPage else shows LoginPage
             exact
             path="/weight-input/:id"
           >
@@ -99,21 +103,21 @@ function App() {
           
           
           <ProtectedRoute
-            // logged in shows AddCatPage else shows LoginPage
+            // logged in shows FoodAmountPage else shows LoginPage
             exact
             path="/food-amount/:id"
           >
             <Nav />
             <FoodAmountPage />
           </ProtectedRoute>
-          <ProtectedRoute
+          {/* <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage
             exact
             path="/result/:id"
           >
             <Nav />
             <ResultPage />
-          </ProtectedRoute>
+          </ProtectedRoute> */}
           <ProtectedRoute
             // logged in shows ChartPage else shows LoginPage
             exact
@@ -131,7 +135,7 @@ function App() {
             <ChartEachCatPage />
           </ProtectedRoute>
           <ProtectedRoute
-            // logged in shows ChartPage else shows LoginPage
+            // logged in shows AdjustCaloriePage else shows LoginPage
             exact
             path="/adjust-calorie/:id"
           >

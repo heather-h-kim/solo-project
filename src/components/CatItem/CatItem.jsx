@@ -22,14 +22,8 @@ function CatItem({ cat }) {
     }
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, mb:'20px', mt:'20px'}}>
             <CardActionArea onClick={handleClick}>
-                {/* <CardMedia
-        component="img"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
-      /> */}
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                         {cat.name}

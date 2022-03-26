@@ -10,6 +10,14 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
+const styles = {
+  "&.MuiButton-contained": {
+    bgcolor: "#d88cb2",
+    mt:'30px',
+    fontSize:'17px'
+  },
+};
+
 function UserHomePage() {
   
   const user = useSelector((store) => store.user);
@@ -34,22 +42,21 @@ function UserHomePage() {
   return (
     <div className="container">
       <h2>Welcome, {user.username}!</h2>
-      {/* <p>Your ID is: {user.id}</p> */}
-      {/* <LogOutButton className="btn" /> */}
 
       <p> Your cats:</p>
-      <section>
+      <section style={{paddingLeft:'10px'}}>
         {cats.map((cat,i) => {
           return(<div key={i}>
             <CatItem cat={cat} />
           </div>)
         }
         )}
-      <p>Click on the cat to get recommended daily calorie!</p>    
       </section>
+      <p>Click on the cat to get the recommended daily calorie!</p>    
+      
        
       <Stack direction="row" spacing={2}>
-      <Button variant="contained" onClick={handleClick}>Add a cat</Button>
+      <Button sx={styles} fullWidth variant="contained" onClick={handleClick}>Add a cat</Button>
     </Stack>
    
     </div>
