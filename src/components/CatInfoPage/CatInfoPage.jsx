@@ -17,7 +17,9 @@ import Stack from '@mui/material/Stack';
 
 const styles = {
   "&.MuiButton-contained": {
-    bgcolor: "#d88cb2"
+    bgcolor: '#c85c92',
+    mt:'20px',
+    fontSize:'16px'
   },
 };
 
@@ -69,7 +71,7 @@ function CatInfoPage() {
         </List>
     </Box>
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 350, bgcolor: 'rgb(255, 230, 255, 0.5)'}}>
+      <Table sx={{ minWidth: 350, bgcolor: 'rgb(255, 230, 255, 0.4)'}}>
         <TableHead>
           <TableRow >
             <TableCell align="center" sx={{width:'200px', fontSize:"21px"}}>Food</TableCell>

@@ -19,10 +19,17 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 const styles = {
+  "&.MuiTextField-root": {
+    bgcolor: "#ffffff",
+    marginTop: '15px'
+  },
   "&.MuiButton-contained": {
-    bgcolor: "#d88cb2"
+    bgcolor: '#c85c92',
+    fontSize:'16px',
   },
 };
+
+
 
 function EditCatPage() {
   const store = useSelector((store) => store);
@@ -88,15 +95,16 @@ function EditCatPage() {
   return (
     <div className="container">
       <FormControl fullWidth>
-        <TextField label="name" variant="outlined" value={name} onChange={event => setName(event.target.value)}
+        <TextField sx={styles} label="name" variant="outlined" value={name} onChange={event => setName(event.target.value)}
           InputProps={{ endAdornment: <Button sx={styles} onClick={editName} variant="contained">Edit</Button> }} /> <br></br>
-        <TextField label="weight" variant="outlined" value={weight} onChange={event => setWeight(event.target.value)}
+        <TextField sx={styles} label="weight" variant="outlined" value={weight} onChange={event => setWeight(event.target.value)}
           InputProps={{ endAdornment: <Button sx={styles} onClick={editWeight} variant="contained">Edit</Button> }} /> <br></br>
       </FormControl>
       <Box sx={{ display: 'flex' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Age</InputLabel>
           <Select
+            sx={{bgcolor:'#ffffff'}}
             labelId="demo-simple-select-label"
             id="demo-simple-select" value={age} label="Age" onChange={event => setAge(event.target.value)}>
             <MenuItem value={'kitten'}>Kitten</MenuItem>
@@ -104,14 +112,14 @@ function EditCatPage() {
           </Select><br></br>
         </FormControl><br></br>
         <Box>
-          <Button sx={{ mt: 1, ml: 1, bgcolor:'#d88cb2' }} onClick={editAge} variant="contained">Edit</Button>
+          <Button sx={{ mt: 1, ml: 1, bgcolor:'#c85c92' }} onClick={editAge} variant="contained">Edit</Button>
         </Box>
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Neuter status</InputLabel>
-          <Select sx={{ p: 0 }}
+          <Select sx={{bgcolor:'#ffffff'}}
             labelId="demo-simple-select-label"
             id="demo-simple-select" value={neutered} label="Neuter-status" onChange={event => setNeutered(event.target.value)}>
             <MenuItem value={'neutered'}>Neutered</MenuItem>
@@ -119,11 +127,11 @@ function EditCatPage() {
           </Select><br></br>
         </FormControl>
 
-        <Button sx={{ mb: 3, ml: 1, bgcolor:'#d88cb2' }} onClick={editNeuterStatus} variant="contained">Edit</Button>
+        <Button sx={{ mb: 3, ml: 1, bgcolor:'#c85c92' }} onClick={editNeuterStatus} variant="contained">Edit</Button>
 
       </Box>
       <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 350, bgcolor:'#ffe6e6' }} >
+      <Table sx={{ minWidth: 350, bgcolor: '#ffffff' }} >
         <TableHead>
           <TableRow >
             <TableCell align="left" sx={{width:'300px', fontSize:"21px"}}>Food</TableCell>

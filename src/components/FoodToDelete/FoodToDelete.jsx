@@ -7,9 +7,11 @@ import Stack from '@mui/material/Stack';
 
 const styles = {
   "&.MuiButton-contained": {
-    bgcolor: "#d88cb2"
+    bgcolor: '#c85c92',
+    fontSize:'16px'
   },
 };
+
 
 
 function FoodToDelete( {food} ) {

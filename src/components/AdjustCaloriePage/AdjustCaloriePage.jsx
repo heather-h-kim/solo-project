@@ -25,12 +25,17 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 const styles = {
+  "&.MuiTextField-root": {
+    bgcolor: "#ffffff",
+    marginTop: '15px',
+    mb: '8px'
+  },
   "&.MuiButton-contained": {
-    bgcolor: "#d88cb2",
-    mt: '8px'
+    bgcolor: '#c85c92',
+    marginTop:'8px',
+    fontSize:'16px'
   },
 };
-
 function AdjustDailyCalorie() {
 
   const store = useSelector((store) => store);
@@ -91,15 +96,15 @@ function AdjustDailyCalorie() {
             <FormControl fullWidth >
               <p>By how much?</p>
 
-              <TextField sx={{ mb: '8px', bgcolor:'#ffffff' }} label="%" variant="outlined" value={adjustment} onChange={event => setAdjustment(event.target.value)} />
+              <TextField sx={styles} label="%" variant="outlined" value={adjustment} onChange={event => setAdjustment(event.target.value)} />
             </FormControl>
           </RadioGroup>
         </FormControl>
 
         <FormControl fullWidth>
           <p>Do you still want the treat % at {cat.treat_percentage}%?</p>
-          Desired % of the daily calories from treats:
-          <TextField sx={{ mt: '8px', bgcolor:'#ffffff' }} label="treat %" variant="outlined" value={treat} onChange={event => setTreat(event.target.value)} /><br></br>
+         <p>Desired % of the daily calories from treats:</p>
+          <TextField sx={styles} label="treat %" variant="outlined" value={treat} onChange={event => setTreat(event.target.value)} /><br></br>
           <Button sx={styles} type="submit" variant="contained">Submit</Button><br></br>
         </FormControl>
 

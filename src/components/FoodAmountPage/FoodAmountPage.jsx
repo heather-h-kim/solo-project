@@ -34,10 +34,13 @@ const styles = {
       marginTop: '15px'
     },
     "&.MuiButton-contained": {
-      bgcolor: "#d88cb2",
-      marginTop:'8px'
+      bgcolor: '#c85c92',
+      marginTop:'12px',
+      fontSize:'16px'
     },
   };
+
+  
 
 function FoodAmountPage() {
     const store = useSelector((store) => store);
@@ -208,7 +211,7 @@ function FoodAmountPage() {
     }
 
     return (
-        <div className="container" style={{marginTop: '2px'}}>
+        <div className="container" style={{marginTop: '25px'}}>
             <form onSubmit={handleSubmit}>
                 
                 <FormControl fullWidth >

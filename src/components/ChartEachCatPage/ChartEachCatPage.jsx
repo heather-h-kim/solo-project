@@ -17,7 +17,7 @@ import { FormControl } from '@mui/material';
 
 const styles = {
   "&.MuiButton-contained": {
-    bgcolor: "#d88cb2",
+    bgcolor: '#c85c92',
     mt:'30px',
     fontSize:'17px'
   },

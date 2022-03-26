@@ -16,6 +16,17 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
+const styles = {
+  "&.MuiTextField-root": {
+    bgcolor: "#ffffff",
+    marginTop: '15px'
+  },
+  "&.MuiButton-contained": {
+    bgcolor: '#c85c92',
+    marginTop:'50px',
+    fontSize:'16px'
+  },
+};
 
 
 function WeightInputPage() {
@@ -28,16 +39,7 @@ function WeightInputPage() {
   const [treat, setTreat] = useState('');
   const [clicked, setClicked] = useState(false);
 
-  const styles = {
-    "&.MuiTextField-root": {
-      bgcolor: "#ffffff",
-      marginTop: '15px'
-    },
-    "&.MuiButton-contained": {
-      bgcolor: "#d88cb2",
-      marginTop:'50px'
-    },
-  };
+
 
   useEffect(() => {
     dispatch({ type: 'FETCH_THIS_CAT', payload: Number(id) });
@@ -80,12 +82,10 @@ function WeightInputPage() {
           <Button type="submit" sx={styles} variant="contained">Calculate the daily calorie</Button>
         </FormControl><br></br>
 
-
-
       </form>
 
       {clicked &&
-        <>
+
           <Box sx={{ width: '100%', maxWidth: 360, bgcolor: '#ffe6ee' }}>
             <List>
               <ListItem sx={{ fontSize: "20px", mt: "10px", mb: "4px" }} disablePadding>
@@ -105,9 +105,9 @@ function WeightInputPage() {
               </ListItem>
             </List>
           </Box>
-          <Button fullWidth type="submit" sx={styles} variant="contained" onClick={sendToFoodAmount}>Calculate the food amount</Button>
-        </>
+
       }
+      <Button fullWidth type="submit" sx={styles} variant="contained" onClick={sendToFoodAmount}>Calculate the food amount</Button>
 
     </div>
   );

@@ -11,9 +11,16 @@ import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-
-
-
+const styles = {
+    "&.MuiButton-contained": {
+      bgcolor: '#c85c92',
+      mt:'30px',
+      fontSize:'16px'
+    },
+    "&.MuiTextField-root": {
+        bgcolor: "#ffffff"
+      },
+  };
 
 function AddCatPage() {
     const store = useSelector((store) => store);
@@ -57,12 +64,12 @@ function AddCatPage() {
             <h1>{heading}</h1>
             <form onSubmit={handleSubmit}>
             <FormControl fullWidth>
-                <TextField  label="name" variant="outlined" value={name} onChange={event => setName(event.target.value)}/><br></br>
-                <TextField  label="weight" variant="outlined"  value={weight} onChange={event => setWeight(event.target.value)}/><br></br>
+                <TextField sx={styles} label="name" variant="outlined" value={name} onChange={event => setName(event.target.value)}/><br></br>
+                <TextField sx={styles} label="weight" variant="outlined"  value={weight} onChange={event => setWeight(event.target.value)}/><br></br>
             </FormControl>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select  
+                <Select  sx={{bgcolor:'#ffffff'}}
                           value={age} label="Age" onChange={event => setAge(event.target.value)}>
                     <MenuItem value={'kitten'}>Kitten</MenuItem>
                     <MenuItem value={'adult'}>Adult</MenuItem>
@@ -70,8 +77,8 @@ function AddCatPage() {
                 </FormControl><br></br>
                 <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Neutered</InputLabel>
-                <Select  labelId="demo-simple-select-label"
-                        
+                <Select 
+                        sx={{bgcolor:'#ffffff'}}
                         id="demo-simple-select" value={neutered} label="Neutered" onChange={event => setNeutered(event.target.value)}>
                             
                     <MenuItem value={'neutered'}>Neutered</MenuItem>
@@ -82,7 +89,7 @@ function AddCatPage() {
            
             <Stack spacing={2} direction="row">
                 
-                <Button sx={{bgcolor: '#d98cb3'}} fullWidth type="submit" variant="contained">Add</Button>
+                <Button sx={styles} fullWidth type="submit" variant="contained">Add</Button>
               
             </Stack>
             </form>

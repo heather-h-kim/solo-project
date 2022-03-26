@@ -12,9 +12,9 @@ import Stack from '@mui/material/Stack';
 
 const styles = {
   "&.MuiButton-contained": {
-    bgcolor: "#d88cb2",
+    bgcolor: '#c85c92',
     mt:'30px',
-    fontSize:'17px'
+    fontSize:'16px'
   },
 };
 
@@ -52,7 +52,7 @@ function UserHomePage() {
         }
         )}
       </section>
-      <p>Click on the cat to get the recommended daily calorie!</p>    
+      <p>Click on the cat to get the recommended daily calories!</p>    
       
        
       <Stack direction="row" spacing={2}>
