@@ -2,14 +2,15 @@ import React from 'react';
 import LoginForm from '../LoginForm/LoginForm';
 import { useHistory } from 'react-router-dom';
 import Header from '../Header/Header';
+import './LoginPage.css'
 
 function LoginPage() {
   const history = useHistory();
 
   return (
     <div>
-      <Header />
       <div className="container">
+      <header>Kitty Weight Watcher</header>
         <LoginForm />
 
         <center>

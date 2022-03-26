@@ -7,6 +7,7 @@ body,
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
+  background-color:#ffe6e6
 }
 
 img {
@@ -21,6 +22,7 @@ Container
 .container {
   padding-left: 20px;
   padding-right: 20px;
+  
 }
 
 /* --------------------------------------------------------------------------------
@@ -33,8 +35,8 @@ Button
   border-color: #014041;
   border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: #00acb0;
-  color: #f8f8f8;
+  background-color: #eb99ff;
+  color: #000000;
   font-size: 1.1rem;
   outline: 0;
   cursor: pointer;
@@ -56,7 +58,7 @@ Button
 }
 
 .btn:hover {
-  background-color: #008183;
+  background-color: #eb99ff;
   text-decoration: none;
 }
 
@@ -68,13 +70,14 @@ Button
   border-radius: 0;
   background: none;
   font: inherit;
-  color: #444;
+  font-size: 20px;
+  color: #000000;
 }
 
 .btn_asLink:hover {
   background-color: transparent;
-  border-color: #008183;
-  color: #008183;
+  border-color: #eb99ff;
+  color: #eb99ff;
 }
 
 /* --------------------------------------------------------------------------------
@@ -102,7 +105,7 @@ Form Treatment
   max-width: 100%;
   padding: 25px;
   margin: 0 auto 20px;
-  background-color: #efefef;
+  background-color: rgba(255, 230, 255, 0.6);
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
 }

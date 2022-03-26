@@ -20,7 +20,14 @@ import { sizing } from '@mui/system';
 import './FoodAmountPage.css';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import InboxIcon from '@mui/icons-material/Inbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
 
 
 function FoodAmountPage() {
@@ -40,6 +47,7 @@ function FoodAmountPage() {
     const [perCup, setPerCup] = useState('');
     const [wetFoodId, setWetFoodId] = useState('');
     const [dryFoodId, setDryFoodId] = useState('');
+    const [errorText, setErrorText] = useState('')
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -51,9 +59,9 @@ function FoodAmountPage() {
         transform: 'translate(-50%, -50%)',
         width: 300,
         bgcolor: 'background.paper',
-        border: '2px solid #000',
+        border: '1px solid #000',
         boxShadow: 24,
-        p: 4,
+        p: 3,
       };
 
     useEffect(() => {
@@ -193,9 +201,10 @@ function FoodAmountPage() {
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
+                
                 <FormControl fullWidth >
                     <p className="title">Desired % of calories from wet food:</p>
-                    <TextField sx={{ mb: '8px' }} size='small' label="Wet food %" variant="outlined" value={wetPercent} onChange={event => setWetPercent(event.target.value)} />
+                    <TextField sx={{ mb: '8px' }} size='small' label="wet food %" variant="outlined" value={wetPercent} onChange={event => setWetPercent(event.target.value)} />
                 </FormControl>
                 <p className="title">Wet food Info</p>
                 <p>Select your wet food from the current foods</p>
@@ -243,6 +252,7 @@ function FoodAmountPage() {
                 </FormControl><br></br>
 
             </form>
+         
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -253,17 +263,13 @@ function FoodAmountPage() {
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                     {cat.name} needs
                     </Typography>
-                    <div id="modal-modal-description" sx={{ mt: 2 }}>
-                        
                         {foods.map((food, i) => (
-                            <ul key={i}>
-                                <li>{food.daily_amount_oz} oz of {food.name} a day. </li>
-                            </ul>
+                        <List sx={{fontSize: 20}} key={i}>
+                            <ListItem key={i}>{food.daily_amount_oz} oz of {food.name} a day.</ListItem>
+                        </List>
                         ))}
-                    </div>
                 </Box>
             </Modal>
-
         </div>
     );
 

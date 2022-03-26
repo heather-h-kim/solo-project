@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './LandingPage.css';
-import Header from '../Header/Header';
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterForm/RegisterForm';
@@ -15,9 +14,9 @@ function LandingPage() {
   };
 
   return (
-    <div>
-      <Header />
+    <div className="landing-background">
       <div className="container">
+      <header>Kitty Weight Watcher</header>
         <RegisterForm />
         <center>
           <h4>Already a Member?</h4>
