@@ -222,7 +222,7 @@ function FoodAmountPage() {
 
                 <FormControl fullWidth >
                     <p className="title">Desired % of calories from wet food:</p>
-                    <TextField sx={{ mb: '8px', bgcolor: '#ffffff' }} size='small' label="wet food %" variant="outlined" value={wetPercent} onChange={event => setWetPercent(event.target.value)} />
+                    <TextField autoComplete="off" sx={{ mb: '8px', bgcolor: '#ffffff' }} size='small' label="wet food %" variant="outlined" value={wetPercent} onChange={event => setWetPercent(event.target.value)} />
                 </FormControl>
                 <p className="title">Wet food Info</p>
                 <p className="p-small">Select your wet food from the current foods</p>
@@ -244,7 +244,7 @@ function FoodAmountPage() {
                     <p className="p-small">or Enter the new food information</p>
 
                     <TextField size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Food name" variant="outlined" value={foodOneName} onChange={event => setFoodOneName(event.target.value)} />
-                    <TextField size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodOnePerKg} onChange={event => setFoodOnePerKg(event.target.value)} />
+                    <TextField autoComplete="off" size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodOnePerKg} onChange={event => setFoodOnePerKg(event.target.value)} />
                     {/* <TextField size='small' sx={{ mb: '8px', bgcolor:'#ffffff' }} label="Calories per can" variant="outlined" value={perCan} onChange={event => setPerCan(event.target.value)} /> */}
                 </FormControl>
                 <p className="title">Dry food Info</p>
@@ -266,7 +266,7 @@ function FoodAmountPage() {
                 <FormControl fullWidth>
                     <p className="p-small">or Enter the new food information</p>
                     <TextField size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Food name" variant="outlined" value={foodTwoName} onChange={event => setFoodTwoName(event.target.value)} />
-                    <TextField size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodTwoPerKg} onChange={event => setFoodTwoPerKg(event.target.value)} />
+                    <TextField autoComplete="off" size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodTwoPerKg} onChange={event => setFoodTwoPerKg(event.target.value)} />
                     {/* <TextField size='small' sx={{ mb: '8px', bgcolor:'#ffffff' }} label="Calories per cup" variant="outlined" value={perCup} onChange={event => setPerCup(event.target.value)} /> */}
                     <Button sx={styles} variant="contained" type="submit">Submit</Button>
                 </FormControl><br></br>

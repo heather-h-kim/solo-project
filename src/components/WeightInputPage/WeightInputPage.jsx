@@ -74,11 +74,11 @@ function WeightInputPage() {
       <form onSubmit={calculateCalorie}>
 
         <FormControl fullWidth>
-          <TextField sx={styles} label="Goal weight lbs" variant="outlined" value={goalWeight} onChange={event => setGoalWeight(event.target.value)} /> <br></br>
+          <TextField autoComplete="off" sx={styles} label="Goal weight lbs" variant="outlined" value={goalWeight} onChange={event => setGoalWeight(event.target.value)} /> <br></br>
         </FormControl>
         <p>How much treats do you want to feed {cat.name}? It is recommended that you limit treats up to 10% of the daily calorie needs.</p>
         <FormControl fullWidth>
-          <TextField sx={styles} label="Treat %" variant="outlined" value={treat} onChange={event => setTreat(event.target.value)} />
+          <TextField autoComplete="off" sx={styles} label="Treat %" variant="outlined" value={treat} onChange={event => setTreat(event.target.value)} />
           <Button type="submit" sx={styles} variant="contained">Calculate the daily calorie</Button>
         </FormControl><br></br>
 
