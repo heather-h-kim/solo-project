@@ -25,12 +25,6 @@ function ChartItem({ cat }) {
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardActionArea onClick={handleClick}>
-                {/* <CardMedia
-        component="img"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
-      /> */}
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
                         {cat.name}

@@ -111,7 +111,9 @@ function AdjustDailyCalorie() {
       </form>
       {clicked &&
         <>
-          {cat.name} now needs {cat.total_daily_cal}kcal a day. {cat.treat_cal}kcal is from treats and {cat.food_cal}kcal is from food.
+        <Typography sx={{fontSize:'20px'}}>
+          {cat.name} now needs {cat.total_daily_cal}kcal a day. <br></br> {cat.treat_cal}kcal is from treats and {cat.food_cal}kcal is from food.
+        </Typography>
           <Button sx={styles} fullWidth variant="contained" onClick={handleClick}>Get the food amount</Button>
         </>
       }

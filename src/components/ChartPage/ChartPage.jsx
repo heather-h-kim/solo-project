@@ -17,25 +17,25 @@ function ChartPage() {
     dispatch({type:'FETCH_CATS'});
   }, [])
 
-  const handleClick = () => {
-    console.log('in chartpage handleClick!');
-    history.push('/adjust-calorie');
-  }
+  // const handleClick = () => {
+  //   console.log('in chartpage handleClick!');
+  //   history.push('/adjust-calorie');
+  // }
   
   console.log('cats are', cats);
   console.log('weightHistory is', weightHistory);
   return (
     <div className="container">
       <p> Your cats:</p>
-      <section>
+      <section style={{marginTop:'20px', marginBottom:'30px'}}>
         {cats.map((cat,i) => {
           return(<div key={i}>
             <ChartItem cat={cat} />
           </div>)
         }
         )}
-      <p>Click on the cat to see the weight history!</p>    
       </section>
+      <p>Click on the cat to see the weight history!</p>    
     
       
     </div>
