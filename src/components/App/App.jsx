@@ -110,14 +110,14 @@ function App() {
             <Nav />
             <FoodAmountPage />
           </ProtectedRoute>
-          {/* <ProtectedRoute
+          <ProtectedRoute
             // logged in shows AddCatPage else shows LoginPage
             exact
             path="/result/:id"
           >
             <Nav />
             <ResultPage />
-          </ProtectedRoute> */}
+          </ProtectedRoute>
           <ProtectedRoute
             // logged in shows ChartPage else shows LoginPage
             exact

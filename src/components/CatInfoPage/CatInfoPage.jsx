@@ -56,7 +56,7 @@ function CatInfoPage() {
     <div className="container">
       <Box sx={{ width: '100%', maxWidth: 360, bgcolor: '#ffe6ee', mb:'20px' }}>
         <List>
-          <ListItem sx={{fontSize:"20px", mb:"4px"}} disablePadding>
+          <ListItem sx={{fontSize:"20px", mt:"10px", mb:"4px"}} disablePadding>
           Name: {cat.name}
           </ListItem>
           <ListItem sx={{fontSize:"20px", mb:"4px"}}disablePadding>
@@ -65,14 +65,8 @@ function CatInfoPage() {
           <ListItem sx={{fontSize:"20px", mb:"4px"}}disablePadding>
           Neuter-status: {cat.is_neutered}
           </ListItem>
-          <ListItem sx={{fontSize:"20px", mb:"4px"}}disablePadding>
-          Current weight: {cat.current_weight}lbs
-          </ListItem>
-          <ListItem sx={{fontSize:"20px", mb:"4px"}}disablePadding>
-          Recommended food calories: {cat.food_cal}kcal
-          </ListItem>
           <ListItem sx={{fontSize:"20px", mb:"15px"}}disablePadding>
-          Recommended treat calories: {cat.treat_cal}kcal
+          Current weight: {cat.current_weight}lbs
           </ListItem>
         </List>
     </Box>

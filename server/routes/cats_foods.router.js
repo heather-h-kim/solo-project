@@ -39,16 +39,7 @@ router.put('/:id', (req, res) => {
                        SET "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id"= $1 AND "foods"."id" =$2) 
                                                             WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
                                                            END
-                                                FROM "foods" WHERE "foods"."id" = $2),
-
-                            "daily_amount_can" = (SELECT CASE WHEN "foods"."type" = 'wet' THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods". "food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 
-                                                                  WHEN "foods"."type" = 'dry' THEN 0
-                                                              END
-                                                      FROM "foods" WHERE "foods"."id" = $2),
-                            "daily_amount_cup" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN 0
-                                                              WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
-                                                            END
-                                                    FROM "foods" WHERE "foods"."id" = $2)
+                                                FROM "foods" WHERE "foods"."id" = $2)
                        WHERE "cat_id" = $1 AND "food_id" = $2;`;
 
 
@@ -150,20 +141,20 @@ router.post('/wet-and-dry', async (req, res) => {
         try {
             await connection.query('BEGIN');
             const sqlAddDryFoodToFoods =
-                `INSERT INTO "foods" ("name", "type", "cal_per_cup", "cal_per_kg")
-        VALUES ($1, $2, $3, $4)
+                `INSERT INTO "foods" ("name", "type", "cal_per_kg")
+        VALUES ($1, $2, $3)
         RETURNING "id";
         `;
 
-            const dryFoodArray = [req.body.dry_food.name, req.body.dry_food.type, req.body.dry_food.cal_per_cup, req.body.dry_food.cal_per_kg];
+            const dryFoodArray = [req.body.dry_food.name, req.body.dry_food.type, req.body.dry_food.cal_per_kg];
 
             const sqlAddWetFoodToFoods =
-                `INSERT INTO "foods" ("name", "type", "cal_per_can", "cal_per_kg")
-        VALUES ($1, $2, $3, $4)
+                `INSERT INTO "foods" ("name", "type", "cal_per_kg")
+        VALUES ($1, $2, $3)
         RETURNING "id";
         `;
 
-            const wetFoodArray = [req.body.wet_food.name, req.body.wet_food.type, req.body.wet_food.cal_per_can, req.body.wet_food.cal_per_kg];
+            const wetFoodArray = [req.body.wet_food.name, req.body.wet_food.type, req.body.wet_food.cal_per_kg];
 
             const resultDry = await connection.query(sqlAddDryFoodToFoods, dryFoodArray);
             const resultWet = await connection.query(sqlAddWetFoodToFoods, wetFoodArray);
@@ -184,16 +175,7 @@ router.post('/wet-and-dry', async (req, res) => {
         SET "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id"= $1 AND "foods"."id" =$2) 
                                              WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
                                             END
-                                 FROM "foods" WHERE "foods"."id" = $2),
-
-             "daily_amount_can" = (SELECT CASE WHEN "foods"."type" = 'wet' THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods". "food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 
-                                                   WHEN "foods"."type" = 'dry' THEN 0
-                                               END
-                                       FROM "foods" WHERE "foods"."id" = $2),
-             "daily_amount_cup" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN 0
-                                               WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
-                                             END
-                                     FROM "foods" WHERE "foods"."id" = $2)
+                                 FROM "foods" WHERE "foods"."id" = $2)
         WHERE "cat_id" = $1 AND "food_id" = $2;`;
 
             const dryValueArray = [cat_id, dryFoodId];
@@ -236,12 +218,12 @@ router.post('/new-dry-old-wet', async (req, res) => {
         try {
             await connection.query('BEGIN');
             const sqlAddDryFoodToFoods =
-                `INSERT INTO "foods" ("name", "type", "cal_per_cup", "cal_per_kg")
-        VALUES ($1, $2, $3, $4)
+                `INSERT INTO "foods" ("name", "type", "cal_per_kg")
+        VALUES ($1, $2, $3)
         RETURNING "id";
         `;
 
-            const dryFoodArray = [req.body.dry_food.name, req.body.dry_food.type, req.body.dry_food.cal_per_cup, req.body.dry_food.cal_per_kg];
+            const dryFoodArray = [req.body.dry_food.name, req.body.dry_food.type, req.body.dry_food.cal_per_kg];
 
 
             const resultDry = await connection.query(sqlAddDryFoodToFoods, dryFoodArray);
@@ -262,16 +244,7 @@ router.post('/new-dry-old-wet', async (req, res) => {
         SET "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id"= $1 AND "foods"."id" =$2) 
                                              WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
                                             END
-                                 FROM "foods" WHERE "foods"."id" = $2),
-
-             "daily_amount_can" = (SELECT CASE WHEN "foods"."type" = 'wet' THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods". "food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 
-                                                   WHEN "foods"."type" = 'dry' THEN 0
-                                               END
-                                       FROM "foods" WHERE "foods"."id" = $2),
-             "daily_amount_cup" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN 0
-                                               WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
-                                             END
-                                     FROM "foods" WHERE "foods"."id" = $2)
+                                 FROM "foods" WHERE "foods"."id" = $2)
         WHERE "cat_id" = $1 AND "food_id" = $2;`;
 
             const dryValueArray = [cat_id, dryFoodId];
@@ -313,12 +286,12 @@ router.post('/new-wet-old-dry', async (req, res) => {
         try {
             await connection.query('BEGIN');
             const sqlAddWetFoodToFoods =
-                `INSERT INTO "foods" ("name", "type", "cal_per_can", "cal_per_kg")
-        VALUES ($1, $2, $3, $4)
+                `INSERT INTO "foods" ("name", "type", "cal_per_kg")
+        VALUES ($1, $2, $3)
         RETURNING "id";
         `;
 
-            const wetFoodArray = [req.body.wet_food.name, req.body.wet_food.type, req.body.wet_food.cal_per_can, req.body.wet_food.cal_per_kg];
+            const wetFoodArray = [req.body.wet_food.name, req.body.wet_food.type, req.body.wet_food.cal_per_kg];
 
 
             const resultWet = await connection.query(sqlAddWetFoodToFoods, wetFoodArray);
@@ -339,16 +312,7 @@ router.post('/new-wet-old-dry', async (req, res) => {
         SET "daily_amount_oz" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id"= $1 AND "foods"."id" =$2) 
                                              WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/("foods"."cal_per_kg"/35.274), 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
                                             END
-                                 FROM "foods" WHERE "foods"."id" = $2),
-
-             "daily_amount_can" = (SELECT CASE WHEN "foods"."type" = 'wet' THEN (SELECT ROUND("cats"."food_cal"*"cats"."wet_percentage"*0.01/"foods"."cal_per_can", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods". "food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 
-                                                   WHEN "foods"."type" = 'dry' THEN 0
-                                               END
-                                       FROM "foods" WHERE "foods"."id" = $2),
-             "daily_amount_cup" = (SELECT CASE WHEN "foods"."type" = 'wet'  THEN 0
-                                               WHEN "foods"."type" = 'dry' THEN (SELECT ROUND("cats"."food_cal"*(100-"cats"."wet_percentage")*0.01/"foods"."cal_per_cup", 1) FROM "cats" JOIN "cats_foods" ON "cats"."id" = "cats_foods"."cat_id"  JOIN "foods" ON "foods"."id" = "cats_foods"."food_id" WHERE "cats"."id" = $1 AND "foods"."id" = $2) 	
-                                             END
-                                     FROM "foods" WHERE "foods"."id" = $2)
+                                 FROM "foods" WHERE "foods"."id" = $2)
         WHERE "cat_id" = $1 AND "food_id" = $2;`;
 
             const dryValueArray = [cat_id, dryFoodId];
