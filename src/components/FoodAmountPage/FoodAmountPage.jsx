@@ -38,9 +38,9 @@ const styles = {
       marginTop:'12px',
       fontSize:'16px'
     },
+
   };
 
-  
 
 function FoodAmountPage() {
     const store = useSelector((store) => store);
@@ -279,7 +279,7 @@ function FoodAmountPage() {
                     </Typography>
                         {foods.map((food, i) => (
                         <List sx={{fontSize: 20}} key={i}>
-                            <ListItem key={i}>{food.daily_amount_oz} oz of {food.name} a day.</ListItem>
+                            <ListItem key={i}>{food.daily_amount_oz}oz of {food.name} a day.</ListItem>
                         </List>
                         ))}
                 </Box>

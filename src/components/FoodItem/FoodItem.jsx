@@ -13,7 +13,7 @@ function FoodItem({ food }) {
     return (
     <>
       <TableCell align="center" sx={{width:'100px', fontSize:"18px"}}>{food.name}</TableCell>
-      <TableCell align="center" sx={{width:'250px', fontSize:"18px"}}>{food.daily_amount_oz} oz per day</TableCell>
+      <TableCell align="center" sx={{width:'250px', fontSize:"18px"}}>{food.daily_amount_oz}oz per day</TableCell>
     </>
     );
 }
