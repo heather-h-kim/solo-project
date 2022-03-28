@@ -8,26 +8,13 @@ import { FormControl } from '@mui/material';
 import { InputLabel } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import { sizing } from '@mui/system';
 import './FoodAmountPage.css';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
+
 
 const styles = {
     "&.MuiTextField-root": {
@@ -45,7 +32,7 @@ const styles = {
 
 function FoodAmountPage() {
     const store = useSelector((store) => store);
-    const user = store.user;
+    // const user = store.user;
     const cat = store.thisCat;
     const foods = store.foods;
     const { id } = useParams();
@@ -60,7 +47,6 @@ function FoodAmountPage() {
     // const [perCup, setPerCup] = useState('');
     const [wetFoodId, setWetFoodId] = useState('');
     const [dryFoodId, setDryFoodId] = useState('');
-    const [errorText, setErrorText] = useState('')
     // const [open, setOpen] = useState(false);
     const [clicked, setClicked] = useState(false);
     // const handleOpen = (event) => setOpen(true);

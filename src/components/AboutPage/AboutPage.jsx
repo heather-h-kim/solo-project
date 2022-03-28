@@ -18,7 +18,7 @@ function About(props) {
         <li>Express</li>
         <li>React</li>
         <li>Redux</li>
-        <li>PosgreSQL</li>
+        <li>PostgreSQL</li>
         <li>Saga</li>
         <li>Material-UI</li>
       </ul>
