@@ -1,12 +1,8 @@
-// import React from 'react';
-// import LogOutButton from '../LogOutButton/LogOutButton';
-// import {useSelector} from 'react-redux';
 
 import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import CatItem from '../CatItem/CatItem';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
