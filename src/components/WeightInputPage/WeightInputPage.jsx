@@ -97,7 +97,7 @@ function WeightInputPage() {
               <ListItem sx={{ fontSize: "20px", mb: "4px" }} disablePadding>
                 Recommended daily calories: <span style={{fontWeight:'bold'}}>{cat.total_daily_cal}kcal</span>
               </ListItem>
-              <ListItem sx={{ fontSize: "20px", mb: "15px" }} disablePadding>
+              <ListItem sx={{ fontSize: "20px", mb: "4px" }} disablePadding>
                 The calories from treats: <span style={{fontWeight:'bold'}}>{cat.treat_cal}kcal</span>
               </ListItem>
               <ListItem sx={{ fontSize: "20px", mb: "15px" }} disablePadding>
