@@ -23,9 +23,9 @@ function About(props) {
         <li>Material-UI</li>
       </ul>
       <h2>Challenges</h2>
-       <p>Figuring out how to send multiple http requests in the order that makes sense for chained calculations in the database.</p>
+       <p>Figuring out how to send multiple http requests in the order that makes sense for the chained calculations that should be done in the database.</p>
       <h2>What's Next?</h2>
-       <p>Adding a graph for a visual representation of the cat's weight change and allowing the user to upload the cat's photo to the cat information page so the app would look more interesting.</p>
+       <p>Adding a graph for a visual representation of the cat's weight change and allowing the user to upload the cat's photo to the cat information page for a little personal touch.</p>
     </div>
   );
 }

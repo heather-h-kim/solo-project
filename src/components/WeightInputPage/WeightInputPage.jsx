@@ -105,7 +105,6 @@ function WeightInputPage() {
               </ListItem>
             </List>
           </Box>
-
       }
       <Button fullWidth type="submit" sx={styles} variant="contained" onClick={sendToFoodAmount}>Calculate the food amount</Button>
 

@@ -61,13 +61,10 @@ function FoodAmountPage() {
     const [wetFoodId, setWetFoodId] = useState('');
     const [dryFoodId, setDryFoodId] = useState('');
     const [errorText, setErrorText] = useState('')
-    const [open, setOpen] = useState(false);
-    // const [clicked, setClicked] = useState(false);
-    const handleOpen = (event) => 
-    { 
-        setOpen(true);
-    }
-    const handleClose = () => setOpen(false);
+    // const [open, setOpen] = useState(false);
+    const [clicked, setClicked] = useState(false);
+    // const handleOpen = (event) => setOpen(true);
+    // const handleClose = () => setOpen(false);
 
     const style = {
         position: 'absolute',
@@ -201,7 +198,7 @@ function FoodAmountPage() {
             }
         }
         // history.push(`/result/${cat.id}`);
-        // setClicked(!clicked);
+        setClicked(!clicked);
         setWetPercent('');
         setFoodOneName('');
         setFoodTwoName('');
@@ -232,12 +229,12 @@ function FoodAmountPage() {
     }
 
     return (
-        <div className="container" style={{ marginTop: '25px' }} >
+        <div className="container" style={{ marginTop: '10px' }} >
             <form onSubmit={handleSubmit}>
 
                 <FormControl fullWidth >
                     <p className="title">Desired % of calories from wet food:</p>
-                    <TextField autoComplete="off" sx={{ mb: '8px', bgcolor: '#ffffff' }} label="wet food %" variant="outlined" value={wetPercent} onChange={event => setWetPercent(event.target.value)} />
+                    <TextField size='small' autoComplete="off" sx={{ mb: '8px', bgcolor: '#ffffff' }} label="wet food %" variant="outlined" value={wetPercent} onChange={event => setWetPercent(event.target.value)} />
                 </FormControl>
                 <p onClick={autoWetFood} className="title">Wet food Info</p>
                 <p className="p-small">Select your wet food from the current foods</p>
@@ -248,6 +245,7 @@ function FoodAmountPage() {
                         id="demo-simple-select"
                         value={wetFoodId}
                         label="Age"
+                        size='small'
                         sx={{ bgcolor: '#ffffff', mb:'10px' }}
                         onChange={event => setWetFoodId(event.target.value)}>
                         {foods.filter(wet).map((food, i) => {
@@ -258,8 +256,8 @@ function FoodAmountPage() {
                 <FormControl fullWidth >
                     <p className="p-small">or Enter the new food information</p>
 
-                    <TextField sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Food name" variant="outlined" value={foodOneName} onChange={event => setFoodOneName(event.target.value)} />
-                    <TextField autoComplete="off" sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodOnePerKg} onChange={event => setFoodOnePerKg(event.target.value)} />
+                    <TextField size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Food name" variant="outlined" value={foodOneName} onChange={event => setFoodOneName(event.target.value)} />
+                    <TextField size='small' autoComplete="off" sx={{ mb: '4px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodOnePerKg} onChange={event => setFoodOnePerKg(event.target.value)} />
                     {/* <TextField size='small' sx={{ mb: '8px', bgcolor:'#ffffff' }} label="Calories per can" variant="outlined" value={perCan} onChange={event => setPerCan(event.target.value)} /> */}
                 </FormControl>
                 <p onClick={autoDryFood} className="title">Dry food Info</p>
@@ -267,6 +265,7 @@ function FoodAmountPage() {
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Dry foods</InputLabel>
                     <Select
+                        size='small'
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={dryFoodId}
@@ -280,14 +279,14 @@ function FoodAmountPage() {
                 </FormControl>
                 <FormControl fullWidth>
                     <p onClick={autoDryFoodTwo}  className="p-small">or Enter the new food information</p>
-                    <TextField  sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Food name" variant="outlined" value={foodTwoName} onChange={event => setFoodTwoName(event.target.value)} />
-                    <TextField autoComplete="off" sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodTwoPerKg} onChange={event => setFoodTwoPerKg(event.target.value)} />
+                    <TextField size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Food name" variant="outlined" value={foodTwoName} onChange={event => setFoodTwoName(event.target.value)} />
+                    <TextField size='small' autoComplete="off" sx={{ mb: '4px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodTwoPerKg} onChange={event => setFoodTwoPerKg(event.target.value)} />
                     {/* <TextField size='small' sx={{ mb: '8px', bgcolor:'#ffffff' }} label="Calories per cup" variant="outlined" value={perCup} onChange={event => setPerCup(event.target.value)} /> */}
-                    <Button onClick={handleOpen} sx={styles} variant="contained" type="submit">Submit</Button>
+                    <Button  sx={styles} variant="contained" type="submit">Submit</Button>
                 </FormControl><br></br>
 
             </form>
-            {/* {clicked &&
+            {clicked &&
                 <Box  sx={{ fontSize: "20px", mt: "10px", mb: "4px" }}>
                     {cat.name} needs
                     {foods.map((food, i) => (
@@ -297,9 +296,9 @@ function FoodAmountPage() {
                     ))}
                 </Box>
 
-            } */}
+            }
                      
-            <Modal
+            {/* <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -315,7 +314,7 @@ function FoodAmountPage() {
                         </List>
                         ))}
                 </Box>
-            </Modal>
+            </Modal> */}
         </div>
     );
 

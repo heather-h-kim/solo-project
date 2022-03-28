@@ -54,18 +54,19 @@ function AddCatPage() {
 
     }
 
-    const handleClick = () => {
-        history.push("/user-home");
-    }
 
+    const autoPochi = () => {
+        setName('Pochi');
+        setWeight('8.9');
+    }
 
     return (
         <div className="container">
-            <h1>{heading}</h1>
+            <h1 onClick={autoPochi}>{heading}</h1>
             <form onSubmit={handleSubmit}>
             <FormControl fullWidth>
                 <TextField sx={styles} label="name" variant="outlined" value={name} onChange={event => setName(event.target.value)}/><br></br>
-                <TextField sx={styles} label="weight" variant="outlined"  value={weight} onChange={event => setWeight(event.target.value)}/><br></br>
+                <TextField sx={styles} label="weight lbs" variant="outlined"  value={weight} onChange={event => setWeight(event.target.value)}/><br></br>
             </FormControl>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
@@ -76,10 +77,10 @@ function AddCatPage() {
                 </Select><br></br>
                 </FormControl><br></br>
                 <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Neutered</InputLabel>
+                <InputLabel id="demo-simple-select-label">Neuter status</InputLabel>
                 <Select 
                         sx={{bgcolor:'#ffffff'}}
-                        id="demo-simple-select" value={neutered} label="Neutered" onChange={event => setNeutered(event.target.value)}>
+                        id="demo-simple-select" value={neutered} label="Neuter-status" onChange={event => setNeutered(event.target.value)}>
                             
                     <MenuItem value={'neutered'}>Neutered</MenuItem>
                     <MenuItem value={'intact'}>Intact</MenuItem>
