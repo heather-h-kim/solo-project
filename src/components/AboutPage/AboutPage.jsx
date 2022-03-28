@@ -23,9 +23,12 @@ function About(props) {
         <li>Material-UI</li>
       </ul>
       <h2>Challenges</h2>
-       <p>Figuring out how to send multiple http requests in the order that makes sense for the chained calculations that should be done in the database.</p>
+      <ul>
+        <li>Figuring out SQL queries to do conditional calculations - the recommended calories change depending on cat's age and neuter status.<br></br></li>
+        <li>Figuring out how to send multiple http requests for the chained calculations for each combination of foods</li>
+      </ul>
       <h2>What's Next?</h2>
-       <p>Adding a graph for a visual representation of the cat's weight change and allowing the user to upload the cat's photo to the cat information page for a little bit of personal touch.</p>
+       <p>Adding a graph for a visual representation of the cat's weight change.</p>
     </div>
   );
 }
