@@ -25,7 +25,7 @@ function About(props) {
       <h2>Challenges</h2>
        <p>Figuring out how to send multiple http requests in the order that makes sense for the chained calculations that should be done in the database.</p>
       <h2>What's Next?</h2>
-       <p>Adding a graph for a visual representation of the cat's weight change and allowing the user to upload the cat's photo to the cat information page for a little personal touch.</p>
+       <p>Adding a graph for a visual representation of the cat's weight change and allowing the user to upload the cat's photo to the cat information page for a little bit of personal touch.</p>
     </div>
   );
 }
