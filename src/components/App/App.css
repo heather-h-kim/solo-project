@@ -137,7 +137,7 @@ input {
 }
 
 .bg {
- background-image: url("/Users/heatherkim/Documents/Prime/solo-project/public/images/catpink.jpeg");
+ background-image: url("public/images/catpink.jpeg");
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;
