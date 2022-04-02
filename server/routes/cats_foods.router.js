@@ -26,9 +26,6 @@ router.post('/', (req, res) => {
 });
 
 
-
-
-
 //calculate food amount 
 router.put('/:id', (req, res) => {
     console.log('in cats_foods PUT route to calculate food amount');

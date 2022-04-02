@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
+import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { FormControl } from '@mui/material';
 import { InputLabel } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import './FoodAmountPage.css';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
@@ -32,25 +29,18 @@ const styles = {
 
 function FoodAmountPage() {
     const store = useSelector((store) => store);
-    // const user = store.user;
     const cat = store.thisCat;
     const foods = store.foods;
     const { id } = useParams();
     const dispatch = useDispatch();
-    const history = useHistory();
     const [wetPercent, setWetPercent] = useState('');
     const [foodOneName, setFoodOneName] = useState('');
     const [foodTwoName, setFoodTwoName] = useState('');
-    // const [perCan, setPerCan] = useState('');
     const [foodOnePerKg, setFoodOnePerKg] = useState('');
     const [foodTwoPerKg, setFoodTwoPerKg] = useState('');
-    // const [perCup, setPerCup] = useState('');
     const [wetFoodId, setWetFoodId] = useState('');
     const [dryFoodId, setDryFoodId] = useState('');
-    // const [open, setOpen] = useState(false);
     const [clicked, setClicked] = useState(false);
-    // const handleOpen = (event) => setOpen(true);
-    // const handleClose = () => setOpen(false);
 
     const style = {
         position: 'absolute',
@@ -81,14 +71,11 @@ function FoodAmountPage() {
         event.preventDefault();
         console.log('in food amount handle submit');
 
-        // //Update the wet food percentage of this cat
-        // dispatch({ type: 'EDIT_WET_PERCENTAGE', payload: { id: cat.id, wet_percentage: Number(wetPercent) } });
 
-
+        //if the user feeds the cat dry food only
         if (Number(wetPercent) === 0) {
-            //if the user feeds the cat dry food only
+           //if the user keeps feeding the cat the current dry food
             if (foodTwoName === '') {
-                //if the user keeps feeding the cat the current dry food
                 dispatch({ type: 'CALCULATE_FOOD_AMOUNT', payload: { cat_id: cat.id, food_id: Number(dryFoodId), wet_percentage: Number(wetPercent) } })
             } else {
                 //if the user feeds the cat new dry food
@@ -98,7 +85,6 @@ function FoodAmountPage() {
                         cat_id: cat.id,
                         name: foodTwoName,
                         type: 'dry',
-                        // cal_per_cup: Number(perCup),
                         cal_per_kg: Number(foodTwoPerKg),
                         wet_percentage: Number(wetPercent)
                     }
@@ -117,7 +103,6 @@ function FoodAmountPage() {
                         cat_id: cat.id,
                         name: foodOneName,
                         type: 'wet',
-                        // cal_per_can: Number(perCan),
                         cal_per_kg: Number(foodOnePerKg),
                         wet_percentage: Number(wetPercent)
                     }
@@ -145,7 +130,6 @@ function FoodAmountPage() {
                         dryFood_id: Number(dryFoodId),
                         wet_name: foodOneName,
                         wet_type: 'wet',
-                        // cal_per_can: Number(perCan),
                         wet_cal_per_kg: Number(foodOnePerKg),
                         wet_percentage: Number(wetPercent)
                     }
@@ -159,7 +143,6 @@ function FoodAmountPage() {
                         wetFood_id: Number(wetFoodId),
                         dry_name: foodTwoName,
                         dry_type: 'dry',
-                        // cal_per_cup: Number(perCup),
                         dry_cal_per_kg: Number(foodTwoPerKg),
                         wet_percentage: Number(wetPercent)
                     }
@@ -172,41 +155,26 @@ function FoodAmountPage() {
                         cat_id: cat.id,
                         wet_name: foodOneName,
                         wet_type: 'wet',
-                        // cal_per_can: Number(perCan),
                         wet_cal_per_kg: Number(foodOnePerKg),
                         dry_name: foodTwoName,
                         dry_type: 'dry',
-                        // cal_per_cup: Number(perCup),
                         dry_cal_per_kg: Number(foodTwoPerKg),
                         wet_percentage: Number(wetPercent)
                     }
                 })
             }
         }
-        // history.push(`/result/${cat.id}`);
+        
         setClicked(!clicked);
         setWetPercent('');
         setFoodOneName('');
         setFoodTwoName('');
-        // setPerCan('');
         setFoodOnePerKg('');
         setFoodTwoPerKg('');
-        // setPerCup('');
         setWetFoodId('');
         setDryFoodId('');
-
-
-
     }
-
  
-
-
-    const autoDryFoodTwo =() => {
-     setFoodTwoName('Dr. Elsey\'s Cleanprotein');
-     setFoodTwoPerKg(4030);
-    }
-
     return (
         <div className="container" style={{ marginTop: '10px' }} >
             <form onSubmit={handleSubmit}>
@@ -234,10 +202,8 @@ function FoodAmountPage() {
                 </FormControl>
                 <FormControl fullWidth >
                     <p className="p-small">or Enter the new food information</p>
-
                     <TextField size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Food name" variant="outlined" value={foodOneName} onChange={event => setFoodOneName(event.target.value)} />
-                    <TextField size='small' autoComplete="off" sx={{ mb: '4px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodOnePerKg} onChange={event => setFoodOnePerKg(event.target.value)} />
-                    {/* <TextField size='small' sx={{ mb: '8px', bgcolor:'#ffffff' }} label="Calories per can" variant="outlined" value={perCan} onChange={event => setPerCan(event.target.value)} /> */}
+                    <TextField size='small' autoComplete="off" sx={{ mb: '4px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodOnePerKg} onChange={event => setFoodOnePerKg(event.target.value)} />         
                 </FormControl>
                 <p className="title">Dry food Info</p>
                 <p className="p-small">Select your dry food from the current foods</p>
@@ -260,7 +226,6 @@ function FoodAmountPage() {
                     <p className="p-small">or Enter the new food information</p>
                     <TextField size='small' sx={{ mb: '8px', bgcolor: '#ffffff' }} label="Food name" variant="outlined" value={foodTwoName} onChange={event => setFoodTwoName(event.target.value)} />
                     <TextField size='small' autoComplete="off" sx={{ mb: '4px', bgcolor: '#ffffff' }} label="Calories per kg" variant="outlined" value={foodTwoPerKg} onChange={event => setFoodTwoPerKg(event.target.value)} />
-                    {/* <TextField size='small' sx={{ mb: '8px', bgcolor:'#ffffff' }} label="Calories per cup" variant="outlined" value={perCup} onChange={event => setPerCup(event.target.value)} /> */}
                     <Button  sx={styles} variant="contained" type="submit">Submit</Button>
                 </FormControl><br></br>
 
@@ -276,24 +241,6 @@ function FoodAmountPage() {
                 </Box>
 
             }
-                     
-            {/* <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                    {cat.name} needs
-                    </Typography>
-                        {foods.map((food, i) => (
-                        <List sx={{fontSize: 20}} key={i}>
-                            <ListItem key={i}>{food.daily_amount_oz} oz of {food.name} a day.</ListItem>
-                        </List>
-                        ))}
-                </Box>
-            </Modal> */}
         </div>
     );
 

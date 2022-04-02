@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserHomePage from '../UserHomePage/UserHomePage';
 import ChartPage from '../ChartPage/ChartPage';
@@ -20,7 +19,6 @@ import EditCatPage from '../EditCatPage/EditCatPage';
 import WeightInputPage from '../WeightInputPage/WeightInputPage';
 import FoodAmountPage from '../FoodAmountPage/FoodAmountPage';
 import AdjustCaloriePage from '../AdjustCaloriePage/AdjustCaloriePage';
-import ResultPage from '../ResultPage/ResultPage';
 import ChartEachCatPage from '../ChartEachCatPage/ChartEachCatPage';
 import AboutPage from '../AboutPage/AboutPage';
 import './App.css';
@@ -111,14 +109,6 @@ function App() {
             <FoodAmountPage />
           </ProtectedRoute>
           <ProtectedRoute
-            // logged in shows AddCatPage else shows LoginPage
-            exact
-            path="/result/:id"
-          >
-            <Nav />
-            <ResultPage />
-          </ProtectedRoute>
-          <ProtectedRoute
             // logged in shows ChartPage else shows LoginPage
             exact
             path="/chart"
@@ -189,7 +179,7 @@ function App() {
             <h1>404</h1>
           </Route>
         </Switch>
-        {/* <Footer /> */}
+       
       </div>
     </Router>
   );

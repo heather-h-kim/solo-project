@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import TextField from '@mui/material/TextField';
 import { FormControl } from '@mui/material';
 import { InputLabel } from '@mui/material';
@@ -30,22 +30,27 @@ function AddCatPage() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('in add cat handleSubmit');
-        const newCat = {
-            name: name,
-            age: age,
-            is_neutered: neutered,
-            current_weight: weight
-        };
-        console.log('newCat is', newCat);
+        // const newCat = {
+        //     name: name,
+        //     age: age,
+        //     is_neutered: neutered,
+        //     current_weight: weight
+        // };
+        // console.log('newCat is', newCat);
         //If the user confirms yes, dispatch the action
         const confirmation = confirm("Do you want to add this cat?")
         if (confirmation === true) {
-            dispatch({ type: 'ADD_CAT', payload: newCat })
+            dispatch({ type: 'ADD_CAT', 
+                       payload: {name: name, 
+                                 age: age, 
+                                 is_neutered: neutered, 
+                                 current_weight: weight
+                                 }})
             setName('');
             setAge('');
             setNeutered('');
             setWeight('');
-            alert(`${newCat.name} is added!`)
+            alert(`${name} is added!`)
         }
 
     }

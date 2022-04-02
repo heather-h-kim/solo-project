@@ -2,9 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-/**
- * GET route template
- */
+//get weight history of one cat
 router.get('/:id', (req, res) => {
     console.log('in weight/GET route');
     console.log('req.params.id is', req.params.id);
@@ -29,9 +27,7 @@ router.get('/:id', (req, res) => {
     }
 });
 
-/**
- * POST route template
- */
+//post new weight
 router.post('/', (req, res) => {
 
     console.log('in weight post router, req.body is', req.body);

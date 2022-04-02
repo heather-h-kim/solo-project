@@ -28,30 +28,6 @@ const router = express.Router();
     }
 });
 
-// //get  the user's foods 
-// router.get('/:id', (req, res) => {
-//     console.log('in foods/user GET route');
-//     console.log('req.user.id is', req.user.id);
-    
-//     if (req.isAuthenticated()) {
-//         const queryText = `SELECT "foods"."id", "foods"."name"
-//                            FROM "foods" 
-//                            WHERE "user_id"= $1;
-//                            `;
-
-//         pool.query(queryText, [req.params.id])
-//             .then((result) => {
-//                 console.log('result.rows is', result.rows);
-//                 res.send(result.rows);
-//             })
-//             .catch((error) => {
-//                 console.log('error GETing foods', error);
-//                 res.sendStatus(500);
-//             })
-//     } else {
-//         res.sendStatus(403);
-//     }
-// });
 
 //add dry food
 router.post('/dry', (req, res) => {

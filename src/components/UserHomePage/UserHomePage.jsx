@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import CatItem from '../CatItem/CatItem';
@@ -59,5 +59,5 @@ function UserHomePage() {
   );
 }
 
-// this allows us to use <App /> in index.js
+
 export default UserHomePage;

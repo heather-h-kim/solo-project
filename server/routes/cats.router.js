@@ -331,8 +331,8 @@ router.put('/adj-calorie/:id', async (req, res) => {
             `UPDATE "cats"
             SET "total_daily_cal" = 
                 (SELECT 
-                    CASE WHEN "cats"."adjustment_direction" = 'increase' THEN (SELECT "cats"."total_daily_cal"*(100+"adjustment_percentage")/100 FROM "cats")
-                        WHEN "cats"."adjustment_direction" = 'decrease' THEN (SELECT "cats"."total_daily_cal"*(100-"adjustment_percentage")/100 FROM "cats")
+                    CASE WHEN "cats"."adjustment_direction" = 'increase' THEN ("cats"."total_daily_cal"*(100+"adjustment_percentage")/100)
+                        WHEN "cats"."adjustment_direction" = 'decrease' THEN ("cats"."total_daily_cal"*(100-"adjustment_percentage")/100)
                     END
                 )
             WHERE "cats"."id" = $1;`;
@@ -343,8 +343,8 @@ router.put('/adj-calorie/:id', async (req, res) => {
 
             const sqlAdjTreatFoodCalories = 
             `UPDATE "cats"
-            SET "treat_cal" = (SELECT "total_daily_cal"*"treat_percentage"*0.01 FROM "cats"),
-                "food_cal" = (SELECT "total_daily_cal"*(100-"treat_percentage")*0.01 FROM "cats")
+            SET "treat_cal" = "total_daily_cal"*"treat_percentage"*0.01,
+                "food_cal" = "total_daily_cal"*(100-"treat_percentage")*0.01 
             WHERE "cats"."id" = $1;`;
 
             const adjTreatFoodCalArray = [req.body.cat_id];

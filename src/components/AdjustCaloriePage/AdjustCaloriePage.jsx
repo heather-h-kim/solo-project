@@ -1,27 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import Box from '@mui/material/Box';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-
 import TextField from '@mui/material/TextField';
-import { InputLabel } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import { sizing } from '@mui/system';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+
 
 const styles = {
   "&.MuiTextField-root": {
@@ -31,8 +18,8 @@ const styles = {
   },
   "&.MuiButton-contained": {
     bgcolor: '#c85c92',
-    marginTop:'8px',
-    fontSize:'16px'
+    marginTop: '8px',
+    fontSize: '16px'
   },
 };
 function AdjustDailyCalorie() {
@@ -102,7 +89,7 @@ function AdjustDailyCalorie() {
 
         <FormControl fullWidth>
           <p>Do you still want the treat % at {cat.treat_percentage}%?</p>
-         <p>Desired % of the daily calories from treats:</p>
+          <p>Desired % of the daily calories from treats:</p>
           <TextField sx={styles} label="treat %" variant="outlined" value={treat} onChange={event => setTreat(event.target.value)} /><br></br>
           <Button sx={styles} type="submit" variant="contained">Submit</Button><br></br>
         </FormControl>
@@ -110,9 +97,9 @@ function AdjustDailyCalorie() {
       </form>
       {clicked &&
         <>
-        <Typography sx={{fontSize:'20px'}}>
-          {cat.name} now needs {cat.total_daily_cal}kcal a day. <br></br> {cat.treat_cal}kcal is from treats and {cat.food_cal}kcal is from food.
-        </Typography>
+          <Typography sx={{ fontSize: '20px' }}>
+            {cat.name} now needs {cat.total_daily_cal}kcal a day. <br></br> {cat.treat_cal}kcal is from treats and {cat.food_cal}kcal is from food.
+          </Typography>
           <Button sx={styles} fullWidth variant="contained" onClick={handleClick}>Get the food amount</Button>
         </>
       }

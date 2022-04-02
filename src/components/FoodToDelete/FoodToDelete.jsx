@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import TableCell from '@mui/material/TableCell';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+
 
 const styles = {
   "&.MuiButton-contained": {
@@ -15,7 +15,6 @@ const styles = {
 
 
 function FoodToDelete( {food} ) {
-    const history = useHistory();
     const dispatch = useDispatch();
     const store = useSelector((store) => store);
     const cat = store.thisCat;
@@ -30,7 +29,6 @@ function FoodToDelete( {food} ) {
 
     const deleteThisFood = () => {
         console.log('lets delete this food!');
-        // dispatch({type: 'DELETE_THIS_FOOD', payload: food.id})
         const payloadToSend = {
             food_id: food.id,
             cat_id: cat.id

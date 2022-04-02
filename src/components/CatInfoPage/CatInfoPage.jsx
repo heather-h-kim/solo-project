@@ -25,7 +25,6 @@ const styles = {
 
 function CatInfoPage() {
   const store = useSelector((store) => store);
-  const [heading, setHeading] = useState('Home Page');
   const history = useHistory();
   const dispatch = useDispatch();
   const cat = store.thisCat;
@@ -38,8 +37,6 @@ function CatInfoPage() {
     dispatch({type:'FETCH_FOODS', payload: Number(id)});
   }, []);
 
-
-  console.log('this cat is', cat);
   const sendToEditInfo = () => {
     history.push(`/edit-cat/${id}`)
   }
@@ -51,7 +48,7 @@ function CatInfoPage() {
   const sendToHome = () => {
     history.push('/user-home');
   }
-  console.log('foods are', foods);
+  
   return (
     <div className="container">
       <Box sx={{ width: '100%', maxWidth: 360, bgcolor: '#ffe6ee', mb:'20px' }}>
