@@ -13,8 +13,9 @@ This app calculates recommended daily calories and feeding amounts for cats to s
 
 ## Installation
  1. Open up your editor of choice and run npm install
- 2. Run npm run server and npm run client
- 3. Navigate to `localhost:3000`
+ 2. Copy the postgreSQL queries and paste them into Postico
+ 3. Run npm run server and npm run client
+ 4. Navigate to `localhost:3000`
 
 ## Built With
 
